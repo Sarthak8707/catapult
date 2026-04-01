@@ -43,7 +43,7 @@ export const environments = pgTable("environments", {
     projectID: integer("project_id").notNull().references(() => projects.id, {
         onDelete: "cascade", onUpdate: "cascade"
     }),
-    createdAt: timestamp("created_at").defaultNow();
+    createdAt: timestamp("created_at").defaultNow()
 })
 
 // Flags Table
@@ -51,10 +51,10 @@ export const environments = pgTable("environments", {
 export const flags = pgTable("flags", {
     id: serial("id").primaryKey(),
     name: text("name").notNull(),
-    description: text("description").notNull(),
+    description: text("description"),
     enabled: boolean("enabled").notNull(),
     environmentID: integer("environment_id").notNull().references(() => environments.id , {
         onDelete: "cascade", onUpdate: "cascade"
     }),
-    createdAt: timestamp("created_at").defaultNow();
+    createdAt: timestamp("created_at").defaultNow()
 })

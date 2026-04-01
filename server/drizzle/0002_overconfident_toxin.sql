@@ -1,0 +1,1 @@
+ALTER TABLE "flags" ALTER COLUMN "description" DROP NOT NULL;

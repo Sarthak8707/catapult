@@ -1,14 +1,24 @@
 import express from "express";
+import { changeFlag, createNewFlag, deleteFlag, getAllFlags } from "../controllers/featureFlag.controller";
 
-const app = express();
-
-app.get("/flags/:id", () => {  })
-
-
-app.put("/flags/", () => {})
+const router = express.Router();
 
 
-app.post("/flags/", () => {})
+// Get all flags 
+
+router.get("/:id", () => getAllFlags)
+
+// Create a flag
+
+router.post("/", () => createNewFlag)
+
+// Update a flag
+
+router.put("/:id", () => changeFlag)
+
+// Delete a flag
+
+router.delete("/:id", () => deleteFlag)
 
 
-app.delete("/flags/:id", () => {})
+export {router as flagRouter} ;

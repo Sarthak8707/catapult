@@ -1,13 +1,17 @@
 import express from "express";
 import cors from "cors";
-import { db } from "./db/client";
-import { users } from "./db/schema";
+import {flagRouter} from "./routes/featureFlag.route"
 
 const app = express();
 
 
 app.use(cors());
 app.use(express.json());
+
+
+// Routes
+
+app.use("/flags", flagRouter);
 
 
 app.listen(3000, () => {

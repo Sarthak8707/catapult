@@ -56,5 +56,6 @@ export const flags = pgTable("flags", {
     environmentID: integer("environment_id").notNull().references(() => environments.id , {
         onDelete: "cascade", onUpdate: "cascade"
     }),
+    rolloutPercentage: integer("rollout_percentage").notNull().default(100),
     createdAt: timestamp("created_at").defaultNow()
 })

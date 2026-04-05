@@ -19,7 +19,7 @@ export const createNewEnvironmentService = async (name: string, projectID: numbe
     return data;
 }
 
-// Update a new environment
+// Update a environment
 
 export const updateEnvironmentService = async (id: number) => {
 

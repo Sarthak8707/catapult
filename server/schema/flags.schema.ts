@@ -6,8 +6,4 @@ export const createNewFlagSchema = z.object({
     environmentID: z.number()
 });
 
-export const createNewEnvironmentSchema = z.object({
-    name: z.string(),
-    projectID: z.number(),
-})
-
+export const updateFlagSchema = createNewFlagSchema.partial();

@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { Request, Response, NextFunction } from "express";
+import { AppError } from "../utils/appError";
 
 export const validate = 
     (schema: z.ZodTypeAny) => 
@@ -11,6 +12,11 @@ export const validate =
         }
         catch(err){
             // send to global error handler via AppError class
+            if(err instanceof z.ZodError){
+                return next(new AppError("Invalid Schema", 400));
+            }
+
+            next(err);
         }
         
 }

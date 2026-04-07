@@ -13,9 +13,9 @@ export const getAllFlagsService = async () => {
 
 // Create a new flag
 
-export const createNewFlagService = async (name: string, enabled: boolean, environmentID: number) => {
+export const createNewFlagService = async (name: string, enabled: boolean, environmentID: number, rolloutPercentage: number) => {
     const flag = {};
-    const data = await db.insert(flags).values({name: "abc", enabled: true, environmentID: 1});
+    const data = await db.insert(flags).values({name: "abc", enabled: true, environmentID: 1, rolloutPercentage: rolloutPercentage});
     return data;
 }
 

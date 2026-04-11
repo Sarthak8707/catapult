@@ -12,8 +12,8 @@ export const getAllFlags = async (req: Request, res: Response) => {
 // Create a new flag
 
 export const createNewFlag = async (req: Request, res: Response) => {
-    const {name, enabled, environmentID} = req.body;
-    const data = createNewFlagService(name, enabled, environmentID);
+    const {name, enabled, environmentID, rolloutPercentage} = req.body;
+    const data = createNewFlagService(name, enabled, environmentID, rolloutPercentage);
     res.json(data);
 } 
 

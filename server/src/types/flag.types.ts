@@ -3,5 +3,10 @@ export type Flag = {
     name: string,
     enabled: boolean,
     description?: string,
-    createdAt: Date
+    createdAt: Date,
+    rolloutPercentage: number
+}
+
+export type Context = {
+    userID: number,
 }

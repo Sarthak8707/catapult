@@ -1,11 +1,11 @@
-import { Context, Flag } from "../types/flag.types";
+import { Context } from "../types/flag.types";
 import { computeBucket } from "./hash";
 
-export const evaluateRollout = (flag: Flag, context: Context) => {
-    const { userID } = context;
+export const evaluateRollout = (flagName: string, rolloutPercentage: number, userID: number) => {
+   
     
     if(!userID) return false;
 
-    const bucket = computeBucket(flag.name, userID);
-    return bucket < flag.rolloutPercentage ;
+    const bucket = computeBucket(flagName, userID);
+    return bucket < rolloutPercentage;
 }

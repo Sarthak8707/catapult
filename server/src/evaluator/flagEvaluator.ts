@@ -1,9 +1,9 @@
-import { Context, Flag } from "../types/flag.types";
+import { Context } from "../types/flag.types";
 import { evaluateRollout } from "./rollout";
 
 
-export const evaluateFlag = (flag: Flag, context: Context) => {
-    if(!flag.enabled) return false;
+export const evaluateFlag = (flagName: string, enabled: boolean, rolloutPercentage: number, userID: number) => {
+    if(!enabled) return false;
 
-    return evaluateRollout(flag, context);
+    return evaluateRollout(flagName, rolloutPercentage, userID);
 }

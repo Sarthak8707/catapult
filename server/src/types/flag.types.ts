@@ -7,6 +7,11 @@ export type Flag = {
     rolloutPercentage: number
 }
 
-export type Context = {
-    userID: number,
+export type FlagConfig = {
+    enabled: boolean,
+    rolloutPercentage: number
+}
+
+export type SDKFlagConfig = {
+    flags: Record<number, FlagConfig>
 }

@@ -1,7 +1,8 @@
 import { eq } from "drizzle-orm";
 import { db } from "../db/client";
 import { flags } from "../db/schema";
-import { evaluateFlag } from "../evaluator/flagEvaluator";
+import { getFlagsForEnvironment } from "../repositories/flag.repository";
+import { SDKFlagConfig } from "../types/flag.types";
 
 
 // Get all flags
@@ -35,14 +36,19 @@ export const deleteFlagService = async (flagID: number) => {
     return {msg: "Deleted successfully!"}
 }
 
-// Evaluate a flag against a context
+// Config Flag Service
 
-export const evaluateFlagService = async (userID: number, flagID: number) => {
-    
-    const flag = (await db.select().from(flags).where(eq(flags.id, flagID)).limit(1))[0];
-    const flagName = flag.name;
-    const enabled = flag.enabled;
-    const rolloutPercentage = flag.rolloutPercentage;
-    
-    return evaluateFlag(flagName, enabled, rolloutPercentage, userID);
+export const getFlagConfig = async (envID: number) => {
+    const flags = await getFlagsForEnvironment(envID);
+    const config: SDKFlagConfig = {
+        flags: {}
+    };
+
+    for(const flag of flags){
+        config.flags[flag.id] = {
+            enabled: flag.enabled, 
+            rolloutPercentage: flag.rolloutPercentage
+        };
+    }
+    return config;
 }

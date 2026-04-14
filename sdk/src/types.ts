@@ -1,6 +1,7 @@
 export type Flag = {
     key: string,
-    enabled: boolean
+    enabled: boolean,
+    rolloutPercentage: number
 }
 
 export type FlagsResponse = {
@@ -10,4 +11,8 @@ export type FlagsResponse = {
 export type FlagsClientOptions = {
     baseUrl: string,
     pollInterval: number
+}
+
+export type Context = {
+    userId: number
 }

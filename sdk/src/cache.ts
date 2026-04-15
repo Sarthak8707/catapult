@@ -9,10 +9,15 @@ export class FlagCache {
             this.flags.set(flag.key, flag);
         }
     }
+
     getFlag(key: string): Flag | undefined {
         return this.flags.get(key);
     }
+
     getAllFlags(){
         return Array.from(this.flags.values());
     }
+
+    
+
 }

@@ -1,8 +1,9 @@
 export type Flag = {
     key: string,
     enabled: boolean,
-    rolloutPercentage: number
-}
+    rolloutPercentage: number,
+    variants?: Variant[]
+} 
 
 export type FlagsResponse = {
     flags: Flag[];
@@ -15,4 +16,9 @@ export type FlagsClientOptions = {
 
 export type Context = {
     userId: number
+}
+
+export type Variant = {
+    name: string,
+    weight: number
 }

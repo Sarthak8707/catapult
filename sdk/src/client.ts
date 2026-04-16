@@ -14,7 +14,7 @@ export class FlagClient {
     }
 
     // Initialize 
-    async init (){
+    async init () {
         const data = await fetchFlags(this.baseUrl, this.sdkKey);
         this.cache.setFlags(data.flags);
     }

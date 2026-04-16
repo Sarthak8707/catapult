@@ -1,5 +1,7 @@
 
+import { jsonb } from "drizzle-orm/pg-core";
 import { integer, pgTable, boolean, serial, text, timestamp } from "drizzle-orm/pg-core";
+import { Rule } from "../types/flag.types";
 
 
 
@@ -57,5 +59,7 @@ export const flags = pgTable("flags", {
         onDelete: "cascade", onUpdate: "cascade"
     }),
     rolloutPercentage: integer("rollout_percentage").notNull().default(100),
-    createdAt: timestamp("created_at").defaultNow()
+    createdAt: timestamp("created_at").defaultNow(),
+    rules: jsonb('rules').$type<Rule[]>().notNull().default([]),
 })
+

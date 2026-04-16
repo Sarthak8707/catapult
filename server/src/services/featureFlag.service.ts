@@ -52,3 +52,4 @@ export const getFlagConfig = async (envID: number) => {
     }
     return config;
 }
+

@@ -4,7 +4,8 @@ export type Flag = {
     enabled: boolean,
     description?: string,
     createdAt: Date,
-    rolloutPercentage: number
+    rolloutPercentage: number,
+    rules: Rule[]
 }
 
 export type FlagConfig = {
@@ -14,4 +15,17 @@ export type FlagConfig = {
 
 export type SDKFlagConfig = {
     flags: Record<number, FlagConfig>
+}
+
+export type Rule = {
+    conditions: Conditions[],
+    rolloutPercentage?: number,
+    variant?: string
+}
+
+
+export type Conditions = {
+    attribute: string,
+    operator: "equals" | "or" | "in" | "less than" | "more than",
+    value: any
 }

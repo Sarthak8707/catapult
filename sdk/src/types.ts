@@ -2,7 +2,8 @@ export type Flag = {
     key: string,
     enabled: boolean,
     rolloutPercentage: number,
-    variants?: Variant[]
+    variants?: Variant[],
+    rules: Rule[],
 } 
 
 export type FlagsResponse = {
@@ -15,10 +16,23 @@ export type FlagsClientOptions = {
 }
 
 export type Context = {
-    userId: number
+    userId: number,
+    attributes: Record<string, any>
 }
 
 export type Variant = {
     name: string,
     weight: number
+}
+
+export type Rule = {
+    conditions: Condition[],
+    rolloutPercentage: number,
+    variant: Variant
+}
+
+export type Condition = {
+    attribute: string,
+    values: any [],
+    operator: "equals" | "or" | "in" | "more than" | "less than"
 }

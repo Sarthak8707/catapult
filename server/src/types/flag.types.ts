@@ -5,7 +5,8 @@ export type Flag = {
     description?: string,
     createdAt: Date,
     rolloutPercentage: number,
-    rules: Rule[]
+    rules: Rule[],
+    variants: Variant[]
 }
 
 export type FlagConfig = {
@@ -23,6 +24,10 @@ export type Rule = {
     variant?: string
 }
 
+export type Variant = {
+    name: string,
+    weight: number
+}
 
 export type Conditions = {
     attribute: string,

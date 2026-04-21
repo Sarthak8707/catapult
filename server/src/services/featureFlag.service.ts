@@ -70,6 +70,4 @@ export const createFlagRules = async(flagId: number, rules: Rule[]) => {
 
     await updateFlagRules(flagId, rules);
     return {msg: "Created rules successfully!"};
-
-
 }

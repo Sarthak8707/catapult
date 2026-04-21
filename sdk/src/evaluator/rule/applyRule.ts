@@ -9,7 +9,7 @@ export const applyRule = (rule: Rule, flag: Flag, context: Context) => {
         // Assuming for every rule there is smae rollout percentage which is flag.rolloutPercentage
 
         const check = evaluateRollout(flagKey, flag, context);
-        if(!check) return null;
+        if(!check) return {enabled: false};
     }
 
     if(rule.variant) return rule.variant;

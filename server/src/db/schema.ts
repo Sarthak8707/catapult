@@ -20,7 +20,7 @@ export const users = pgTable("users", {
   username: text("username").notNull(),
   password: text("password").notNull(),
   email: text("email").notNull(),
-  organizationID: integer("organization_id").notNull().references(() => organizations.id, {
+  organizationID: integer("organization_id").references(() => organizations.id, {
     onDelete: "cascade", onUpdate: "cascade"
   }),
   createdAt: timestamp("created_at").defaultNow(),

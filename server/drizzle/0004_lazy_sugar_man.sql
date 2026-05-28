@@ -1,0 +1,1 @@
+ALTER TABLE "flags" ADD COLUMN "rules" jsonb DEFAULT '[]'::jsonb NOT NULL;

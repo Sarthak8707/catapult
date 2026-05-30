@@ -30,6 +30,12 @@ router.get("/:id/projects", () => {});
 
 router.post("/:id/projects", () => {});
 
+// Get all members in an organization
+
+router.get("/:id/members", () => {});
+
+
+
 
 
 export {router as organizationsRouter}

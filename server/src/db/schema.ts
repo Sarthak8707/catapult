@@ -10,6 +10,9 @@ import { Rule } from "../types/flag.types";
 export const organizations = pgTable("organizations", {
     id: serial("id").primaryKey(),
     name: text("name").notNull(),
+    createdBy: integer("created_by").notNull().references(() => users.id, {
+        onDelete: "restrict", onUpdate: "cascade"
+    }) ,
     createdAt: timestamp("created_at").defaultNow(),
 })
 

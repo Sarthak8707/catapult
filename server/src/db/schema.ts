@@ -19,12 +19,23 @@ export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   username: text("username").notNull(),
   password: text("password").notNull(),
-  email: text("email").notNull(),
-  organizationID: integer("organization_id").references(() => organizations.id, {
-    onDelete: "cascade", onUpdate: "cascade"
-  }),
+  email: text("email").notNull(),  
   createdAt: timestamp("created_at").defaultNow(),
 });
+
+// Membership Table
+
+export const members = pgTable("members", {
+    id: serial("id").primaryKey(),
+    userID: integer("user_id").notNull().references(() => users.id, {
+        onDelete: "cascade", onUpdate: "cascade"
+    }),
+    organizationID: integer("organization_id").notNull().references(() => organizations.id, {
+        onDelete: "cascade", onUpdate: "cascade"
+    }),
+    role: text("role"),
+    joinedAt: timestamp("joined_at").defaultNow()
+})
 
 // Projects Table
 

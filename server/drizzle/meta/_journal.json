@@ -36,6 +36,20 @@
       "when": 1779963004329,
       "tag": "0004_lazy_sugar_man",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1780223999517,
+      "tag": "0005_worthless_nico_minoru",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1780225116771,
+      "tag": "0006_marvelous_shadowcat",
+      "breakpoints": true
     }
   ]
 }

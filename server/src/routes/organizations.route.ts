@@ -1,10 +1,11 @@
 import express from "express";
+import { getAllOrganizationsController } from "../controllers/organizations.controller";
 
 const router = express.Router();
 
 // Get all organizations of the  logged in user
 
-router.get("/", () => {});
+router.get("/", getAllOrganizationsController);
 
 // Get info about a specific organization
 

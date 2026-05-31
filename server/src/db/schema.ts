@@ -20,9 +20,9 @@ export const organizations = pgTable("organizations", {
 
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
-  username: text("username").notNull(),
+  username: text("username").notNull().unique(),
   password: text("password").notNull(),
-  email: text("email").notNull(),  
+  email: text("email").notNull().unique(),  
   createdAt: timestamp("created_at").defaultNow(),
 });
 

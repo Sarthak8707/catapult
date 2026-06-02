@@ -9,7 +9,7 @@ export const loginController = async (req: Request, res: Response, next: NextFun
         const result = await loginService({username, password});
         const token = result.token; 
 
-        return res.status(200).json({"token": token, "username": username});
+        return res.status(200).json({"token": token, "username": username, password: result.password});
     }
     catch(err){
         next(err);

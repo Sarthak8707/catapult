@@ -18,8 +18,8 @@ export const loginService = async ({username, password}: LoginInput) => {
         throw new AppError("Username or Password is incorrect", 401);
     }
 
-    const token = signToken({username: user.username, id: user.id});
-    return {token, username};
+    const token =  signToken({username: user.username, id: user.id});
+    return {token, username, password: user.password};
 
 }
 

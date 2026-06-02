@@ -1,24 +1,30 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 
 
 
 const Organizations = () => {
   
-  const userId = window.localStorage.getItem('id');
-  const [organizationData, setOrganizationData] = useState([]);
+  const token = window.localStorage.getItem('token');
+  const [organizationData, setOrganizationData] = useState < {organizationName: string, role: string, joinedAt: string} []> ([]);
 
   useEffect(() => {
     const getOrganizations = async () => {
+
       const response = await axios.get(`http://localhost:3000/organizations`, {
-        //need to be passed via headers later
-      params: {userId}
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
     });
+
+     setOrganizationData(response.data.organizations);
+     console.log(response.data);
+
   }
 
   getOrganizations();
-  }, [userId]);
+  }, []);
 
   return (
     <div className='bg-neutral-950 min-h-screen w-300 m-10'>
@@ -29,20 +35,34 @@ const Organizations = () => {
       </div>
 
       <div className='grid grid-cols-4 ml-20 gap-4 mt-10'>
-        <div className='text-gray-500 text-sm font-medium'>Organization</div>
-        <div className='text-gray-500 text-sm font-medium'>Role</div>
-        <div className='text-gray-500 text-sm font-medium'>Created On</div>
-        <div className='text-gray-500 text-sm font-medium'>Actions</div>             
-      </div>
+  <div className='text-gray-500 text-sm font-medium'>Organization</div>
+  <div className='text-gray-500 text-sm font-medium'>Role</div>
+  <div className='text-gray-500 text-sm font-medium'>Created On</div>
+  <div className='text-gray-500 text-sm font-medium'>Actions</div>
+</div>
 
-      
-        <div className='grid grid-cols-4 ml-20 gap-4 mt-10'>
-        <div className='text-white'>JQ Enterprises </div>
-        <div className='text-white'>Admin</div>
-        <div className='text-white'>24 July 2025</div>
-        <div className='text-white'>Delete</div>
+{organizationData.map((organization, index) => (
+  <div
+    key={index}
+    className='grid grid-cols-4 ml-20 gap-4 mt-10'
+  >
+    <div className='text-white'>
+      {organization.organizationName}
+    </div>
 
-      </div>
+    <div className='text-white'>
+      {organization.role}
+    </div>
+
+    <div className='text-white'>
+      {organization.joinedAt}
+    </div>
+
+    <div className='text-white'>
+      Configure
+    </div>
+  </div>
+))}
       
     </div>
   )

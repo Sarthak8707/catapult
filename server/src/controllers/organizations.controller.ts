@@ -9,3 +9,10 @@ export const getAllOrganizationsController = async (req: Request, res: Response,
     return res.json(result);
     
 }
+
+export const getOrganizationInfoController = async (req: Request, res: Response, next: NextFunction) => {
+    const organizationID = req.body.organizationID;
+
+    const result = await ( () => {});
+
+}

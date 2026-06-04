@@ -4,5 +4,5 @@ export type GetOrganizationsInput = {
 
 export type GetOrganizationInfoInput = {
     organizationID: number,
-    userID: string
+    userID: number
 }

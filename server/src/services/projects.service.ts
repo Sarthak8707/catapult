@@ -1,14 +1,17 @@
 import { eq } from "drizzle-orm";
 import { db } from "../db/client"
 import { projects } from "../db/schema"
+import { GetProjectsInput } from "../types/projects.types";
 
 
 // Get all projects
 
-export const getAllProjectsService = async (organizationID: number) => {
-    //const 
-    const data = await db.select().from(projects).where(eq(projects.organizationID, organizationID));
-    return data;
+export const getAllProjectsService = async ({organizationID}: GetProjectsInput) => {
+
+    const projectsList = await db.select().from(projects).where(eq(projects.organizationID, organizationID));
+
+    return {projectsList};
+
 }
 
 // Create a new projects

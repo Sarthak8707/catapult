@@ -7,6 +7,3 @@ export type GetOrganizationInfoInput = {
     userID: number
 }
 
-export type GetProjectsInput = {
-    organizationID: number
-}

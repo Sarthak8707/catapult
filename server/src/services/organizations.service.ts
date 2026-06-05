@@ -1,7 +1,10 @@
 import { and, eq } from "drizzle-orm";
 import { db } from "../db/client";
 import { members, organizations, projects, } from "../db/schema";
-import { GetOrganizationInfoInput, GetOrganizationsInput, GetProjectsInput } from "../types/organizations.types";
+import { GetOrganizationInfoInput, GetOrganizationsInput } from "../types/organizations.types";
+
+
+
 
 export const getAllOrganizationsService = async ({userID}: GetOrganizationsInput) => {
     
@@ -39,10 +42,5 @@ export const getOrganizationInfoService = async ({organizationID, userID}: GetOr
 }
 
 
-export const getAllProjectsService = async ({organizationID}: GetProjectsInput) => {
 
-    const projectsList = await db.select().from(projects).where(eq(projects.organizationID, organizationID));
 
-    return {projectsList};
-
-}

@@ -21,6 +21,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Link } from "react-router-dom";
+
 
 const Organizations = () => {
   const token = window.localStorage.getItem("token");
@@ -30,6 +32,7 @@ const Organizations = () => {
       organizationName: string;
       role: string;
       joinedAt: string;
+      organizationID: number
     }[]
   >([]);
 
@@ -45,6 +48,7 @@ const Organizations = () => {
       );
 
       setOrganizationData(response.data.organizations);
+     
     };
 
     getOrganizations();
@@ -82,8 +86,10 @@ const Organizations = () => {
             <TableBody>
               {organizationData.map((organization, index) => (
                 <TableRow key={index}>
-                  <TableCell className="font-medium">
-                    {organization.organizationName}
+                  <TableCell className="font-medium" >
+                    <Link to = {`/organizations/${organization.organizationID}`}>
+                      {organization.organizationName}
+                    </Link>
                   </TableCell>
 
                   <TableCell>

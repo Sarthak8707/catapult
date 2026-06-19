@@ -16,7 +16,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
         const username = decode.username;
 
         req.user = {id, username};
-
+       
         next();
 
         

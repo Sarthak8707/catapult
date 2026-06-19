@@ -6,6 +6,7 @@ import Organizations from "./pages/Organizations";
 import AuditTrails from "./pages/AuditTrail";
 import Analytics from "./pages/Analytics";
 import Flags from "./pages/Flags";
+import OrganizationDetails from "./pages/OrganizationDetails";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
         <Route path="audit-trails" element={<AuditTrails />} />
         <Route path="analytics" element={<Analytics />} />
         <Route path="flags" element={<Flags />} />
+        <Route path="organizations/:id" element={<OrganizationDetails />} />
       </Route>
     </Routes>
   );

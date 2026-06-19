@@ -26,7 +26,8 @@ export const getAllOrganizationsService = async ({userID}: GetOrganizationsInput
 
 export const getOrganizationInfoService = async ({organizationID, userID}: GetOrganizationInfoInput) => {
 
-    const projectsCount = (await db.select().from(projects).where(eq(projects.organizationID, organizationID))).length;
+    try{
+        const projectsCount = (await db.select().from(projects).where(eq(projects.organizationID, organizationID))).length;
 
     const membersCount = (await db.select().from(members).where(eq(members.organizationID, organizationID))).length;
 
@@ -38,6 +39,10 @@ export const getOrganizationInfoService = async ({organizationID, userID}: GetOr
     ));
 
     return {projectsCount, membersCount, createdBy, yourRole}
+    }
+    catch(err){
+        console.log("service::::", err);
+    }
 
 }
 

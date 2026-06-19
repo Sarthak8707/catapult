@@ -3,28 +3,45 @@ import { getAllOrganizationsService, getOrganizationInfoService } from "../servi
 import { getAllProjectsService } from "../services/projects.service";
 
 export const getAllOrganizationsController = async (req: Request, res: Response, next: NextFunction) => {
-    const userID = req.user.id;
+    try{
+        const userID = req.user.id;
 
     const result = await getAllOrganizationsService({userID}) ;
-
+    console.log(req.user.username)
     return res.status(200).json(result);
+    }
+    catch(err){
+        next(err);
+    }
     
 }
 
 export const getOrganizationInfoController = async (req: Request, res: Response, next: NextFunction) => {
-    const organizationID = Number(req.params.id);
+    try{
+        const organizationID = Number(req.params.id);
+   
     const userID = req.user.id;
+    
 
     const result = await getOrganizationInfoService({organizationID, userID});
 
     return res.status(200).json(result);
+    }
+    catch(err){
+        next(err)
+    }
 }
 
 export const getAllProjectsController = async (req: Request, res: Response, next: NextFunction) => {
 
-    const organizationID = Number(req.params.id);
+    try{
+        const organizationID = Number(req.params.id);
     
     const result = await getAllProjectsService({organizationID});
 
     return res.status(200).json(result);
+    }
+    catch(err){
+        next(err);
+    }
 }

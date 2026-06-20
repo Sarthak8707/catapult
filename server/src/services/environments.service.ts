@@ -3,7 +3,7 @@ import { db } from "../db/client"
 import { environments } from "../db/schema"
 
 
-// Get all environments
+// Get all environments of a project
 
 export const getAllEnvironmentsService = async (projectID: number) => {
     //const 

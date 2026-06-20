@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { getAllProjectsOfUserService } from "../services/projects.service";
+import { getAllProjectsOfUserService, getProjectInfoService } from "../services/projects.service";
+import { getAllEnvironmentsService } from "../services/environments.service";
 
 export const getAllProjectsOfUserController = async (req: Request, res: Response, next: NextFunction) => {
 
@@ -11,10 +12,31 @@ export const getAllProjectsOfUserController = async (req: Request, res: Response
         res.status(200).json(result);
     }
     catch(err){
-
         next(err);
-
     }
 
+}
 
+
+export const getAllEnvironmentsController = async (req: Request, res: Response, next: NextFunction) => {
+
+    try{
+        const projectID = Number(req.params.id);
+        const result = await getAllEnvironmentsService(projectID);
+        res.status(200).json(result);
+    }
+    catch(err){
+        next(err);
+    }
+}
+
+export const getProjectInfoController = async (req:Request, res: Response, next: NextFunction) => {
+
+    try{
+        const projectID = Number(req.params.id);
+        const result = await getProjectInfoService(projectID);
+    }
+    catch(err){
+        next(err);
+    }
 }

@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllProjectsOfUserController } from "../controllers/projects.controller";
+import { getAllEnvironmentsController, getAllProjectsOfUserController, getProjectInfoController } from "../controllers/projects.controller";
 
 const router = express.Router();
 
@@ -9,7 +9,7 @@ router.get("/", getAllProjectsOfUserController);
 
 // Get info about a specific project
 
-router.get("/:id", () => {});
+router.get("/:id", getProjectInfoController);
 
 // Update a project
 
@@ -21,12 +21,12 @@ router.delete("/:id", () => {});
 
 // Get all environments in a project
 
-router.get("/:id/environments", () => {});
+router.get("/:id/environments", getAllEnvironmentsController);
 
 // Create an environment in a project
 
 router.post("/:id/environments", () => {});
 
-// 
+
 
 export {router as projectsRouter}

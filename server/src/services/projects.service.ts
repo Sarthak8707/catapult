@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { db } from "../db/client"
-import { members, projects } from "../db/schema"
+import { environments, members, projects } from "../db/schema"
 import { GetProjectsInput } from "../types/projects.types";
 
 
@@ -25,6 +25,18 @@ export const getAllProjectsOfUserService = async (userID: number) => {
 
     return projectsList;
 
+}
+
+// Get info about a specific project
+
+
+export const getProjectInfoService = async (projectID: number) => {
+
+    const environmentCount = (await db.select().from(environments).where(eq(environments.projectID, projectID))).length;
+    const projectData = await db.select().from(projects).where(eq(projects.id, projectID));
+
+    return {environmentCount, projectData};
+    
 }
 
 // Create a new projects

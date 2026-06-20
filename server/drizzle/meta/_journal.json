@@ -50,6 +50,13 @@
       "when": 1780225116771,
       "tag": "0006_marvelous_shadowcat",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1781985330810,
+      "tag": "0007_boring_havok",
+      "breakpoints": true
     }
   ]
 }

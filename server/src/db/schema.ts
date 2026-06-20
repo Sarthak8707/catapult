@@ -48,7 +48,10 @@ export const projects = pgTable("projects", {
     organizationID: integer("organization_id").notNull().references(() => organizations.id, {
         onDelete: "cascade", onUpdate: "cascade"
     }),
-    createdAt: timestamp("created_at").defaultNow()
+    createdAt: timestamp("created_at").defaultNow(),
+    createdBy: integer("created_by").notNull().references(() => users.id, {
+        onDelete: "restrict", onUpdate: "cascade"
+    })
 })
 
 // Environments Table

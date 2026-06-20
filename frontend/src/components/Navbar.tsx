@@ -11,9 +11,11 @@ import {
 const navItems = [
   { name: "Dashboard", path: "/" },
   { name: "Organizations", path: "/organizations" },
+  { name: "Projects", path: "/projects" },
   { name: "Audit Trails", path: "/audit-trails" },
   { name: "Analytics", path: "/analytics" },
   { name: "Flags", path: "/flags" },
+  
 ];
 
 export default function Navbar() {
@@ -27,7 +29,7 @@ export default function Navbar() {
         <NavigationMenu>
           <NavigationMenuList>
             {navItems.map((item) => (
-              <NavigationMenuItem key={item.path}>
+              <NavigationMenuItem key={item.path} className="">
                 <NavigationMenuLink asChild>
                   <NavLink
                     to={item.path}

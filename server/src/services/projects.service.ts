@@ -1,16 +1,29 @@
 import { eq } from "drizzle-orm";
 import { db } from "../db/client"
-import { projects } from "../db/schema"
+import { members, projects } from "../db/schema"
 import { GetProjectsInput } from "../types/projects.types";
 
 
-// Get all projects
+// Get all projects of an Organization
 
 export const getAllProjectsService = async ({organizationID}: GetProjectsInput) => {
 
     const projectsList = await db.select().from(projects).where(eq(projects.organizationID, organizationID));
 
     return {projectsList};
+
+}
+
+// Get all projects of logged in user
+
+export const getAllProjectsOfUserService = async (userID: number) => {
+
+    const projectsList = await db.select({projectName: projects.name})
+    .from(projects)
+    .innerJoin(projects, eq(members.organizationID, projects.organizationID))
+    .where(eq(members.userID, userID));
+
+    return projectsList;
 
 }
 

@@ -1,6 +1,11 @@
 import express from "express";
+import { getAllProjectsOfUserController } from "../controllers/projects.controller";
 
 const router = express.Router();
+
+// Get all the projects of the logged in user
+
+router.get("/", getAllProjectsOfUserController);
 
 // Get info about a specific project
 

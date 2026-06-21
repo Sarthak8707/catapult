@@ -1,3 +1,4 @@
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
 import { Card, CardDescription, CardHeader, CardPanel, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -31,7 +32,27 @@ const OrganizationDetails = () => {
 
   return (
     <div className='border-gray-200 p-6  min-h-screen'>
+
+        <div className=' border-red-200 h-10'>
+            <Breadcrumb>
+            <BreadcrumbList>
+               <BreadcrumbItem>
+                 <BreadcrumbLink href="/organizations">Home</BreadcrumbLink>
+               </BreadcrumbItem>
+               <BreadcrumbSeparator />
+               <BreadcrumbItem>
+                 <BreadcrumbLink href="/organizations/2">Organization</BreadcrumbLink>
+               </BreadcrumbItem>
+               <BreadcrumbSeparator />
+               <BreadcrumbItem>
+                 <BreadcrumbLink href="/organizations/2">Projects</BreadcrumbLink>
+               </BreadcrumbItem>
+            </BreadcrumbList>
+            </Breadcrumb>
+        </div>
+
         <div className='flex flex-row   border-amber-600 py-0'>
+        
         <div className=' border-amber-950 ml-0'>
             <Card className='w-150'>
             <CardHeader>

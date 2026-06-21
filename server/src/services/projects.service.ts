@@ -8,9 +8,15 @@ import { GetProjectsInput } from "../types/projects.types";
 
 export const getAllProjectsService = async ({organizationID}: GetProjectsInput) => {
 
-    const projectsList = await db.select().from(projects).where(eq(projects.organizationID, organizationID));
+    try{
+        const projectsList = await db.select().from(projects).where(eq(projects.organizationID, organizationID));
 
-    return {projectsList};
+        return {projectsList};
+    }
+    catch(err){
+        console.log("service err:::", err);
+        
+    }
 
 }
 
@@ -36,14 +42,14 @@ export const getProjectInfoService = async (projectID: number) => {
     const projectData = await db.select().from(projects).where(eq(projects.id, projectID));
 
     return {environmentCount, projectData};
-    
+
 }
 
 // Create a new projects
 
-export const createNewProjectService = async (name: string, organizationID: number) => {
+export const createNewProjectService = async (name: string, organizationID: number, createdBy: number) => {
 
-    const data = await db.insert(projects).values({name: name, organizationID: organizationID});
+    const data = await db.insert(projects).values({name: name, organizationID: organizationID, createdBy});
     return data;
 }
 

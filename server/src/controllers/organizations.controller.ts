@@ -42,6 +42,7 @@ export const getAllProjectsController = async (req: Request, res: Response, next
     return res.status(200).json(result);
     }
     catch(err){
+        console.log("controller error:::::", err)
         next(err);
     }
 }

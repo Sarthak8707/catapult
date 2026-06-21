@@ -30,9 +30,9 @@ const OrganizationDetails = () => {
     }, [])
 
   return (
-    <div className='border-gray-200 p-6 border min-h-screen'>
-        <div className='flex flex-row gap-80 justify-center'>
-        <div>
+    <div className='border-gray-200 p-6  min-h-screen'>
+        <div className='flex flex-row   border-amber-600 py-0'>
+        <div className=' border-amber-950 ml-0'>
             <Card className='w-150'>
             <CardHeader>
                 <CardTitle> Organization Name </CardTitle>
@@ -45,9 +45,10 @@ const OrganizationDetails = () => {
             </CardPanel>
         </Card>
         </div>
-        <div className='flex gap-5'>
-            <Button variant="destructive">Leave Organization</Button>
+        <div className='flex  gap-5 border-blue-500 ml-auto'>
             <Button> Start New Project </Button>
+            <Button variant="destructive">Leave Organization</Button>
+            
         </div>
     </div>
 

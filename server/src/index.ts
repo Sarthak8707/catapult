@@ -36,6 +36,7 @@ app.use("/flags", flagRouter);
 app.use("/auth", authRouter);
 
 
+
 app.listen(3000, () => {
     console.log("Server is runnnnnning");
 });

@@ -51,7 +51,7 @@ const OrganizationDetails = () => {
             </Breadcrumb>
         </div>
 
-        <div className='flex flex-row   border-amber-600 py-0'>
+        <div className='flex flex-row border  border-amber-600 py-0'>
         
         <div className=' border-amber-950 ml-0'>
             <Card className='w-150'>

@@ -7,18 +7,31 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import axios from 'axios';
 
+
+const statusVariant = {
+    draft: "warning",
+    active: "success",
+    deprecated: "destructive"
+} as const
+
+type FlagStatus = "draft" | "active" | "deprecated"
+
 const EnvironmentDetails = () => {
     const {id} = useParams();
+
     const [flagData, setFlagData] = useState<{
         name: string,
         enabled: boolean,
         rolloutPercentage: number,
-
+        status: FlagStatus,
+        updatedAt: string
     }[]
     >([]);
+
     useEffect(() => {
         const getFlags = async () => {
         const response = await axios.get(`http://localhost:3000/environments/${id}/flags`);
+        setFlagData(response.data);
 
         }
 
@@ -70,7 +83,14 @@ const EnvironmentDetails = () => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    
+                    {flagData.map((flag, index) => (
+                        <TableRow>
+                            <TableCell> {flag.name} </TableCell>
+                            <TableCell> <Badge variant= {statusVariant[flag.status]} > {flag.status} </Badge> </TableCell>
+                            <TableCell> {flag.rolloutPercentage} % </TableCell>
+                            <TableCell> { new Date(flag.updatedAt).toLocaleDateString() } </TableCell>
+                        </TableRow>
+                    ))}
                 </TableBody>
             </Table>
         </div>

@@ -84,6 +84,10 @@ export const flags = pgTable("flags", {
     rules: jsonb('rules').$type<Rule[]>().notNull().default([]),
 
     createdAt: timestamp("created_at").defaultNow(),
+    createdBy: integer("created_by").notNull().references(() => users.id, {
+        onDelete: "no action", onUpdate: "cascade"
+    }),
+    updatedAt: timestamp("updated_at").defaultNow(),
 })
 
 // Audit Logs Table

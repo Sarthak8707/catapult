@@ -1,13 +1,7 @@
 import { Request, Response } from "express";
-import { changeFlagService, createNewFlagService, deleteFlagService, getAllFlagsService } from "../services/featureFlag.service";
+import { changeFlagService, createNewFlagService, deleteFlagService, } from "../services/featureFlag.service";
 
 
-// Get all flags
-
-export const getAllFlags = async (req: Request, res: Response) => {
-    const data = await getAllFlagsService();
-    res.json(data);
-}
 
 // Create a new flag
 

@@ -1,14 +1,11 @@
 import express from "express";
-import { changeFlag, createNewFlag, deleteFlag, getAllFlags } from "../controllers/featureFlag.controller";
+import { changeFlag, createNewFlag, deleteFlag } from "../controllers/featureFlag.controller";
 import { validate } from "../middlewares/validate.middleware";
 import { createNewFlagSchema, updateFlagSchema } from "../schema/flags.schema";
 
 const router = express.Router();
 
 
-// Get all flags 
-
-router.get("/:id",    getAllFlags)
 
 // Create a flag
 

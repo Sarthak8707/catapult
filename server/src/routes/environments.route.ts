@@ -1,4 +1,5 @@
 import express from "express";
+import { getAllFlagsOfEnvironmentController } from "../controllers/environments.controller";
 
 const router = express.Router();
 
@@ -17,7 +18,7 @@ router.delete("/:id", () => {});
 
 // Get all flags in an environment
 
-router.get("/:id/flags", () => {});
+router.get("/:id/flags", getAllFlagsOfEnvironmentController);
 
 // Create a flag in an environment
 

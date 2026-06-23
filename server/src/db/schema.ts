@@ -71,13 +71,19 @@ export const flags = pgTable("flags", {
     id: serial("id").primaryKey(),
     name: text("name").notNull(),
     description: text("description"),
+
     enabled: boolean("enabled").notNull(),
+    status: text("status").notNull().default("draft"),
+
     environmentID: integer("environment_id").notNull().references(() => environments.id , {
         onDelete: "cascade", onUpdate: "cascade"
     }),
+
     rolloutPercentage: integer("rollout_percentage").notNull().default(100),
-    createdAt: timestamp("created_at").defaultNow(),
+    
     rules: jsonb('rules').$type<Rule[]>().notNull().default([]),
+
+    createdAt: timestamp("created_at").defaultNow(),
 })
 
 // Audit Logs Table

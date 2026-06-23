@@ -1,0 +1,1 @@
+ALTER TABLE "flags" ALTER COLUMN "status" SET DEFAULT 'draft';

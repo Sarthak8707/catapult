@@ -7,10 +7,11 @@ import { Rule, SDKFlagConfig } from "../types/flag.types";
 
 // Get all flags
 
-export const getAllFlagsService = async () => {
-    const environmentID = 1;
+export const getAllFlagsOfEnvironmentService = async (environmentID: number) => {
+   
     const data = await db.select().from(flags).where(eq(flags.environmentID, environmentID))
-    return {data} ;
+    return data ;
+
 }
 
 // Create a new flag

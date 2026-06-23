@@ -80,3 +80,27 @@ export const flags = pgTable("flags", {
     rules: jsonb('rules').$type<Rule[]>().notNull().default([]),
 })
 
+// Audit Logs Table
+
+export const auditLogs = pgTable("audit_logs", {
+    id: serial("id").primaryKey(),
+
+    organizationID: integer("organization_id").notNull().references(() => organizations.id, {
+        onDelete: "no action", onUpdate: "cascade"
+    }),
+    projectID: integer("project_id").notNull().references(() => projects.id, {
+        onDelete: "no action", onUpdate: "cascade"
+    }),
+    actorUserID: integer("actor_user_id").notNull().references(() => users.id, {
+        onDelete: "no action", onUpdate: "cascade"
+    }),
+
+    action: text("action").notNull(),
+
+    resourceType: text("resource_type").notNull(),
+    resourceID: integer("resource_id").notNull(),
+    
+    oldData: jsonb("old_data").$type<Record<string, any>>(),
+    newData: jsonb("new_data").$type<Record<string, any>>(),
+
+})

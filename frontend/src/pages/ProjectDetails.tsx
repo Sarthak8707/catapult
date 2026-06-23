@@ -16,26 +16,21 @@ const ProjectDetails = () => {
 
         <div>  </div>
 
-        <div className='flex'>
+        <div className='flex mb-5'>
         <div className=' border-amber-950 ml-0'>
-            <Card className='w-150'>
-            <CardHeader>
-                <CardTitle> Project Name </CardTitle>
-            </CardHeader>
-            <CardPanel>
-                <p>Projects</p>
-                <p>Members</p>
-                <p>Created By</p>
-                <p>Your Role</p>
-            </CardPanel>
-        </Card>
+            <div>
+                <div className='text-2xl font-medium'> Checkout Service </div>
+                <div className='text-gray-800' > Themes and Payments flag rollouts </div>
+            </div>
         </div>
         <div className='flex  gap-5 border-blue-500 ml-auto'>
             <Button> <PlusIcon></PlusIcon>  New Flag </Button>
-            <Button variant="destructive">Leave Project</Button>
+            <Button variant="destructive-outline">Leave Project</Button>
         </div>
             
         </div>
+
+        <Separator className="my-2" />
 
         <div>
            <div className='flex mt-8'> 

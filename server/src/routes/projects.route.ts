@@ -27,6 +27,10 @@ router.get("/:id/environments", getAllEnvironmentsController);
 
 router.post("/:id/environments", () => {});
 
+// Get all flags in a project
+
+router.get("/:id/flags", () => {});
+
 
 
 export {router as projectsRouter}

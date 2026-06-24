@@ -10,6 +10,7 @@ import OrganizationDetails from "./pages/OrganizationDetails";
 import Projects from "./pages/Projects";
 import ProjectDetails from "./pages/ProjectDetails";
 import EnvironmentDetails from "./pages/EnvironmentDetails";
+import FlagDetails from "./pages/FlagDetails";
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="projects" element={<Projects />} />
         <Route path="projects/:id" element={<ProjectDetails />} />
         <Route path="environments/:id" element={<EnvironmentDetails />} />
+        <Route path="flags/:id" element={<FlagDetails />} />
       </Route>
     </Routes>
   );

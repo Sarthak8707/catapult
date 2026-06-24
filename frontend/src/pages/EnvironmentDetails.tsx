@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { SettingsIcon } from 'lucide-react';
@@ -20,6 +20,7 @@ const EnvironmentDetails = () => {
     const {id} = useParams();
 
     const [flagData, setFlagData] = useState<{
+        id: number,
         name: string,
         enabled: boolean,
         rolloutPercentage: number,
@@ -49,7 +50,7 @@ const EnvironmentDetails = () => {
             <div>
                 <div className=' flex items-center gap-0.5'> <div className='text-3xl font-medium'>Production</div>
                   </div>
-                <div className='text-gray-800' > Live traffic. Approval required for all changes </div>
+                <div className='text-gray-700 text-sm' > Live traffic. Approval required for all changes </div>
             </div>
         </div>
         <div className='flex items-center gap-2  border-blue-500 ml-auto'>
@@ -85,10 +86,10 @@ const EnvironmentDetails = () => {
                 <TableBody>
                     {flagData.map((flag, index) => (
                         <TableRow>
-                            <TableCell> {flag.name} </TableCell>
+                            <TableCell> <Link to = {`/flags/${flag.id}`}> {flag.name} </Link> </TableCell>
                             <TableCell> <Badge variant= {statusVariant[flag.status]} > {flag.status} </Badge> </TableCell>
                             <TableCell> {flag.rolloutPercentage} % </TableCell>
-                            <TableCell> { new Date(flag.updatedAt).toLocaleDateString() } </TableCell>
+                            <TableCell> { new Date(flag.updatedAt).toLocaleString() } </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

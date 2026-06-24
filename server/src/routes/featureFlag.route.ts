@@ -6,6 +6,9 @@ import { createNewFlagSchema, updateFlagSchema } from "../schema/flags.schema";
 const router = express.Router();
 
 
+// Get info about a specific flag
+
+router.get("/:id", () => {})
 
 // Create a flag
 

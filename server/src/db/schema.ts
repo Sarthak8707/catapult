@@ -2,6 +2,7 @@
 import { jsonb } from "drizzle-orm/pg-core";
 import { integer, pgTable, boolean, serial, text, timestamp } from "drizzle-orm/pg-core";
 import { Rule } from "../types/flag.types";
+import { unique } from "drizzle-orm/pg-core";
 
 
 
@@ -121,11 +122,32 @@ export const flagTargets = pgTable("flag_targets", {
     id: serial("id").primaryKey(),
 
     flagID: integer("flag_id").references(() => flags.id, {
-        onDelete: "restrict", onUpdate: "cascade"
+        onDelete: "cascade", onUpdate: "cascade"
     }),
 
     targetType: text("target_type"),
     targetValue: integer("target_value"),
 
-    variantID: integer("variant_id")
+    variantID: integer("variant_id").references(() => flagVariants.id, {
+        onDelete: "cascade", onUpdate: "cascade"
+    })
 })
+
+// Flag Variants Table
+
+export const flagVariants = pgTable("flag_variants", {
+    id: serial("id").primaryKey(),
+
+    flagID: integer("flag_id").references(() => flags.id, {
+        onDelete: "cascade", onUpdate: "cascade"
+    }),
+
+    name: text("name").notNull(),
+    value: jsonb("value").$type<Record<string, any>>()
+
+}, (table) => [
+    unique("flag_id_key").on(
+        table.flagID, table.name
+    )
+] )
+

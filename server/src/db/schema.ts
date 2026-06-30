@@ -80,10 +80,6 @@ export const flags = pgTable("flags", {
         onDelete: "cascade", onUpdate: "cascade"
     }),
 
-    rolloutPercentage: integer("rollout_percentage").notNull().default(100),
-    
-
-
     createdAt: timestamp("created_at").defaultNow(),
     createdBy: integer("created_by").notNull().references(() => users.id, {
         onDelete: "no action", onUpdate: "cascade"
@@ -151,7 +147,7 @@ export const flagVariants = pgTable("flag_variants", {
     )
 ] )
 
-// Flag Rules
+// Flag Rules Table
 
 export const flagRules = pgTable("flag_rules", {
     id: serial("id").primaryKey(),
@@ -162,5 +158,24 @@ export const flagRules = pgTable("flag_rules", {
 
     name: text("name").notNull(),
     conditions: jsonb("conditions").$type<Record<string, any>>()
+
+})
+
+// Flag Rollouts Table
+
+export const flagRollouts = pgTable("flag_rollouts", {
+    id: serial("id").primaryKey(),
+
+    flagID: integer("flag_id").references(() => flags.id, {
+        onDelete: "cascade", onUpdate: "cascade"
+    }),
+
+    percentage: integer("percentage").default(100),
+
+    variantID: integer("variant_id").references(() => flagVariants.id, {
+        onDelete: "cascade", onUpdate: "cascade"
+    }),
+
+    bucketBy: text("bucket_by")
 
 })

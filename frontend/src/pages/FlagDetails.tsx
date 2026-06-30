@@ -45,15 +45,41 @@ const FlagDetails = () => {
                             <div className='mt-8'> Release Conditions</div>
                             <Separator className="my-8"/> 
                             <div className=' border-red-500'>
-                                <div className='ml-10'>Rule 1</div>
+                                <div className='ml-10'>Flow 1</div>
                                 <div className='flex justify-center mt-8'>
-                                    <Card className='w-170 h-20'>
-                                        <CardPanel>
-
-                                        </CardPanel>
+                                    <Card className="w-170 h-20 flex justify-center px-8">
+                                    <div className=" border-red-500 flex">
+                                    <div className='text-gray-500 w-30'>Rollout %</div>
+                                    <div>70% of your users included</div>
+                                    </div>
                                     </Card>
                                 </div>
-                            </div>                    
+                            </div>  
+
+                            <Separator className="my-8"/> 
+                            <div >
+                                <div className='ml-10'>Flow 2</div>
+                                <div className='flex flex-col justify-center items-center gap-2 mt-8'>
+                                    
+                                    <Card className="w-170 h-20 flex justify-center px-8">
+                                    <div className=" flex">
+                                    <div className='w-30 text-gray-500'>Rollout %</div>
+                                    <div >70% of your users included</div>
+                                    </div>
+                                    </Card>
+                                    
+                                    <Badge variant="info"> AND </Badge>
+                                    
+                                    <Card className="w-170 h-20 flex justify-center px-8">
+                                    <div className="flex ">
+                                    <div className='w-30 text-gray-500'>Constraint</div>
+                                    <div>device is one of mobile device </div>
+                                    </div>
+                                    </Card>
+                                    
+                                </div>
+                            </div> 
+
                         </div>
                     </CardPanel>
                 </Card>

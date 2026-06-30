@@ -114,3 +114,18 @@ export const auditLogs = pgTable("audit_logs", {
     newData: jsonb("new_data").$type<Record<string, any>>(),
 
 })
+
+// Flag Targets Table
+
+export const flagTargets = pgTable("flag_targets", {
+    id: serial("id").primaryKey(),
+
+    flagID: integer("flag_id").references(() => flags.id, {
+        onDelete: "restrict", onUpdate: "cascade"
+    }),
+
+    targetType: text("target_type"),
+    targetValue: integer("target_value"),
+
+    variantID: integer("variant_id")
+})

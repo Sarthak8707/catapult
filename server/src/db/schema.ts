@@ -82,7 +82,7 @@ export const flags = pgTable("flags", {
 
     rolloutPercentage: integer("rollout_percentage").notNull().default(100),
     
-    rules: jsonb('rules').$type<Rule[]>().notNull().default([]),
+
 
     createdAt: timestamp("created_at").defaultNow(),
     createdBy: integer("created_by").notNull().references(() => users.id, {
@@ -151,3 +151,16 @@ export const flagVariants = pgTable("flag_variants", {
     )
 ] )
 
+// Flag Rules
+
+export const flagRules = pgTable("flag_rules", {
+    id: serial("id").primaryKey(),
+
+    flagID: integer("flag_id").references(() => flags.id, {
+        onDelete: "cascade", onUpdate: "cascade"
+    }),
+
+    name: text("name").notNull(),
+    conditions: jsonb("conditions").$type<Record<string, any>>()
+
+})

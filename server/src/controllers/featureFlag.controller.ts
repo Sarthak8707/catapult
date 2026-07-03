@@ -1,7 +1,16 @@
 import { Request, Response } from "express";
-import { changeFlagService, createNewFlagService, deleteFlagService, } from "../services/featureFlag.service";
+import { changeFlagService, createNewFlagService, deleteFlagService, getFlagInfoService, } from "../services/featureFlag.service";
 
 
+// Get info about a certain flag
+
+export const getFlagInfoController = async (req: Request, res: Response) => {
+    const flagID = Number(req.params.id);
+
+    const result = await getFlagInfoService(flagID);
+    res.status(200).json(result);
+    
+}
 
 // Create a new flag
 

@@ -157,8 +157,14 @@ export const flagRules = pgTable("flag_rules", {
     }),
 
     name: text("name").notNull(),
-    conditions: jsonb("conditions").$type<Record<string, any>>()
+    conditions: jsonb("conditions").$type<Record<string, any>>(),
 
+    // Variant not null only if rule has simple 100% rollout and evaluation ends here. For rollout 
+    // values which are distributed it is null and evaluated through rollouts.
+
+    variantID: integer("variant_id").references(() => flagVariants.id, {
+        onDelete: "restrict", onUpdate: "cascade"
+    })
 })
 
 // Flag Rollouts Table
@@ -166,7 +172,9 @@ export const flagRules = pgTable("flag_rules", {
 export const flagRollouts = pgTable("flag_rollouts", {
     id: serial("id").primaryKey(),
 
-    flagID: integer("flag_id").references(() => flags.id, {
+    // Rollout is on  users who qualify rules not on whole flag users
+
+    ruleID: integer("rule_id").references(() => flagRules.id, {
         onDelete: "cascade", onUpdate: "cascade"
     }),
 
@@ -177,5 +185,21 @@ export const flagRollouts = pgTable("flag_rollouts", {
     }),
 
     bucketBy: text("bucket_by")
+
+})
+
+// Flag Evaluation Table
+
+export const flagEvaluation = pgTable("flag_evaluation", {
+    id: serial("id").primaryKey(),
+
+    flagID: integer("flag_id").references(() => flags.id, {
+        onDelete: "cascade", onUpdate: "cascade"
+    }),
+
+    entityType: text("entity_type"),
+    entityID: integer("entity_id"),
+
+    position: integer("position"),
 
 })

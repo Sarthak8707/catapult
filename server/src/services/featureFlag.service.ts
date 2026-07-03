@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { db } from "../db/client";
-import { flags } from "../db/schema";
+import { flagRollouts, flagRules, flags, flagVariants } from "../db/schema";
 import { getFlagsForEnvironment } from "../repositories/flag.repository";
 import { Rule, SDKFlagConfig } from "../types/flag.types";
 
@@ -14,12 +14,49 @@ export const getAllFlagsOfEnvironmentService = async (environmentID: number) => 
 
 }
 
+// Get info about specific flag
+
+export const getFlagInfoService = async (flagID: number) => {
+
+    const data = await db.select({ 
+
+        ruleID: flagRules.id,
+        ruleName: flagRules.name,
+        conditions: flagRules.conditions,
+
+        rolloutID: flagRollouts.id,
+        percentage: flagRollouts.percentage,
+        bucketBy: flagRollouts.bucketBy,
+
+        variantID: flagVariants.id,
+        variantName: flagVariants.name,
+        value: flagVariants.value
+
+     })
+     .from(flagRules)
+     .leftJoin(
+        flagRollouts,
+        eq(flagRollouts.ruleID, flagRules.id)
+     )
+     .leftJoin(
+        flagVariants,
+        eq(flagVariants.id, flagRollouts.variantID)
+     )
+     .where(eq(flagRules.flagID, flagID))
+
+     return data;
+
+}
+
+
 // Create a new flag
 
-export const createNewFlagService = async (name: string, enabled: boolean, environmentID: number, rolloutPercentage: number) => {
+export const createNewFlagService = async (name: string, enabled: boolean, environmentID: number, 
+    rolloutPercentage: number) => {
+
     const flag = {};
-    const data = await db.insert(flags).values({name: "abc", enabled: true, environmentID: 1, rolloutPercentage: rolloutPercentage});
-    return data;
+    //const data = await db.insert(flags).values({name: "abc", enabled: true, environmentID: 1, rolloutPercentage: rolloutPercentage});
+   // return data;
 }
 
 // Update a flag
@@ -45,29 +82,29 @@ export const getFlagConfig = async (envID: number) => {
         flags: {}
     };
 
-    for(const flag of flags){
-        config.flags[flag.id] = {
-            enabled: flag.enabled, 
-            rolloutPercentage: flag.rolloutPercentage
-        };
-    }
+    // for(const flag of flags){
+    //     config.flags[flag.id] = {
+    //         enabled: flag.enabled, 
+    //         rolloutPercentage: flag.rolloutPercentage
+    //     };
+    // }
     return config;
 }
 
 // Update rules of flag
 
 export const updateFlagRules = async (flagId: number, rules: Rule[]) => {
-    const data = await db.update(flags).set({rules: rules}).where(eq(flags.id, flagId));
+   // const data = await db.update(flags).set({rules: rules}).where(eq(flags.id, flagId));
     return {msg: "Updated rules successfully!"}
 }
 
 // Create rules for flag
 
 export const createFlagRules = async(flagId: number, rules: Rule[]) => {
-    const flag = await db.select({existingRules: flags.rules}).from(flags).where(eq(flags.id, flagId)).limit(1);
+   // const flag = await db.select({existingRules: flags.rules}).from(flags).where(eq(flags.id, flagId)).limit(1);
 
-    const currentRules = flag[0].existingRules || [];
-    const newRules = [...currentRules, ...rules];
+   // const currentRules = flag[0].existingRules || [];
+   // const newRules = [...currentRules, ...rules];
 
     await updateFlagRules(flagId, rules);
     return {msg: "Created rules successfully!"};

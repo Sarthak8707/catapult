@@ -44,7 +44,33 @@ export const getFlagInfoService = async (flagID: number) => {
      )
      .where(eq(flagRules.flagID, flagID))
 
-     return data;
+    // Map of (ruleid, {}) to categorize based on unique rule ids
+     
+    const groupedByRule = new Map<number, any>();
+
+    for (const row of data){
+
+        if(!groupedByRule.has(row.ruleID)){
+            groupedByRule.set(row.ruleID, {
+                ruleID: row.ruleID,
+                ruleName: row.ruleName,
+                conditions: row.conditions,
+                rollouts: [],
+            })
+        }
+
+        groupedByRule.get(row.ruleID).rollouts.push({
+            rolloutID: row.rolloutID,
+            percentage: row.percentage,
+            variantID: row.variantID,
+            variantName: row.variantName,
+            value: row.value
+        })
+    }
+
+    const result = [...groupedByRule.values()];
+
+    return result;
 
 }
 

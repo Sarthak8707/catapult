@@ -105,9 +105,25 @@ const FlagDetails = () => {
     
             
     
-            {/* Recent Activity */}
-    
-            <div></div>
+            {/* About Flag */}
+
+            <div className='text-2xl mt-20'>About</div>
+            <div className='mt-8'> Details about the flag </div>
+            <div className='mt-5 bg-white  flex'>
+
+                <div className='flex flex-col  border-red-600 w-140 pt-5 pb-5 pl-10 gap-3'>
+                    <div className='flex'> <div className='text-gray-500 w-40'>Type</div> Release flag  </div>
+                    <div className='flex'> <div className='text-gray-500 w-40'>Environment</div> Production </div>
+                    <div className='flex'> <div className='text-gray-500 w-40'>Lifecycle</div> Active  </div>
+                </div>
+
+                <div className='flex flex-col  border-amber-800 w-140 pt-5 pb-5 pl-10 gap-3 ml-auto'>
+                    <div className='flex'> <div className='text-gray-500 w-40'>Created </div> 23 June, 2026 </div>
+                    <div className='flex'> <div className='text-gray-500 w-40'>Created by</div> Nick  </div>
+                    <div className='flex'> <div className='text-gray-500 w-40'>Tags</div> Dashboard  </div>
+                </div>
+
+            </div>
     
         </div>
   )

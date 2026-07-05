@@ -45,9 +45,8 @@ const FlagDetails = () => {
     }, [])
 
   return (
-    <div className='min-h-screen p-12 bg-neutral-50 border-red-400'>
+    <div className='min-h-screen p-12 bg-neutral-100 border-red-400'>
     
-            <div>  </div>
     
             <div className='flex mb-5'>
             <div className=' border-amber-950 ml-0 mt-5'>

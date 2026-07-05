@@ -6,7 +6,7 @@ import { environments } from "../db/schema"
 // Get all environments of a project
 
 export const getAllEnvironmentsService = async (projectID: number) => {
-    //const 
+    
     const data = await db.select().from(environments).where(eq(environments.projectID, projectID));
     return data;
 }

@@ -41,45 +41,45 @@ const EnvironmentDetails = () => {
 
 
   return (
-    <div className='min-h-screen p-12 bg-sidebar'>
+    <div className='min-h-screen p-12 bg-neutral-100'>
 
         <div>  </div>
 
         <div className='flex mb-5'>
-        <div className=' border-amber-950 ml-0'>
+        <div className=' border-amber-950 ml-0 mt-5'>
             <div>
                 <div className=' flex items-center gap-0.5'> <div className='text-3xl font-medium'>Production</div>
                   </div>
-                <div className='text-gray-700 text-sm' > Live traffic. Approval required for all changes </div>
+                
             </div>
         </div>
         <div className='flex items-center gap-2  border-blue-500 ml-auto'>
             
-            <div> <Badge variant="outline" className='rounded-full px-1.5'> <div className='h-2 w-2 rounded-full bg-emerald-500'></div>  All OK </Badge> </div> 
-            <Button variant="secondary"> <SettingsIcon />  Settings </Button>
-            <Button variant="destructive-outline">Freeze Env</Button>
+            
         </div>
             
         </div>
 
-        <Separator className="my-2" />
 
         <div>
-           <div className='flex mt-8'> 
-            <div className='font-medium '>Flags</div> 
-            <div className='ml-auto'> <span className='mr-4 text-sm'> Prod is 14% behind dev </span> <Button variant="outline">  View Difference </Button> </div>  </div>
+           <div className='flex mt-20 items-center justify-center'> 
+            <div className=' text-2xl'>Flags</div>
+            <button className='bg-blue-600 text-white px-6 py-2 ml-auto text-sm'> Create Flag </button>
+           </div>
 
         </div>
 
+        <div className='mt-8'> List of flags associated with this environment </div>
+
         {/* Flags Table */}
 
-        <div className='mt-5'>
+        <div className='mt-5 bg-white'>
             <Table>
                 <TableHeader>
                     <TableRow>
                         <TableHead> Flag </TableHead>
+                        <TableHead> Condition </TableHead>
                         <TableHead> Status </TableHead>
-                        <TableHead> Rollout </TableHead>
                         <TableHead> Last Updated </TableHead>
                     </TableRow>
                 </TableHeader>
@@ -88,7 +88,7 @@ const EnvironmentDetails = () => {
                         <TableRow>
                             <TableCell> <Link to = {`/flags/${flag.id}`}> {flag.name} </Link> </TableCell>
                             <TableCell> <Badge variant= {statusVariant[flag.status]} > {flag.status} </Badge> </TableCell>
-                            <TableCell> {flag.rolloutPercentage} % </TableCell>
+                            <TableCell> {flag.enabled && (<> On </>) } {!flag.enabled && (<>Off</>)} </TableCell>
                             <TableCell> { new Date(flag.updatedAt).toLocaleString() } </TableCell>
                         </TableRow>
                     ))}

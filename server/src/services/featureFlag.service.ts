@@ -9,8 +9,13 @@ import { Rule, SDKFlagConfig } from "../types/flag.types";
 
 export const getAllFlagsOfEnvironmentService = async (environmentID: number) => {
    
-    const data = await db.select().from(flags).where(eq(flags.environmentID, environmentID))
+    try{
+        const data = await db.select().from(flags).where(eq(flags.environmentID, environmentID))
     return data ;
+    }
+    catch(err){
+        console.log("Service:::::", err);
+    }
 
 }
 

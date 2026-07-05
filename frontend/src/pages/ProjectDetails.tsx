@@ -1,18 +1,35 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardPanel, CardFooter, CardDescription } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { CircleCheckIcon, PlusIcon } from 'lucide-react';
+import axios from 'axios';
+import { ArrowRight, CircleCheckIcon, EllipsisVertical, Plus, PlusIcon } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 const ProjectDetails = () => {
 
     const {id} = useParams();
+    const [environments, setEnvironments] = useState<{
+        id: number,
+        name: string,
+        createdAt: string
+    }[]
+    >([]);
+
+    useEffect(() => {
+        const getEnvironmentsData = async () => {
+            const response = await axios.get(`http://localhost:3000/projects/${id}/environments`);
+            setEnvironments(response.data);
+        }
+
+        getEnvironmentsData();
+    }, [])
 
 
   return (
-    <div className='min-h-screen p-6'>
+    <div className='min-h-screen p-12 bg-neutral-100'>
 
         <div>  </div>
 
@@ -35,17 +52,19 @@ const ProjectDetails = () => {
         <div>
            <div className='flex mt-8'> 
             <div className='font-medium '>Environments</div> 
-            <div className='ml-auto'> <Button variant="outline"> <PlusIcon /> Add Environment </Button> </div>  </div>
+            </div>
 
         </div>
 
         {/* Environment Cards */}
 
-        <div className='mt-5'>
-            <Card className='w-70'>
+        <div className='mt-5 flex gap-15'>
+            {environments.map((environment, idx) => (
+                <Link to = {`/environments/${environment.id}`}> 
+                    <Card className='w-70 h-46 rounded-none'>
                 <CardHeader>
                     <CardTitle>
-                        <div className='flex'> <div> Dev </div> <div className='ml-auto'> <CircleCheckIcon className='h-4 w-4 text-green-700' /> </div> </div>
+                        <div className='flex'> <div> {environment.name} </div> <div className='ml-auto'> <EllipsisVertical className='h-4 w-4'/> </div> </div>
                     </CardTitle>
                     <CardDescription>
                         Make new branch
@@ -57,11 +76,32 @@ const ProjectDetails = () => {
                         <div> 725 evaluations in last 2 hours </div>
                     </div>
                 </CardPanel>
-                <Separator className="my-2" />
+                
                 <CardFooter className=' border-red-200 h-5'>
                    <div className='text-sm text-gray-500'> changed 12m ago </div>
                 </CardFooter>
             </Card>
+                </Link>
+            ))}
+
+            {/* Option to add new */}
+
+            <Link to = ""> 
+                <Card className='w-70 h-46 rounded-none border-white bg-blue-700'>
+                
+                
+                    <div className='text-xl text-white  h-full flex  flex-col '>
+                            <div className=' border-amber-500 flex items-center h-20 mt-10 px-4'>Create new environment and add flags</div>
+                            <div className='mt-auto'>
+                                <ArrowRight className='mt-auto mb-4 mr-4 border-amber-600 ml-auto'/>
+                            </div>
+                    </div>
+                
+                
+                
+            </Card>
+                </Link>
+
         </div>
 
         {/* Recent Activity */}

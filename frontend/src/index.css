@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "@fontsource-variable/inter";
+@import "@fontsource-variable/source-sans-3";
 @import "@fontsource-variable/geist-mono";
 
 
@@ -183,9 +183,9 @@
     translate: 0 0;
         }
     }
-  --font-heading: "Inter Variable", sans-serif;
+  --font-heading: "Source Sans 3 Variable", sans-serif;
   --font-mono: "Geist Mono Variable", monospace;
-  --font-sans: "Inter Variable", sans-serif;
+  --font-sans: "Source Sans 3 Variable", sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
   --color-sidebar-primary: var(--sidebar-primary);

@@ -10,7 +10,7 @@ export default function Layout() {
 
       <div className="flex">
       <SlideBar />
-      <main className="container mx-auto p-6">
+      <main className="container mx-auto">
         <Outlet />
       </main>
       </div>

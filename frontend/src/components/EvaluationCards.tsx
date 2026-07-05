@@ -1,10 +1,8 @@
-import React from 'react'
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { Badge } from '@/components/ui/badge';
-import { Card } from './ui/card';
-import EvalCard from './EvalCard';
 
+import { Separator } from '@/components/ui/separator';
+import EvalCard from './EvalCard';
+import { EllipsisVertical, Pencil, Trash2, } from 'lucide-react';
+import { Button } from './ui/button';
 
 type RuleType = {
     ruleName: string,
@@ -37,7 +35,12 @@ const EvaluationCards = ({rules}: EvaluationCardsProps) => {
             <div>
                 {rules.map((rule, index) => (
                     <div>
-                        <div className='ml-10'>Rule {index + 1}</div>
+                        <div className='ml-10 mr-10 flex'>Rule {index + 1}  <div className='ml-auto flex border border-gray-200 rounded'> 
+                          <Button variant="ghost" className='border-none'> <Pencil /> </Button>
+                          <Button variant="ghost" className='border-none'> <EllipsisVertical /> </Button>
+                          <Button variant="destructive-outline" className='border-none'> <Trash2 /> </Button>
+                          
+                           </div>  </div>
                         <EvalCard {...rule}/>
                         {(index != rules.length - 1) && 
                            <Separator className="my-8"/>

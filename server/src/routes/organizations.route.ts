@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllOrganizationsController, getAllProjectsController, getOrganizationInfoController } from "../controllers/organizations.controller";
+import { createProjectController, getAllOrganizationsController, getAllProjectsController, getOrganizationInfoController } from "../controllers/organizations.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 
 const router = express.Router();
@@ -30,7 +30,7 @@ router.get("/:id/projects", getAllProjectsController);
 
 // Create a project in an organization
 
-router.post("/:id/projects", () => {});
+router.post("/:id/projects", createProjectController);
 
 // Get all members in an organization
 

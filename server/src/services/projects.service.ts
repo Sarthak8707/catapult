@@ -45,12 +45,31 @@ export const getProjectInfoService = async (projectID: number) => {
 
 }
 
-// Create a new projects
+// Create a new project
 
 export const createNewProjectService = async (name: string, organizationID: number, createdBy: number) => {
 
-    const data = await db.insert(projects).values({name: name, organizationID: organizationID, createdBy});
-    return data;
+
+    const project = await db.transaction(async (tx) => {
+
+    const [data] = await db
+    .insert(projects)
+    .values({name: name, organizationID: organizationID, createdBy})
+    .returning({id: projects.id})
+    
+    await db.insert(environments).values([
+        {
+            name: "development", 
+            projectID: data.id
+        },
+        {
+            name: "production",
+            projectID: data.id
+        }
+    ]);
+    })
+   
+    return project;
 }
 
 // Update a project

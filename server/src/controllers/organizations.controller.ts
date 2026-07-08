@@ -46,3 +46,10 @@ export const getAllProjectsController = async (req: Request, res: Response, next
         next(err);
     }
 }
+
+export const createProjectController = async (req: Request, res: Response, next: NextFunction) => {
+
+    const organizationID = req.params.id;
+
+    res.status(201).json({msg: "Project created"})
+}

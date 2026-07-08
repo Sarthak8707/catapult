@@ -62,18 +62,7 @@ const FlagDetails = () => {
     
             {/* Top Analytics */}
 
-            <div className='text-2xl mt-20'>Summary</div>
-            <div className='text mt-8'> Highlights of the flag based on past evaluations and changes</div>
-
-            <div className='bg-white h-40 flex  mt-5'>
-                <div className='pt-5 pl-4'> <div className='flex gap-2 items-center text-blue-500 hover:text-blue-700 cursor-pointer'>Evaluations/day <ArrowRight className='h-4 w-4' /> </div> <div className='text-xl mt-8'>1.2 Million</div> </div>
-                <Separator orientation="vertical" className="ml-40"></Separator>
-                <div className='pt-5 pl-4'> <div className='flex gap-2 items-center text-blue-500 hover:text-blue-700 cursor-pointer'>Last evaluation <ArrowRight className='h-4 w-4' /> </div> <div className='text-xl mt-8'>8 seconds ago</div> </div>
-                <Separator orientation='vertical' className="ml-40"></Separator>
-                <div className='pt-5 pl-4'> <div className='flex gap-2 items-center text-blue-500 hover:text-blue-700 cursor-pointer'>Unique users <ArrowRight className='h-4 w-4' /> </div> <div className='text-xl mt-8'>48 thousand</div> </div>
-                <Separator orientation='vertical' className="ml-40"></Separator>
-                <div className='pt-5 pl-4'> <div className='flex gap-2 items-center text-blue-500 hover:text-blue-700 cursor-pointer'>Rollouts <ArrowRight className='h-4 w-4' /> </div> <div className='text-xl mt-8'>4 Strategies</div> </div>
-            </div>
+            
 
            
            {/* Flag Rules */}

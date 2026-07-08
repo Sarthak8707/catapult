@@ -40,14 +40,13 @@ const ProjectDetails = () => {
 
 
   return (
-    <div className='min-h-screen p-12 bg-neutral-100'>
+    <div className='min-h-screen px-10 py-5 bg-white'>
 
-        <div>  </div>
 
         <div className='flex mb-5'>
         <div className=' border-amber-950 ml-0'>
             <div>
-                <div className='text-3xl font-medium'> Checkout Service </div>
+                <div className='text-2xl font-medium'> Checkout Service </div>
                 <div className='text-gray-800' > Themes and Payments flag rollouts </div>
             </div>
         </div>
@@ -58,7 +57,7 @@ const ProjectDetails = () => {
 
         <div>
            <div className='flex mt-10'> 
-            <div className='text-2xl '>Environments</div> 
+            <div className='text-xl '>Environments</div> 
             </div>
 
         </div>
@@ -68,7 +67,7 @@ const ProjectDetails = () => {
         <div className='mt-5 flex gap-8'>
             {environments.map((environment, idx) => (
                 <Link to = {`/environments/${environment.id}`}> 
-                    <Card className='w-70 h-46 rounded-[6px]'>
+                    <Card className='w-60 h-40 rounded-[6px]'>
                 <CardHeader>
                     <CardTitle>
                         <div className='flex'> <div> {environment.name} </div> <div className='ml-auto'> <EllipsisVertical className='h-4 w-4'/> </div> </div>
@@ -94,14 +93,12 @@ const ProjectDetails = () => {
             {/* Option to add new */}
 
             <Link to = ""> 
-                <Card className='w-70 h-46 rounded-[6px] border-white bg-blue-700'>
+                <Card className='w-60 h-40 rounded-[6px] border-white bg-blue-700'>
                 
                 
                     <div className='text-xl text-white  h-full flex  flex-col '>
-                            <div className=' border-amber-500 flex items-center h-20 mt-10 px-4'>Create new environment and add flags</div>
-                            <div className='mt-auto'>
-                                <ArrowRight className='mt-auto mb-4 mr-4 border-amber-600 ml-auto'/>
-                            </div>
+                            <div className=' border-amber-500 flex items-center h-20 mt-10 px-4'>Create new environment and add flags <ArrowRight className='mt-auto mb-4 mr-4 border-amber-600 ml-auto'/></div>
+                            
                     </div>
                 
                 
@@ -113,8 +110,12 @@ const ProjectDetails = () => {
 
         {/* Flags */}
 
-        <div className='mt-10'>
-            <div className='text-2xl'> Flags </div>
+        <div className='mt-15 flex gap-5'>
+            <div className='w-200'>
+            <div className='flex '>
+                <div className='text-xl'> Flags </div>
+                <div className='ml-auto mr-5'> <button className='bg-blue-700 text-white px-6 py-2 font-bold text-sm rounded-sm'> Create Flag </button> </div>
+            </div>
             <div className='mt-5 bg-white rounded-[6px] border'>
                 <Table>
                 <TableHeader>
@@ -127,7 +128,7 @@ const ProjectDetails = () => {
                 </TableHeader>
                 <TableBody>
                     {flags?.map((flag, idx) => (
-                        <TableRow>
+                        <TableRow >
                             <TableCell> {flag.flagName} </TableCell>
                             <TableCell> {flag.enabled && (<> On </>) } {!flag.enabled && (<>Off</>)} </TableCell>
                             <TableCell> {flag.type} </TableCell>
@@ -137,6 +138,22 @@ const ProjectDetails = () => {
                 </TableBody>
             </Table>
             </div>
+            </div>
+
+            <div>
+                <div className=' flex'>
+                    <div className='text-xl'> Recent Activity</div> <div className='text-sm ml-auto mr-8 flex gap-2 text-blue-700 items-center'>View all <ArrowRight className='h-3 w-3'/> </div>
+                 </div>
+            <div className='border h-70 w-90 mt-5 rounded-sm'>
+
+            </div>
+            </div>
+        </div>
+
+        {/* Recent Activity */}
+
+        <div >
+
         </div>
 
     </div>

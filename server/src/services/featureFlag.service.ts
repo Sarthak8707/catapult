@@ -1,11 +1,11 @@
 import { eq } from "drizzle-orm";
 import { db } from "../db/client";
-import { flagRollouts, flagRules, flags, flagVariants } from "../db/schema";
+import { environments, flagRollouts, flagRules, flags, flagVariants, projects } from "../db/schema";
 import { getFlagsForEnvironment } from "../repositories/flag.repository";
 import { Rule, SDKFlagConfig } from "../types/flag.types";
 
 
-// Get all flags
+// Get all flags of Environment
 
 export const getAllFlagsOfEnvironmentService = async (environmentID: number) => {
    
@@ -15,6 +15,38 @@ export const getAllFlagsOfEnvironmentService = async (environmentID: number) => 
     }
     catch(err){
         console.log("Service:::::", err);
+    }
+
+}
+
+// Get all flags of Project
+
+export const getAllFLagsOfProjectService = async (projectID: number) => {
+
+    try{
+        const data = await db.select({
+
+            flagID: flags.id,
+            flagName: flags.name,
+            enabled: flags.enabled,
+            status: flags.status,
+            type: flags.type,
+            updated: flags.updatedAt,
+            
+
+        })
+        .from(flags)
+        .innerJoin(
+            environments,
+            eq(flags.environmentID, environments.id)
+        )
+        .where(eq(environments.projectID, projectID));
+
+        return data;
+
+    }
+    catch(err){
+        console.log(err);
     }
 
 }

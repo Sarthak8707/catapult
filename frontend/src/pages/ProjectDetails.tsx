@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardPanel, CardFooter, CardDescription } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import axios from 'axios';
 import { ArrowRight, CircleCheckIcon, EllipsisVertical, Plus, PlusIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -18,10 +19,20 @@ const ProjectDetails = () => {
     }[]
     >([]);
 
+    const [flags, setFlags] = useState<{
+        flagName: string,
+        enabled: boolean,
+        status: string,
+        type: string,
+        updated: string
+    }[]>();
+
     useEffect(() => {
         const getEnvironmentsData = async () => {
             const response = await axios.get(`http://localhost:3000/projects/${id}/environments`);
             setEnvironments(response.data);
+            const resp = await axios.get(`http://localhost:3000/projects/${id}/flags`);
+            setFlags(resp.data);
         }
 
         getEnvironmentsData();
@@ -36,13 +47,9 @@ const ProjectDetails = () => {
         <div className='flex mb-5'>
         <div className=' border-amber-950 ml-0'>
             <div>
-                <div className='text-2xl font-medium'> Checkout Service </div>
+                <div className='text-3xl font-medium'> Checkout Service </div>
                 <div className='text-gray-800' > Themes and Payments flag rollouts </div>
             </div>
-        </div>
-        <div className='flex  gap-5 border-blue-500 ml-auto'>
-            <Button> <PlusIcon></PlusIcon>  New Flag </Button>
-            <Button variant="destructive-outline">Leave Project</Button>
         </div>
             
         </div>
@@ -50,18 +57,18 @@ const ProjectDetails = () => {
         <Separator className="my-2" />
 
         <div>
-           <div className='flex mt-8'> 
-            <div className='font-medium '>Environments</div> 
+           <div className='flex mt-10'> 
+            <div className='text-2xl '>Environments</div> 
             </div>
 
         </div>
 
         {/* Environment Cards */}
 
-        <div className='mt-5 flex gap-15'>
+        <div className='mt-5 flex gap-8'>
             {environments.map((environment, idx) => (
                 <Link to = {`/environments/${environment.id}`}> 
-                    <Card className='w-70 h-46 rounded-none'>
+                    <Card className='w-70 h-46 rounded-[6px]'>
                 <CardHeader>
                     <CardTitle>
                         <div className='flex'> <div> {environment.name} </div> <div className='ml-auto'> <EllipsisVertical className='h-4 w-4'/> </div> </div>
@@ -87,7 +94,7 @@ const ProjectDetails = () => {
             {/* Option to add new */}
 
             <Link to = ""> 
-                <Card className='w-70 h-46 rounded-none border-white bg-blue-700'>
+                <Card className='w-70 h-46 rounded-[6px] border-white bg-blue-700'>
                 
                 
                     <div className='text-xl text-white  h-full flex  flex-col '>
@@ -104,9 +111,33 @@ const ProjectDetails = () => {
 
         </div>
 
-        {/* Recent Activity */}
+        {/* Flags */}
 
-        <div></div>
+        <div className='mt-10'>
+            <div className='text-2xl'> Flags </div>
+            <div className='mt-5 bg-white rounded-[6px] border'>
+                <Table>
+                <TableHeader>
+                    <TableRow>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Enabled</TableHead>
+                    <TableHead>Type</TableHead>
+                    <TableHead>Updated</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    {flags?.map((flag, idx) => (
+                        <TableRow>
+                            <TableCell> {flag.flagName} </TableCell>
+                            <TableCell> {flag.enabled && (<> On </>) } {!flag.enabled && (<>Off</>)} </TableCell>
+                            <TableCell> {flag.type} </TableCell>
+                            <TableCell> {flag.updated} </TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+            </div>
+        </div>
 
     </div>
     

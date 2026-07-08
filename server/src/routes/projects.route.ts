@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllEnvironmentsController, getAllProjectsOfUserController, getProjectInfoController } from "../controllers/projects.controller";
+import { getAllEnvironmentsController, getAllFlagsOfProjectController, getAllProjectsOfUserController, getProjectInfoController } from "../controllers/projects.controller";
 
 const router = express.Router();
 
@@ -29,7 +29,7 @@ router.post("/:id/environments", () => {});
 
 // Get all flags in a project
 
-router.get("/:id/flags", () => {});
+router.get("/:id/flags", getAllFlagsOfProjectController);
 
 
 

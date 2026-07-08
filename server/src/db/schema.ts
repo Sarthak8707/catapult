@@ -75,6 +75,7 @@ export const flags = pgTable("flags", {
 
     enabled: boolean("enabled").notNull(),
     status: text("status").notNull().default("draft"),
+    type: text("type").notNull().default("release"),
 
     environmentID: integer("environment_id").notNull().references(() => environments.id , {
         onDelete: "cascade", onUpdate: "cascade"

@@ -1,3 +1,4 @@
+import FlagDialog from '@/components/FlagDialog';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardPanel, CardFooter, CardDescription } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
@@ -8,6 +9,7 @@ import { useEffect, useState } from 'react';
 
 
 import { Link, useParams } from 'react-router-dom'
+
 
 const ProjectDetails = () => {
 
@@ -114,7 +116,10 @@ const ProjectDetails = () => {
             <div className='w-200'>
             <div className='flex '>
                 <div className='text-xl'> Flags </div>
-                <div className='ml-auto mr-5'> <button className='bg-blue-700 text-white px-6 py-2 font-bold text-sm rounded-sm'> Create Flag </button> </div>
+                <div className='ml-auto mr-5'> 
+                    <FlagDialog />
+                    
+                 </div>
             </div>
             <div className='mt-5 bg-white rounded-[6px] border'>
                 <Table>

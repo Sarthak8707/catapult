@@ -12,7 +12,7 @@ router.get("/:id", getFlagInfoController)
 
 // Create a flag
 
-router.post("/", validate(createNewFlagSchema), createNewFlag)
+router.post("/", createNewFlag)
 
 // Update a flag
 

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { getAllOrganizationsService, getOrganizationInfoService } from "../services/organizations.service";
-import { getAllProjectsService } from "../services/projects.service";
+import { createNewProjectService, getAllProjectsService } from "../services/projects.service";
 
 export const getAllOrganizationsController = async (req: Request, res: Response, next: NextFunction) => {
     try{
@@ -49,7 +49,18 @@ export const getAllProjectsController = async (req: Request, res: Response, next
 
 export const createProjectController = async (req: Request, res: Response, next: NextFunction) => {
 
-    const organizationID = req.params.id;
+    try{
+        const organizationID = Number(req.params.id);
+    const userID = req.user.id;
+    const name = req.body.name;
+
+    console.log(organizationID, userID, name)
+    const result = await createNewProjectService(name, organizationID, userID);
 
     res.status(201).json({msg: "Project created"})
+    }
+    catch(err){
+        console.log("controller::::",err);
+    }
+
 }

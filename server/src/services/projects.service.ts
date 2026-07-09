@@ -49,9 +49,6 @@ export const getProjectInfoService = async (projectID: number) => {
 
 export const createNewProjectService = async (name: string, organizationID: number, createdBy: number) => {
 
-
-    const project = await db.transaction(async (tx) => {
-
     const [data] = await db
     .insert(projects)
     .values({name: name, organizationID: organizationID, createdBy})
@@ -67,9 +64,9 @@ export const createNewProjectService = async (name: string, organizationID: numb
             projectID: data.id
         }
     ]);
-    })
-   
-    return project;
+    
+    return data;
+    
 }
 
 // Update a project

@@ -114,12 +114,21 @@ export const getFlagInfoService = async (flagID: number) => {
 
 // Create a new flag
 
-export const createNewFlagService = async (name: string, enabled: boolean, environmentID: number, 
-    rolloutPercentage: number) => {
+export const createNewFlagService = async (name: string, description: string, projectID: number, userID: number) => {
 
-    const flag = {};
-    //const data = await db.insert(flags).values({name: "abc", enabled: true, environmentID: 1, rolloutPercentage: rolloutPercentage});
-   // return data;
+    const envs = await db.select({id: environments.id}).from(environments).where(eq(environments.id, projectID));
+
+    await db.insert(flags).values([
+        {
+            name, description, createdBy: userID, enabled: false, environmentID: envs[0].id
+        },
+        {
+            name, description, createdBy: userID, enabled: false, environmentID: envs[1].id
+        }
+    ]);
+
+    return {msg: "Created successfully!"};
+
 }
 
 // Update a flag

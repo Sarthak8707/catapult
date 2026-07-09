@@ -30,7 +30,7 @@ router.get("/:id/projects", getAllProjectsController);
 
 // Create a project in an organization
 
-router.post("/:id/projects", createProjectController);
+router.post("/:id/projects", authMiddleware, createProjectController);
 
 // Get all members in an organization
 

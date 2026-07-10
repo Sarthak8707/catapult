@@ -20,8 +20,5 @@ router.delete("/:id", () => {});
 
 router.get("/:id/flags", getAllFlagsOfEnvironmentController);
 
-// Create a flag in an environment
-
-router.post("/:id/flags", () => {});
 
 export { router as environmentsRouter }

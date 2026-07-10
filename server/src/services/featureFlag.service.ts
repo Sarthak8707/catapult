@@ -116,7 +116,8 @@ export const getFlagInfoService = async (flagID: number) => {
 
 export const createNewFlagService = async (name: string, description: string, projectID: number, userID: number) => {
 
-    const envs = await db.select({id: environments.id}).from(environments).where(eq(environments.id, projectID));
+    const envs = await db.select({id: environments.id}).from(environments).where(eq(environments.projectID, projectID));
+    console.log("envs:::::", envs)
 
     await db.insert(flags).values([
         {
@@ -127,7 +128,9 @@ export const createNewFlagService = async (name: string, description: string, pr
         }
     ]);
 
-    return {msg: "Created successfully!"};
+    return {
+        msg: "Created successfully!",
+    };
 
 }
 

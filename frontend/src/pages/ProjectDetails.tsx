@@ -13,7 +13,10 @@ import { Link, useParams } from 'react-router-dom'
 
 const ProjectDetails = () => {
 
-    const {id} = useParams();
+    const ID = useParams();
+    const id = Number(ID.id);
+    let token = window.localStorage.getItem("token");
+    if(token == null) token = ""
     const [environments, setEnvironments] = useState<{
         id: number,
         name: string,
@@ -22,6 +25,7 @@ const ProjectDetails = () => {
     >([]);
 
     const [flags, setFlags] = useState<{
+        flagID: number,
         flagName: string,
         enabled: boolean,
         status: string,
@@ -117,7 +121,8 @@ const ProjectDetails = () => {
             <div className='flex '>
                 <div className='text-xl'> Flags </div>
                 <div className='ml-auto mr-5'> 
-                    <FlagDialog />
+
+                    <FlagDialog id = {id} token = {token}/>
                     
                  </div>
             </div>
@@ -134,7 +139,7 @@ const ProjectDetails = () => {
                 <TableBody>
                     {flags?.map((flag, idx) => (
                         <TableRow >
-                            <TableCell> {flag.flagName} </TableCell>
+                            <TableCell> <Link to = {`/flags/${flag.flagID}`}> {flag.flagName} </Link> </TableCell>
                             <TableCell> {flag.enabled && (<> On </>) } {!flag.enabled && (<>Off</>)} </TableCell>
                             <TableCell> {flag.type} </TableCell>
                             <TableCell> {flag.updated} </TableCell>

@@ -13,8 +13,47 @@ import {
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import axios from "axios";
+import { useState, type SubmitEvent } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function FlagDialog() {
+
+export default function FlagDialog({id, token}: {id: number, token: string}) {
+
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        name: "",
+        description: ""
+    })
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        try{
+            console.log(formData);
+            const response = await axios.post(`http://localhost:3000/projects/${id}/flags`, formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            navigate(`/projects/${id}`)
+            
+        }
+        catch(err){
+            console.log(err);
+        }
+
+    }
+
+
+
   return (
     <Dialog>
       <DialogTrigger render={<button className='bg-blue-700 text-white px-6 py-2 font-bold text-sm rounded-sm cursor-pointer'></button>}>
@@ -29,15 +68,15 @@ export default function FlagDialog() {
         </DialogHeader>
 
 
-        <Form className="contents">
+        <Form className="contents" onSubmit={handleSubmit}>
           <DialogPanel className="grid gap-4">
             <Field>
               <FieldLabel>Flag Name</FieldLabel>
-              <Input type="text" />
+              <Input type="text" name="name" value={formData.name} onChange={handleChange}/>
             </Field>
             <Field>
               <FieldLabel>Description</FieldLabel>
-              <Input type="text" />
+              <Input type="text" name="description" value={formData.description} onChange={handleChange} />
             </Field>
           </DialogPanel>
           <DialogFooter>

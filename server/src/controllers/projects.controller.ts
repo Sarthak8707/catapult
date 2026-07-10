@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { getAllProjectsOfUserService, getProjectInfoService } from "../services/projects.service";
 import { getAllEnvironmentsService } from "../services/environments.service";
-import { getAllFLagsOfProjectService } from "../services/featureFlag.service";
+import { createNewFlagService, getAllFLagsOfProjectService } from "../services/featureFlag.service";
 
 export const getAllProjectsOfUserController = async (req: Request, res: Response, next: NextFunction) => {
 
@@ -52,4 +52,24 @@ export const getAllFlagsOfProjectController = async (req: Request, res: Response
     catch(err){
         console.log(err);
     }
+}
+
+export const createFlagInProjectController = async (req: Request, res: Response, next: NextFunction) => {
+
+    try{
+        const projectID = Number(req.params.id);
+        console.log(req.user)
+    const userID = req.user.id;
+    const {name, description} = req.body;
+
+    const result = await createNewFlagService(name, description, projectID, userID);
+
+    res.status(201).json(result);
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json({error: "error"})
+    }
+
+
 }

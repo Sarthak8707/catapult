@@ -73,11 +73,9 @@ export const flags = pgTable("flags", {
     name: text("name").notNull(),
     description: text("description"),
 
-    enabled: boolean("enabled").notNull(),
-    status: text("status").notNull().default("draft"),
     type: text("type").notNull().default("release"),
 
-    environmentID: integer("environment_id").notNull().references(() => environments.id , {
+    projectID: integer("project_id").notNull().references(() => projects.id , {
         onDelete: "cascade", onUpdate: "cascade"
     }),
 
@@ -85,6 +83,21 @@ export const flags = pgTable("flags", {
     createdBy: integer("created_by").notNull().references(() => users.id, {
         onDelete: "no action", onUpdate: "cascade"
     }),
+    updatedAt: timestamp("updated_at").defaultNow(),
+})
+
+
+// Environment Flag Configs
+
+
+export const environmentFlagConfig = pgTable("environment_flag_config", {
+    id: serial("id").primaryKey(),
+    
+    flagID: integer("flag_id").notNull().references(() => flags.id, {
+        onDelete: "cascade", onUpdate: "cascade"
+    }),
+    environment: text("environment").notNull(),
+    enabled: boolean("enabled").notNull().default(false),
     updatedAt: timestamp("updated_at").defaultNow(),
 })
 
@@ -114,6 +127,7 @@ export const auditLogs = pgTable("audit_logs", {
 })
 
 // Flag Targets Table
+// flag target is just simply rules and variants combined for targeted people
 
 export const flagTargets = pgTable("flag_targets", {
     id: serial("id").primaryKey(),
@@ -153,7 +167,7 @@ export const flagVariants = pgTable("flag_variants", {
 export const flagRules = pgTable("flag_rules", {
     id: serial("id").primaryKey(),
 
-    flagID: integer("flag_id").references(() => flags.id, {
+    envFlagConfigID: integer("env_flag_config_id").references(() => environmentFlagConfig.id, {
         onDelete: "cascade", onUpdate: "cascade"
     }),
 

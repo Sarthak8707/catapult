@@ -1,5 +1,6 @@
 import express from "express";
-import { getAllEnvironmentsController, getAllFlagsOfProjectController, getAllProjectsOfUserController, getProjectInfoController } from "../controllers/projects.controller";
+import { createFlagInProjectController, getAllEnvironmentsController, getAllFlagsOfProjectController, getAllProjectsOfUserController, getProjectInfoController } from "../controllers/projects.controller";
+import { authMiddleware } from "../middlewares/auth.middleware";
 
 const router = express.Router();
 
@@ -23,13 +24,13 @@ router.delete("/:id", () => {});
 
 router.get("/:id/environments", getAllEnvironmentsController);
 
-// Create an environment in a project
-
-router.post("/:id/environments", () => {});
-
 // Get all flags in a project
 
 router.get("/:id/flags", getAllFlagsOfProjectController);
+
+// Create a flag in a project
+
+router.post("/:id/flags", authMiddleware, createFlagInProjectController);
 
 
 

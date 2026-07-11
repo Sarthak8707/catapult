@@ -27,18 +27,23 @@ const ProjectDetails = () => {
     const [flags, setFlags] = useState<{
         flagID: number,
         flagName: string,
-        enabled: boolean,
-        status: string,
         type: string,
-        updated: string
+
+        envs: {
+            environment: string,
+            enabled: boolean,
+            status: string
+        }[]
     }[]>();
 
     useEffect(() => {
         const getEnvironmentsData = async () => {
-            const response = await axios.get(`http://localhost:3000/projects/${id}/environments`);
-            setEnvironments(response.data);
+            // const response = await axios.get(`http://localhost:3000/projects/${id}/environments`);
+            // setEnvironments(response.data);
             const resp = await axios.get(`http://localhost:3000/projects/${id}/flags`);
             setFlags(resp.data);
+
+            
         }
 
         getEnvironmentsData();
@@ -131,20 +136,41 @@ const ProjectDetails = () => {
                 <TableHeader>
                     <TableRow>
                     <TableHead>Name</TableHead>
-                    <TableHead>Enabled</TableHead>
                     <TableHead>Type</TableHead>
-                    <TableHead>Updated</TableHead>
+                    <TableHead>Dev</TableHead>
+                    <TableHead>Staging</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {flags?.map((flag, idx) => (
-                        <TableRow >
-                            <TableCell> <Link to = {`/flags/${flag.flagID}`}> {flag.flagName} </Link> </TableCell>
-                            <TableCell> {flag.enabled && (<> On </>) } {!flag.enabled && (<>Off</>)} </TableCell>
-                            <TableCell> {flag.type} </TableCell>
-                            <TableCell> {flag.updated} </TableCell>
-                        </TableRow>
-                    ))}
+                            {flags?.map((flag) => {
+                               const dev = flag.envs.find(
+                             (env) => env.environment === "dev"
+                             );
+
+                            const staging = flag.envs.find(
+                               (env) => env.environment === "stag"
+                            );
+
+                             return (
+                              <TableRow key={flag.flagID}>
+                                <TableCell>
+                                  <Link to={`/flags/${flag.flagID}`}>
+                                    {flag.flagName}
+                                  </Link>
+                                </TableCell>
+
+                            <TableCell>{flag.type}</TableCell>
+
+                            <TableCell>
+                              {dev?.enabled ? "True" : "False"}
+                            </TableCell>
+
+                            <TableCell>
+                              {staging?.enabled ? "True" : "False"}
+                            </TableCell>
+                          </TableRow>
+                        );
+                    })}
                 </TableBody>
             </Table>
             </div>

@@ -9,12 +9,13 @@ import { Card, CardHeader, CardPanel, CardTitle } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import EvaluationCards from '@/components/EvaluationCards';
 import { ArrowRight } from 'lucide-react';
+import { Tabs, TabsList, TabsPanel, TabsTab } from '@/components/ui/tabs';
 
-const FlagDetails = () => {
 
-    const {id} = useParams();
-    const [flagRules, setFlagRules] = useState<{
-        ruleName: string,
+type RulesType = {
+    
+    ruleID: number,
+    ruleName: string,
     conditions: {
       operator: string,
       conditions: {
@@ -32,16 +33,38 @@ const FlagDetails = () => {
         val: any
       }
     }[]
-    }[]
-    >([]);
+    }
+
+
+const FlagDetails = () => {
+
+    const {id} = useParams();
+
+    const [flagData, setFlagData] = useState<{
+        configID: number,
+        environment: string,
+        rules: RulesType[]
+    }[]>([])
+    const [devRules, setDevRules] = useState<RulesType[]>([]);
+    const [stagRules, setStagRules] = useState<RulesType[]>([]);
 
     useEffect(() => {
-        const getFlagRules = async () => {
-            const reponse = await axios.get(`http://localhost:3000/flags/${id}`);
-            setFlagRules(reponse.data);
+        const getFlagData = async () => {
+            const response = await axios.get(`http://localhost:3000/flags/${id}`);
+            setFlagData(response.data);
+
+            console.log(response.data)
+
+            const dev = response.data.find((c: any) => c.environment == "dev");
+            setDevRules(dev.rules);
+
+            const prod = response.data.find((c: any) => c.environment == "stag");
+            setStagRules(prod.rules);
+            console.log(dev)
+
         }
 
-        getFlagRules();
+        getFlagData();
     }, [])
 
   return (
@@ -79,12 +102,28 @@ const FlagDetails = () => {
                     <Separator />
                     <CardPanel className=''>
                         <div className='mt-5'>
-                            <div className='mt-8'> Release Flow</div>
-                            <Separator className="my-8"/> 
+                            <div className='mt-8 mb-5'> Release Flow</div>
+                             
 
                             {/* Evaluation Cards */}
 
-                            <EvaluationCards rules={flagRules} />
+                            <Tabs defaultValue="tab-1">
+                                <TabsList variant="underline" className="mb-5">
+                                    <TabsTab value="tab-1">Development</TabsTab>
+                                    <TabsTab value="tab-2">Staging</TabsTab>
+                                </TabsList>
+
+                                <TabsPanel value="tab-1">
+
+                                    <EvaluationCards rules={devRules} />
+                                </TabsPanel>
+                                <TabsPanel value="tab-2">
+                                    <EvaluationCards rules={stagRules} />
+                                </TabsPanel>
+
+                            </Tabs>
+
+                            
 
                         </div>
                     </CardPanel>

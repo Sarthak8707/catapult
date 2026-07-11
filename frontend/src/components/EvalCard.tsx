@@ -67,7 +67,7 @@ const EvalCard = ({conditions, rollouts}: RuleType) => {
                                 <div className='w-30 text-gray-500  border-blue-500 flex items-center'>Rollout %</div>
                                 <div > {rollouts.map((rollout, index) => (
                                   <div> 
-                                    {rollout.percentage} % of users get {rollout.value.val} 
+                                    {rollout?.percentage} % of users get {rollout?.value?.val} 
                                   </div>
                                 ))} </div>
                                 </div>

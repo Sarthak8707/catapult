@@ -29,9 +29,11 @@ type RuleType = {
 interface EvaluationCardsProps { rules: RuleType[] }
 
 const EvaluationCards = ({rules}: EvaluationCardsProps) => {
+
+  console.log("rules::", rules)
   return (
     <div>
-        <div className=' border-red-800'>
+        <div className='border-red-800 min-h-100'>
             <div>
                 {rules.map((rule, index) => (
                     <div>

@@ -7,6 +7,9 @@ import { Card, CardHeader, CardPanel, CardTitle } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import EvaluationCards from '@/components/EvaluationCards';
 import { Tabs, TabsList, TabsPanel, TabsTab } from '@/components/ui/tabs';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
+import Actions from '@/components/Actions';
 
 
 type RulesType = {
@@ -34,8 +37,8 @@ type RulesType = {
 
 
 const FlagDetails = () => {
-
     const {id} = useParams();
+    const Id = Number(id);
 
     const [devRules, setDevRules] = useState<RulesType[]>();
     const [stagRules, setStagRules] = useState<RulesType[]>([]);    
@@ -65,14 +68,20 @@ const FlagDetails = () => {
     }, [])
 
   return (
-    <div className='min-h-screen p-10 py-5 bg-white'>
+    <div className='min-h-screen px-10 py-5 bg-white'>
     
     
             <div className='mb-5'>
             <div className=' border-amber-950 ml-0'>
                 <div>
-                    <div className=''> <div className='text-2xl font-medium'> { flagInfo ? (flagInfo.name) : (<>Flag Name</>) } </div>
-                    <div> { flagInfo ? (flagInfo.description) : (<>Flag Description</>) } </div>
+                    <div className=''> 
+                        <div className=' border-red-950 flex'>
+                             <div className='text-2xl font-medium'>{ flagInfo ? (flagInfo.name) : (<>Flag Name</>) }</div>
+                              <div className='ml-auto mr-5'> 
+                                <Actions flagID={Id}/>
+                              </div>
+                         </div>
+                    <div className='text-gray-600'> { flagInfo ? (flagInfo.description) : (<>Flag Description</>) } </div>
                     </div>
                     
                 </div>
@@ -134,11 +143,11 @@ const FlagDetails = () => {
     
             {/* About Flag */}
 
-            <div className='text-2xl mt-20'>About</div>
-            <div className='mt-8'> Details about the flag </div>
-            <div className='mt-5 bg-white  flex'>
+            <div className='text-xl mt-20'>About</div>
+            <div className='mt-1 text-gray-600'> Details about the flag </div>
+            <div className='mt-5 border-red-300 bg-white text-sm flex'>
 
-                <div className='flex flex-col  border-red-600 w-140 pt-5 pb-5 pl-10 gap-3'>
+                <div className='flex flex-col border-red-600 w-140 pt-5 pb-5 pl-10 gap-3'>
                     <div className='flex'> <div className='text-gray-500 w-40'>Type</div> Release flag  </div>
                     <div className='flex'> <div className='text-gray-500 w-40'>Environment</div> Production </div>
                     <div className='flex'> <div className='text-gray-500 w-40'>Type</div> { flagInfo ? (flagInfo.type) : (<>type</>) }  </div>

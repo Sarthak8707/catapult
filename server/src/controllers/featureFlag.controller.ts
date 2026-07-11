@@ -20,7 +20,7 @@ export const getFlagSummaryController = async (req: Request, res: Response) => {
 
     const result = await getFlagSummaryService(flagID);
     res.status(200).json(result);
-    
+
 }
 
 // Create a new flag
@@ -42,7 +42,7 @@ export const changeFlag = async (req: Request, res: Response) => {
 
 // Delete a flag
 
-export const deleteFlag = async (req: Request, res: Response) => {
+export const deleteFlagController = async (req: Request, res: Response) => {
     const flagID = Number(req.params.id);
     const data = await deleteFlagService(flagID);
     res.json(data);

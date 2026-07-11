@@ -201,8 +201,8 @@ export const changeFlagService = async (flagID: number) => {
 // Delete a flag
 
 export const deleteFlagService = async (flagID: number) => {
-    const data = await db.delete(flags).where(eq(flags.id, flagID));
-    return {msg: "Deleted successfully!"}
+    const [data] = await db.delete(flags).where(eq(flags.id, flagID)).returning({projectID: flags.projectID});
+    return data;
 }
 
 // Config Flag Service

@@ -33,7 +33,9 @@ const EvaluationCards = ({rules}: EvaluationCardsProps) => {
 
   if(rules.length == 0){
     return <>
-     <div className=' flex items-center justify-center'>Create your Release Flow</div> 
+     <div className=' flex items-center justify-center'>
+       <button className='bg-blue-700 text-white px-6 py-2 font-bold text-sm rounded-sm cursor-pointer'>Create your Release Flow</button>
+    </div> 
     </>
   }
 

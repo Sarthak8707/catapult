@@ -5,6 +5,7 @@ import { EllipsisVertical, Pencil, Trash2, } from 'lucide-react';
 import { Button } from './ui/button';
 
 type RuleType = {
+    ruleID: number,
     ruleName: string,
     conditions: {
       operator: string,
@@ -30,10 +31,15 @@ interface EvaluationCardsProps { rules: RuleType[] }
 
 const EvaluationCards = ({rules}: EvaluationCardsProps) => {
 
-  console.log("rules::", rules)
+  if(rules.length == 0){
+    return <>
+     <div className=' flex items-center justify-center'>Create your Release Flow</div> 
+    </>
+  }
+
   return (
     <div>
-        <div className='border-red-800 min-h-100'>
+        <div className='border-red-800 min-h-100 mb-10'>
             <div>
                 {rules.map((rule, index) => (
                     <div>

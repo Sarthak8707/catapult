@@ -37,13 +37,14 @@ export default function FlagDialog({id, token}: {id: number, token: string}) {
         e.preventDefault();
 
         try{
-            console.log(formData);
             const response = await axios.post(`http://localhost:3000/projects/${id}/flags`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            navigate(`/projects/${id}`)
+
+            console.log(response.data)
+            navigate(`/flags/${response.data.flagID}`)
             
         }
         catch(err){

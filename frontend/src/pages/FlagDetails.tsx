@@ -1,14 +1,11 @@
 
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { Badge } from '@/components/ui/badge';
 import axios from 'axios';
 import { Card, CardHeader, CardPanel, CardTitle } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import EvaluationCards from '@/components/EvaluationCards';
-import { ArrowRight } from 'lucide-react';
 import { Tabs, TabsList, TabsPanel, TabsTab } from '@/components/ui/tabs';
 
 
@@ -40,26 +37,26 @@ const FlagDetails = () => {
 
     const {id} = useParams();
 
-    const [flagData, setFlagData] = useState<{
-        configID: number,
-        environment: string,
-        rules: RulesType[]
-    }[]>([])
-    const [devRules, setDevRules] = useState<RulesType[]>([]);
-    const [stagRules, setStagRules] = useState<RulesType[]>([]);
+    const [devRules, setDevRules] = useState<RulesType[]>();
+    const [stagRules, setStagRules] = useState<RulesType[]>([]);    
+
+    const [flagInfo, setFlagInfo] = useState<{name: string, description: string, type: string}>();
 
     useEffect(() => {
         const getFlagData = async () => {
             const response = await axios.get(`http://localhost:3000/flags/${id}`);
-            setFlagData(response.data);
 
+            const res2 = await axios.get(`http://localhost:3000/flags/${id}/summary`);
+            setFlagInfo(res2.data);
             console.log(response.data)
 
             const dev = response.data.find((c: any) => c.environment == "dev");
-            setDevRules(dev.rules);
+            if(dev)  setDevRules(dev.rules);
+            else setDevRules([])
 
-            const prod = response.data.find((c: any) => c.environment == "stag");
-            setStagRules(prod.rules);
+            const stag = response.data.find((c: any) => c.environment == "stag");
+            if(stag)  setStagRules(stag.rules);
+            else setStagRules([])
             console.log(dev)
 
         }
@@ -68,20 +65,22 @@ const FlagDetails = () => {
     }, [])
 
   return (
-    <div className='min-h-screen p-12 bg-neutral-100 border-red-400'>
+    <div className='min-h-screen p-10 py-5 bg-white'>
     
     
-            <div className='flex mb-5'>
-            <div className=' border-amber-950 ml-0 mt-5'>
+            <div className='mb-5'>
+            <div className=' border-amber-950 ml-0'>
                 <div>
-                    <div className=' flex items-center gap-0.5'> <div className='text-3xl font-medium'>greetings</div>
+                    <div className=''> <div className='text-2xl font-medium'> { flagInfo ? (flagInfo.name) : (<>Flag Name</>) } </div>
+                    <div> { flagInfo ? (flagInfo.description) : (<>Flag Description</>) } </div>
                     </div>
                     
                 </div>
             </div>
-            
                 
             </div>
+
+            <Separator className="my-2" />
     
             {/* Top Analytics */}
 
@@ -90,11 +89,10 @@ const FlagDetails = () => {
            
            {/* Flag Rules */}
             
-            <div className='text-2xl mt-20'>Flag Evaluation</div>
-            <div className='mt-8'> The evalution flow shows in which order the rules will be applied to flag, and how rollouts will work </div>
+            <div className='text-xl mt-10'>Flag Evaluation</div>
     
             <div className='border-red-500 w-220  mt-5'>
-                <Card className='border-none rounded-none'>
+                <Card className=' rounded-sm'>
                     <CardHeader>
                         <CardTitle className='flex'> <div className=''>Flag is On</div> <Switch className="ml-auto [--thumb-size:--spacing(4)] cursor-pointer"/>
                         </CardTitle>
@@ -107,7 +105,7 @@ const FlagDetails = () => {
 
                             {/* Evaluation Cards */}
 
-                            <Tabs defaultValue="tab-1">
+                            <Tabs >
                                 <TabsList variant="underline" className="mb-5">
                                     <TabsTab value="tab-1">Development</TabsTab>
                                     <TabsTab value="tab-2">Staging</TabsTab>
@@ -115,10 +113,12 @@ const FlagDetails = () => {
 
                                 <TabsPanel value="tab-1">
 
-                                    <EvaluationCards rules={devRules} />
+                                    {devRules ? (<EvaluationCards rules={devRules} />) : 
+                                    (<div className='flex items-center justify-center'>Loading Release FLow</div>)}
                                 </TabsPanel>
                                 <TabsPanel value="tab-2">
-                                    <EvaluationCards rules={stagRules} />
+                                    {stagRules ? (<EvaluationCards rules={stagRules} />) : 
+                                    (<div className='flex items-center justify-center'>Loading Release FLow</div>)}
                                 </TabsPanel>
 
                             </Tabs>
@@ -141,7 +141,7 @@ const FlagDetails = () => {
                 <div className='flex flex-col  border-red-600 w-140 pt-5 pb-5 pl-10 gap-3'>
                     <div className='flex'> <div className='text-gray-500 w-40'>Type</div> Release flag  </div>
                     <div className='flex'> <div className='text-gray-500 w-40'>Environment</div> Production </div>
-                    <div className='flex'> <div className='text-gray-500 w-40'>Lifecycle</div> Active  </div>
+                    <div className='flex'> <div className='text-gray-500 w-40'>Type</div> { flagInfo ? (flagInfo.type) : (<>type</>) }  </div>
                 </div>
 
                 <div className='flex flex-col  border-amber-800 w-140 pt-5 pb-5 pl-10 gap-3 ml-auto'>

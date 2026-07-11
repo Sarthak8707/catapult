@@ -37,7 +37,7 @@ const EvalCard = ({conditions, rollouts}: RuleType) => {
                                 {conditions.conditions.map((condition, index) => (
                                 <div className='flex flex-col items-center gap-2'>
 
-                                <Card className="w-170 h-20 flex justify-center px-8 rounded-none">
+                                <Card className="w-170 h-20 flex justify-center px-8 rounded-sm">
                                 <div className="flex ">
                                 <div className='w-30 text-gray-500'>Constraint</div>
                                 <div>  If {condition.field} {` `} {condition.operator} {` `} <Badge variant="secondary" size="lg">
@@ -62,7 +62,7 @@ const EvalCard = ({conditions, rollouts}: RuleType) => {
 
                                 <Badge variant="default">THEN</Badge> 
 
-                                <Card className="w-170  flex justify-center px-8 rounded-none">
+                                <Card className="w-170  flex justify-center px-8 rounded-sm">
                                 <div className=" flex  py-4 border-red-400">
                                 <div className='w-30 text-gray-500  border-blue-500 flex items-center'>Rollout %</div>
                                 <div > {rollouts.map((rollout, index) => (

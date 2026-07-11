@@ -5,6 +5,16 @@ import { getFlagsForEnvironment } from "../repositories/flag.repository";
 import { Rule, SDKFlagConfig } from "../types/flag.types";
 
 
+// Get flag summary
+
+export const getFlagSummaryService = async (flagID: number) => {
+
+  const [data] = await db.select().from(flags).where(eq(flags.id, flagID));
+
+  return data;
+
+}
+
 
 // Get all flags of Project
 
@@ -161,21 +171,22 @@ const result = [...groupedByConfig.values()].map((config) => ({
 
 export const createNewFlagService = async (name: string, description: string, projectID: number, userID: number) => {
 
-    // const envs = await db.select({id: environments.id}).from(environments).where(eq(environments.projectID, projectID));
-    // console.log("envs:::::", envs)
 
-    // await db.insert(flags).values([
-    //     {
-    //         name, description, createdBy: userID, enabled: false, environmentID: envs[0].id
-    //     },
-    //     {
-    //         name, description, createdBy: userID, enabled: false, environmentID: envs[1].id
-    //     }
-    // ]);
+    const [flag] = await db.insert(flags).values([
+        {
+            name, description, createdBy: userID, projectID
+        },
 
-    // return {
-    //     msg: "Created successfully!",
-    // };
+    ]).returning({id: flags.id});
+
+    await db.insert(environmentFlagConfig).values([
+      { flagID: flag.id, environment: "dev" },
+      { flagID: flag.id, environment: "stag" }
+    ])
+
+    return {
+        flagID: flag.id,
+    };
 
 }
 

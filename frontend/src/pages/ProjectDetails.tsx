@@ -36,18 +36,20 @@ const ProjectDetails = () => {
         }[]
     }[]>();
 
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         const getEnvironmentsData = async () => {
             // const response = await axios.get(`http://localhost:3000/projects/${id}/environments`);
             // setEnvironments(response.data);
             const resp = await axios.get(`http://localhost:3000/projects/${id}/flags`);
             setFlags(resp.data);
-
-            
+            setLoading(false);
         }
 
         getEnvironmentsData();
     }, [])
+
 
 
   return (
@@ -131,8 +133,11 @@ const ProjectDetails = () => {
                     
                  </div>
             </div>
-            <div className='mt-5 bg-white rounded-[6px] border'>
-                <Table>
+
+                {loading ? (<div className='h-50 flex items-center justify-center'> Loading Flags </div>) : 
+                (<>
+                  <div className='mt-5 bg-white rounded-[6px] border'>
+                  <Table>
                 <TableHeader>
                     <TableRow>
                     <TableHead>Name</TableHead>
@@ -174,6 +179,8 @@ const ProjectDetails = () => {
                 </TableBody>
             </Table>
             </div>
+                </>)}
+            
             </div>
 
             <div>

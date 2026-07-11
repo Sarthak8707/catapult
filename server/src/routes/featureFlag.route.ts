@@ -1,5 +1,5 @@
 import express from "express";
-import { changeFlag, createNewFlag, deleteFlag, getFlagInfoController } from "../controllers/featureFlag.controller";
+import { changeFlag, createNewFlag, deleteFlag, getFlagInfoController, getFlagSummaryController } from "../controllers/featureFlag.controller";
 import { validate } from "../middlewares/validate.middleware";
 import { createNewFlagSchema, updateFlagSchema } from "../schema/flags.schema";
 
@@ -9,6 +9,10 @@ const router = express.Router();
 // Get info about a specific flag
 
 router.get("/:id", getFlagInfoController)
+
+// Get flag summary
+
+router.get("/:id/summary", getFlagSummaryController)
 
 // Create a flag
 

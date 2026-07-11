@@ -1,23 +1,10 @@
-import { eq } from "drizzle-orm";
+import { eq, inArray, or } from "drizzle-orm";
 import { db } from "../db/client";
-import { environments, flagRollouts, flagRules, flags, flagVariants, projects } from "../db/schema";
+import { environmentFlagConfig, flagRollouts, flagRules, flags, flagVariants, projects } from "../db/schema";
 import { getFlagsForEnvironment } from "../repositories/flag.repository";
 import { Rule, SDKFlagConfig } from "../types/flag.types";
 
 
-// Get all flags of Environment
-
-export const getAllFlagsOfEnvironmentService = async (environmentID: number) => {
-   
-    try{
-        const data = await db.select().from(flags).where(eq(flags.environmentID, environmentID))
-    return data ;
-    }
-    catch(err){
-        console.log("Service:::::", err);
-    }
-
-}
 
 // Get all flags of Project
 
@@ -28,21 +15,47 @@ export const getAllFLagsOfProjectService = async (projectID: number) => {
 
             flagID: flags.id,
             flagName: flags.name,
-            enabled: flags.enabled,
-            status: flags.status,
             type: flags.type,
             updated: flags.updatedAt,
             
+            envs: {
+                environment: environmentFlagConfig.environment,
+                enabled: environmentFlagConfig.enabled,
+                status: environmentFlagConfig.status,               
+            }
 
         })
         .from(flags)
         .innerJoin(
-            environments,
-            eq(flags.environmentID, environments.id)
+            environmentFlagConfig,
+            eq(environmentFlagConfig.flagID, flags.id)
         )
-        .where(eq(environments.projectID, projectID));
+        .where(eq(flags.projectID, projectID));
 
-        return data;
+        
+
+        const groupedByFlag = new Map<number, any>();
+
+        for(const row of data){
+            if(!groupedByFlag.has(row.flagID)){
+                groupedByFlag.set(row.flagID, {
+                    flagID: row.flagID,
+                    flagName: row.flagName,
+                    type: row.type,
+
+                    envs: []
+                })
+            }
+
+            groupedByFlag.get(row.flagID).envs.push({
+                environment: row.envs.environment,
+                enabled: row.envs.enabled,
+                status: row.envs.status
+            })
+        }
+
+        const result = [...groupedByFlag.values()];
+        return result;
 
     }
     catch(err){
@@ -55,59 +68,91 @@ export const getAllFLagsOfProjectService = async (projectID: number) => {
 
 export const getFlagInfoService = async (flagID: number) => {
 
-    const data = await db.select({ 
 
-        ruleID: flagRules.id,
-        ruleName: flagRules.name,
-        conditions: flagRules.conditions,
 
-        rolloutID: flagRollouts.id,
-        percentage: flagRollouts.percentage,
-        bucketBy: flagRollouts.bucketBy,
+const data = await db
+  .select({
+    configID: environmentFlagConfig.id,
+    environment: environmentFlagConfig.environment,
 
-        variantID: flagVariants.id,
-        variantName: flagVariants.name,
-        value: flagVariants.value
+    ruleID: flagRules.id,
+    ruleName: flagRules.name,
+    conditions: flagRules.conditions,
 
-     })
-     .from(flagRules)
-     .leftJoin(
-        flagRollouts,
-        eq(flagRollouts.ruleID, flagRules.id)
-     )
-     .leftJoin(
-        flagVariants,
-        eq(flagVariants.id, flagRollouts.variantID)
-     )
-     .where(eq(flagRules.flagID, flagID))
+    rolloutID: flagRollouts.id,
+    percentage: flagRollouts.percentage,
+    bucketBy: flagRollouts.bucketBy,
 
-    // Map of (ruleid, {}) to categorize based on unique rule ids
-     
-    const groupedByRule = new Map<number, any>();
+    variantID: flagVariants.id,
+    variantName: flagVariants.name,
+    value: flagVariants.value,
+  })
+  .from(environmentFlagConfig)
+  .leftJoin(
+    flagRules,
+    eq(flagRules.envFlagConfigID, environmentFlagConfig.id)
+  )
+  .leftJoin(
+    flagRollouts,
+    eq(flagRollouts.ruleID, flagRules.id)
+  )
+  .leftJoin(
+    flagVariants,
+    eq(flagVariants.id, flagRollouts.variantID)
+  )
+  .where(eq(environmentFlagConfig.flagID, flagID));
+       
+        
+        
+        // Gruoup by config
 
-    for (const row of data){
+  const groupedByConfig = new Map<number, any>();
 
-        if(!groupedByRule.has(row.ruleID)){
-            groupedByRule.set(row.ruleID, {
-                ruleID: row.ruleID,
-                ruleName: row.ruleName,
-                conditions: row.conditions,
-                rollouts: [],
-            })
-        }
+for (const row of data) {
+  // Create config if it doesn't exist
+  if (!groupedByConfig.has(row.configID)) {
+    groupedByConfig.set(row.configID, {
+      configID: row.configID,
+      environment: row.environment,
 
-        groupedByRule.get(row.ruleID).rollouts.push({
-            rolloutID: row.rolloutID,
-            percentage: row.percentage,
-            variantID: row.variantID,
-            variantName: row.variantName,
-            value: row.value
-        })
-    }
+      //   Map < ruleID, data >
+      rules: new Map<number | null, any>(),
+    });
+  }
 
-    const result = [...groupedByRule.values()];
+  const config = groupedByConfig.get(row.configID);
 
-    return result;
+  // Skip if there is no rule
+  if (row.ruleID === null) continue;
+
+  // Create rule if it doesn't exist
+  if (!config.rules.has(row.ruleID)) {
+    config.rules.set(row.ruleID, {
+      ruleID: row.ruleID,
+      ruleName: row.ruleName,
+      conditions: row.conditions,
+      rollouts: [],
+    });
+  }
+
+  // Add rollout
+  config.rules.get(row.ruleID).rollouts.push({
+    rolloutID: row.rolloutID,
+    percentage: row.percentage,
+    bucketBy: row.bucketBy,
+    variantID: row.variantID,
+    variantName: row.variantName,
+    value: row.value,
+  });
+}
+
+// Convert nested Maps to arrays
+const result = [...groupedByConfig.values()].map((config) => ({
+  configID: config.configID,
+  environment: config.environment,
+  rules: [...config.rules.values()],
+}));
+  return result
 
 }
 
@@ -116,21 +161,21 @@ export const getFlagInfoService = async (flagID: number) => {
 
 export const createNewFlagService = async (name: string, description: string, projectID: number, userID: number) => {
 
-    const envs = await db.select({id: environments.id}).from(environments).where(eq(environments.projectID, projectID));
-    console.log("envs:::::", envs)
+    // const envs = await db.select({id: environments.id}).from(environments).where(eq(environments.projectID, projectID));
+    // console.log("envs:::::", envs)
 
-    await db.insert(flags).values([
-        {
-            name, description, createdBy: userID, enabled: false, environmentID: envs[0].id
-        },
-        {
-            name, description, createdBy: userID, enabled: false, environmentID: envs[1].id
-        }
-    ]);
+    // await db.insert(flags).values([
+    //     {
+    //         name, description, createdBy: userID, enabled: false, environmentID: envs[0].id
+    //     },
+    //     {
+    //         name, description, createdBy: userID, enabled: false, environmentID: envs[1].id
+    //     }
+    // ]);
 
-    return {
-        msg: "Created successfully!",
-    };
+    // return {
+    //     msg: "Created successfully!",
+    // };
 
 }
 

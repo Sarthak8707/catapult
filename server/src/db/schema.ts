@@ -55,16 +55,6 @@ export const projects = pgTable("projects", {
     })
 })
 
-// Environments Table
-
-export const environments = pgTable("environments", {
-    id: serial("id").primaryKey(),
-    name: text("name").notNull(),
-    projectID: integer("project_id").notNull().references(() => projects.id, {
-        onDelete: "cascade", onUpdate: "cascade"
-    }),
-    createdAt: timestamp("created_at").defaultNow()
-})
 
 // Flags Table
 
@@ -96,8 +86,11 @@ export const environmentFlagConfig = pgTable("environment_flag_config", {
     flagID: integer("flag_id").notNull().references(() => flags.id, {
         onDelete: "cascade", onUpdate: "cascade"
     }),
+
     environment: text("environment").notNull(),
+
     enabled: boolean("enabled").notNull().default(false),
+    status: text("status").notNull().default("draft"),
     updatedAt: timestamp("updated_at").defaultNow(),
 })
 

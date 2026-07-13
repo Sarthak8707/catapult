@@ -211,3 +211,20 @@ export const flagEvaluation = pgTable("flag_evaluation", {
     position: integer("position"),
 
 })
+
+// Incoming Events Table
+
+export const events = pgTable("events", {
+    id: serial("id").primaryKey(),
+
+    key: text("key"),
+
+    flagEnvironmentID: integer("flag_environment_id").references(() => environmentFlagConfig.id, {
+        onDelete: "no action", onUpdate: "cascade"
+    }),
+
+    eventType: text("event_type"),
+    
+    service: text("service")
+
+})

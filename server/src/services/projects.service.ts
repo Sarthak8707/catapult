@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { db } from "../db/client"
-import { environments, members, projects } from "../db/schema"
+import { auditLogs, members, projects } from "../db/schema"
 import { GetProjectsInput } from "../types/projects.types";
 
 
@@ -38,10 +38,6 @@ export const getAllProjectsOfUserService = async (userID: number) => {
 
 export const getProjectInfoService = async (projectID: number) => {
 
-    const environmentCount = (await db.select().from(environments).where(eq(environments.projectID, projectID))).length;
-    const projectData = await db.select().from(projects).where(eq(projects.id, projectID));
-
-    return {environmentCount, projectData};
 
 }
 
@@ -53,17 +49,6 @@ export const createNewProjectService = async (name: string, organizationID: numb
     .insert(projects)
     .values({name: name, organizationID: organizationID, createdBy})
     .returning({id: projects.id})
-    
-    await db.insert(environments).values([
-        {
-            name: "development", 
-            projectID: data.id
-        },
-        {
-            name: "production",
-            projectID: data.id
-        }
-    ]);
     
     return data;
     
@@ -83,4 +68,14 @@ export const deleteProjectService = async (id: number) => {
 
     const data = await db.delete(projects).where(eq(projects.id, id));
     return {msg: "Delted Successfully!"}
+}
+
+
+// Get recent activity of a project
+
+export const getRecentAcitivityService = async (projectID: number) => {
+
+    const data = await db.select().from(auditLogs).where(eq(auditLogs.projectID, projectID));
+
+    return data;
 }

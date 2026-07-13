@@ -68,64 +68,12 @@ const ProjectDetails = () => {
 
         <Separator className="my-2" />
 
-        <div>
-           <div className='flex mt-10'> 
-            <div className='text-xl '>Environments</div> 
-            </div>
-
-        </div>
-
-        {/* Environment Cards */}
-
-        <div className='mt-5 flex gap-8'>
-            {environments.map((environment, idx) => (
-                <Link to = {`/environments/${environment.id}`}> 
-                    <Card className='w-60 h-40 rounded-[6px]'>
-                <CardHeader>
-                    <CardTitle>
-                        <div className='flex'> <div> {environment.name} </div> <div className='ml-auto'> <EllipsisVertical className='h-4 w-4'/> </div> </div>
-                    </CardTitle>
-                    <CardDescription>
-                        Make new branch
-                    </CardDescription>
-                </CardHeader>
-                <CardPanel>
-                    <div className='text-sm text-gray-700'>
-                        <div> 34 out of 46 flags on </div>
-                        <div> 725 evaluations in last 2 hours </div>
-                    </div>
-                </CardPanel>
-                
-                <CardFooter className=' border-red-200 h-5'>
-                   <div className='text-sm text-gray-500'> changed 12m ago </div>
-                </CardFooter>
-            </Card>
-                </Link>
-            ))}
-
-            {/* Option to add new */}
-
-            <Link to = ""> 
-                <Card className='w-60 h-40 rounded-[6px] border-white bg-blue-700'>
-                
-                
-                    <div className='text-xl text-white  h-full flex  flex-col '>
-                            <div className=' border-amber-500 flex items-center h-20 mt-10 px-4'>Create new environment and add flags <ArrowRight className='mt-auto mb-4 mr-4 border-amber-600 ml-auto'/></div>
-                            
-                    </div>
-                
-                
-                
-            </Card>
-                </Link>
-
-        </div>
 
         {/* Flags */}
 
         <div className='mt-15 flex gap-5'>
             <div className='w-200'>
-            <div className='flex '>
+            <div className='flex border-red-200'>
                 <div className='text-xl'> Flags </div>
                 <div className='ml-auto mr-5'> 
 
@@ -183,17 +131,26 @@ const ProjectDetails = () => {
             
             </div>
 
+
+
             <div>
-                <div className=' flex'>
+
+            {/* Recent Activity */}
+
+            <div>
+                <div className=' flex border-red-400'>
                     <div className='text-xl'> Recent Activity</div> <div className='text-sm ml-auto mr-8 flex gap-2 text-blue-700 items-center'>View all <ArrowRight className='h-3 w-3'/> </div>
                  </div>
             <div className='border h-70 w-90 mt-5 rounded-sm'>
 
             </div>
             </div>
+
+            </div>
+
         </div>
 
-        {/* Recent Activity */}
+        
 
         <div >
 

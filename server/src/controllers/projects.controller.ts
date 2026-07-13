@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { getAllProjectsOfUserService, getProjectInfoService } from "../services/projects.service";
+import { getAllProjectsOfUserService, getProjectInfoService, getRecentAcitivityService } from "../services/projects.service";
 import { getAllEnvironmentsService } from "../services/environments.service";
 import { createNewFlagService, getAllFLagsOfProjectService } from "../services/featureFlag.service";
 
@@ -70,6 +70,19 @@ export const createFlagInProjectController = async (req: Request, res: Response,
         console.log(err);
         res.status(500).json({error: "error"})
     }
-
-
 }
+
+export const getRecentActivityController = async (req: Request, res: Response, next: NextFunction) => {
+
+    try{
+        const projectID = Number(req.params.id);
+        const result = await getRecentAcitivityService(projectID);
+        res.status(200).json(result);
+    }
+    catch(err){
+        console.log(err);
+        next(err);
+    }
+}
+
+

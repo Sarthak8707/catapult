@@ -5,6 +5,7 @@ import { organizationsRouter } from "./routes/organizations.route";
 import { projectsRouter } from "./routes/projects.route";
 import { environmentsRouter } from "./routes/environments.route";
 import { authRouter } from "./routes/auth.route";
+import { eventsRouter } from "./routes/events.route";
 
 const app = express();
 
@@ -34,6 +35,10 @@ app.use("/flags", flagRouter);
 // Auth Routes
 
 app.use("/auth", authRouter);
+
+// Events Ingestion Routes
+
+app.use("/events", eventsRouter);
 
 
 

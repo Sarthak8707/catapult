@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { db } from "../db/client"
-import { auditLogs, members, projects } from "../db/schema"
+import { auditLogs, flags, members, projects, users } from "../db/schema"
 import { GetProjectsInput } from "../types/projects.types";
 
 
@@ -75,7 +75,14 @@ export const deleteProjectService = async (id: number) => {
 
 export const getRecentAcitivityService = async (projectID: number) => {
 
-    const data = await db.select().from(auditLogs).where(eq(auditLogs.projectID, projectID));
+    // const data = await db.select({
+    //     userName: users.username,
+    //     flagName: flags.name,
+    //     action: auditLogs.action
+    // })
+    // .from(auditLogs)
+    // .leftJoin()
+    // .where(eq(auditLogs.projectID, projectID));
 
-    return data;
+    // return data;
 }

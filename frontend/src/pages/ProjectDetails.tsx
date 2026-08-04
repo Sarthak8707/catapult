@@ -36,10 +36,16 @@ const ProjectDetails = () => {
         }[]
     }[]>();
 
+    const [activity, setActivity] = useState<{
+        actor: string,
+        action: string,
+        resource: string
+    }[]>([])
+
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const getEnvironmentsData = async () => {
+        const getProjectData = async () => {
             // const response = await axios.get(`http://localhost:3000/projects/${id}/environments`);
             // setEnvironments(response.data);
             const resp = await axios.get(`http://localhost:3000/projects/${id}/flags`);
@@ -47,7 +53,7 @@ const ProjectDetails = () => {
             setLoading(false);
         }
 
-        getEnvironmentsData();
+        getProjectData();
     }, [])
 
 

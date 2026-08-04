@@ -99,9 +99,6 @@ export const environmentFlagConfig = pgTable("environment_flag_config", {
 export const auditLogs = pgTable("audit_logs", {
     id: serial("id").primaryKey(),
 
-    organizationID: integer("organization_id").notNull().references(() => organizations.id, {
-        onDelete: "no action", onUpdate: "cascade"
-    }),
     projectID: integer("project_id").notNull().references(() => projects.id, {
         onDelete: "no action", onUpdate: "cascade"
     }),
@@ -222,9 +219,35 @@ export const events = pgTable("events", {
     flagEnvironmentID: integer("flag_environment_id").references(() => environmentFlagConfig.id, {
         onDelete: "no action", onUpdate: "cascade"
     }),
-
+    
     eventType: text("event_type"),
     
-    service: text("service")
+    // unique
+    service: text("service"),
+
+    createdAt: timestamp("created_at").defaultNow()
+
+})
+
+// Automation Rules
+
+export const automationActions = pgTable("automation_actions", {
+    id: serial("id").primaryKey(),
+
+    // (flag env id and service) is unique
+
+    flagEnvironmentID: integer("flag_environment_id").references(() => environmentFlagConfig.id, {
+        onDelete: "cascade", onUpdate: "cascade"
+    }),
+
+    service: text("service"),
+
+    // threshold at which flag will be disabled
+
+    errorThreshold: integer("error_threshold").notNull(),
+
+    // action to be performed
+
+    action: text("action")
 
 })

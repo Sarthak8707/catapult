@@ -1,6 +1,6 @@
 import { eq, inArray, or } from "drizzle-orm";
 import { db } from "../db/client";
-import { environmentFlagConfig, flagRollouts, flagRules, flags, flagVariants, projects } from "../db/schema";
+import { auditLogs, environmentFlagConfig, flagRollouts, flagRules, flags, flagVariants, projects } from "../db/schema";
 import { getFlagsForEnvironment } from "../repositories/flag.repository";
 import { Rule, SDKFlagConfig } from "../types/flag.types";
 
@@ -171,7 +171,7 @@ const result = [...groupedByConfig.values()].map((config) => ({
 
 export const createNewFlagService = async (name: string, description: string, projectID: number, userID: number) => {
 
-
+    // Add flag to Flags db
     const [flag] = await db.insert(flags).values([
         {
             name, description, createdBy: userID, projectID
@@ -179,10 +179,20 @@ export const createNewFlagService = async (name: string, description: string, pr
 
     ]).returning({id: flags.id});
 
+    // Add environment flag configs to db
+
     await db.insert(environmentFlagConfig).values([
       { flagID: flag.id, environment: "dev" },
       { flagID: flag.id, environment: "stag" }
     ])
+    
+    // Push Audit Logs
+
+     db.insert(auditLogs).values(
+      {
+        projectID, actorUserID: userID, action: "created", resourceType: "flag", resourceID: flag.id
+      }
+    )
 
     return {
         flagID: flag.id,

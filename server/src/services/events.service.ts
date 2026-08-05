@@ -28,7 +28,9 @@ export const automateActions = async (flagEnvironmentID: number, service: string
         if(event.eventType == "failed") failed++;
     }
 
-    const per = (failed*100)/(totalEvents.length);
+    let per = 0;
+
+    if(totalEvents.length != 0) { per = (failed*100)/(totalEvents.length); }  
 
     const data = await db.select().from(automationActions).where(and(
         eq(automationActions.flagEnvironmentID, flagEnvironmentID),

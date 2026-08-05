@@ -110,6 +110,7 @@ export const auditLogs = pgTable("audit_logs", {
 
     resourceType: text("resource_type").notNull(),
     resourceID: integer("resource_id").notNull(),
+    resourceName: text("resource_name"),
     
     oldData: jsonb("old_data").$type<Record<string, any>>(),
     newData: jsonb("new_data").$type<Record<string, any>>(),
@@ -248,6 +249,6 @@ export const automationActions = pgTable("automation_actions", {
 
     // action to be performed
 
-    action: text("action")
+    action: text("action").default("turn_off")
 
 })

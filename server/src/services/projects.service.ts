@@ -75,14 +75,17 @@ export const deleteProjectService = async (id: number) => {
 
 export const getRecentAcitivityService = async (projectID: number) => {
 
-    // const data = await db.select({
-    //     userName: users.username,
-    //     flagName: flags.name,
-    //     action: auditLogs.action
-    // })
-    // .from(auditLogs)
-    // .leftJoin()
-    // .where(eq(auditLogs.projectID, projectID));
+    const logs = await db.select({
+        userName: users.username,
+        resourceName: auditLogs.resourceName,
+        action: auditLogs.action,
+        resourceType: auditLogs.resourceType
+    })
+    .from(auditLogs)
+    .leftJoin(users, eq(users.id, auditLogs.actorUserID))
+    .where(eq(auditLogs.projectID, projectID));
 
-    // return data;
+    return logs;
+
+
 }

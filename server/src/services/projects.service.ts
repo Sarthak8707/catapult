@@ -2,6 +2,7 @@ import { eq } from "drizzle-orm";
 import { db } from "../db/client"
 import { auditLogs, flags, members, projects, users } from "../db/schema"
 import { GetProjectsInput } from "../types/projects.types";
+import { formatAuditLog } from "../utils/auditLogFormatter";
 
 
 // Get all projects of an Organization
@@ -73,10 +74,10 @@ export const deleteProjectService = async (id: number) => {
 
 // Get recent activity of a project
 
-export const getRecentAcitivityService = async (projectID: number) => {
+export const getRecentActivityService = async (projectID: number) => {
 
     const logs = await db.select({
-        userName: users.username,
+        actorName: users.username,
         resourceName: auditLogs.resourceName,
         action: auditLogs.action,
         resourceType: auditLogs.resourceType
@@ -85,7 +86,10 @@ export const getRecentAcitivityService = async (projectID: number) => {
     .leftJoin(users, eq(users.id, auditLogs.actorUserID))
     .where(eq(auditLogs.projectID, projectID));
 
-    return logs;
+    return logs.map(log => ({
+    ...log,
+    message: formatAuditLog(log)
+}));
 
 
 }

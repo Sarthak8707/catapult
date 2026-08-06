@@ -4,7 +4,7 @@ import { Card, CardHeader, CardTitle, CardPanel, CardFooter, CardDescription } f
 import { Separator } from '@/components/ui/separator';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import axios from 'axios';
-import { ArrowRight, CircleCheckIcon, EllipsisVertical, Plus, PlusIcon } from 'lucide-react';
+import { ArrowRight, CircleCheckIcon, Dot, EllipsisVertical, Plus, PlusIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 
@@ -37,9 +37,7 @@ const ProjectDetails = () => {
     }[]>();
 
     const [activity, setActivity] = useState<{
-        actor: string,
-        action: string,
-        resource: string
+        message: string
     }[]>([])
 
     const [loading, setLoading] = useState(true);
@@ -49,7 +47,9 @@ const ProjectDetails = () => {
             // const response = await axios.get(`http://localhost:3000/projects/${id}/environments`);
             // setEnvironments(response.data);
             const resp = await axios.get(`http://localhost:3000/projects/${id}/flags`);
+            const resp2 = await axios.get(`http://localhost:3000/projects/${id}/activity`)
             setFlags(resp.data);
+            setActivity(resp2.data);
             setLoading(false);
         }
 
@@ -77,15 +77,19 @@ const ProjectDetails = () => {
 
         {/* Flags */}
 
-        <div className='mt-15 flex gap-5'>
+        <div className='mt-10 flex gap-5'>
             <div className='w-200'>
             <div className='flex border-red-200'>
-                <div className='text-xl'> Flags </div>
+                <div className='text-xl font-medium'> Flags </div>
                 <div className='ml-auto mr-5'> 
 
                     <FlagDialog id = {id} token = {token}/>
                     
                  </div>
+            </div>
+
+            <div className='mt-3'>
+                <div className='h-8 w-120 border rounded-sm text-gray-400 py-1 px-2'> Search... </div>
             </div>
 
                 {loading ? (<div className='h-50 flex items-center justify-center'> Loading Flags </div>) : 
@@ -146,9 +150,15 @@ const ProjectDetails = () => {
             <div>
                 <div className=' flex border-red-400'>
                     <div className='text-xl'> Recent Activity</div> <div className='text-sm ml-auto mr-8 flex gap-2 text-blue-700 items-center'>View all <ArrowRight className='h-3 w-3'/> </div>
-                 </div>
-            <div className='border h-70 w-90 mt-5 rounded-sm'>
-
+                </div>
+            <div className='border h-70 w-90 mt-5 rounded-sm pt-3 px-2'>
+                {activity.map((act, idx) => (
+                    <>
+                    <div className='flex flex-col gap-5'> 
+                        <div className='mt-3 text-gray-800 text-md flex gap-0'> <Dot /> {act.message} </div>
+                    </div>
+                    </>
+                ))}
             </div>
             </div>
 

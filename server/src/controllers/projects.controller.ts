@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { getAllProjectsOfUserService, getProjectInfoService, getRecentAcitivityService } from "../services/projects.service";
+import { getAllProjectsOfUserService, getProjectInfoService, getRecentActivityService } from "../services/projects.service";
 
 import { createNewFlagService, getAllFLagsOfProjectService } from "../services/featureFlag.service";
 
@@ -76,7 +76,7 @@ export const getRecentActivityController = async (req: Request, res: Response, n
 
     try{
         const projectID = Number(req.params.id);
-        const result = await getRecentAcitivityService(projectID);
+        const result = await getRecentActivityService(projectID);
         res.status(200).json(result);
     }
     catch(err){

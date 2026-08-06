@@ -26,16 +26,16 @@ function formatProjectLog(
 ): string {
   switch (log.action) {
     case "created":
-      return `${actor} created project "${resource}"`;
+      return `${actor} created project ${resource}`;
 
     case "updated":
-      return `${actor} updated project "${resource}"`;
+      return `${actor} updated project ${resource}`;
 
     case "deleted":
-      return `${actor} deleted project "${resource}"`;
+      return `${actor} deleted project ${resource}`;
 
     default:
-      return `${actor} ${log.action} project "${resource}"`;
+      return `${actor} ${log.action} project ${resource}`;
   }
 }
 
@@ -48,28 +48,28 @@ function formatFlagLog(
 ): string {
   switch (log.action) {
     case "created":
-      return `${actor} created flag "${resource}"`;
+      return `${actor} created flag ${resource}`;
 
     case "updated":
-      return `${actor} updated flag "${resource}"`;
+      return `${actor} updated flag ${resource}`;
 
     case "deleted":
-      return `${actor} deleted flag "${resource}"`;
+      return `${actor} deleted flag ${resource}`;
 
     case "turned_on":
-      return `${actor} turned on flag "${resource}"`;
+      return `${actor} turned on flag ${resource}`;
 
     case "turned_off":
-      return `${actor} turned off flag "${resource}"`;
+      return `${actor} turned off flag ${resource}`;
 
     case "archived":
-      return `${actor} archived flag "${resource}"`;
+      return `${actor} archived flag ${resource}`;
 
     case "restored":
-      return `${actor} restored flag "${resource}"`;
+      return `${actor} restored flag ${resource}`;
 
     default:
-      return `${actor} ${log.action} flag "${resource}"`;
+      return `${actor} ${log.action} flag ${resource}`;
   }
 }
 
@@ -81,16 +81,16 @@ function formatRuleLog(
 ): string {
   switch (log.action) {
     case "created":
-      return `${actor} created rule "${resource}"`;
+      return `${actor} created rule ${resource}`;
 
     case "updated":
-      return `${actor} updated rule "${resource}"`;
+      return `${actor} updated rule ${resource}`;
 
     case "deleted":
-      return `${actor} deleted rule "${resource}"`;
+      return `${actor} deleted rule ${resource}`;
 
     default:
-      return `${actor} ${log.action} rule "${resource}"`;
+      return `${actor} ${log.action} rule ${resource}`;
   }
 }
 

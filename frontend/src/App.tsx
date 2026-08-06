@@ -11,6 +11,7 @@ import Projects from "./pages/Projects";
 import ProjectDetails from "./pages/ProjectDetails";
 import EnvironmentDetails from "./pages/EnvironmentDetails";
 import FlagDetails from "./pages/FlagDetails";
+import Guardrails from "./pages/Guardrails";
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="organizations/:id" element={<OrganizationDetails />} />
         <Route path="projects" element={<Projects />} />
         <Route path="projects/:id" element={<ProjectDetails />} />
+        <Route path="projects/:id/guardrails" element={<Guardrails />} />
         <Route path="environments/:id" element={<EnvironmentDetails />} />
         <Route path="flags/:id" element={<FlagDetails />} />
       </Route>

@@ -14,6 +14,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Button } from './ui/button';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { ChevronDown } from 'lucide-react';
 
 
 
@@ -35,13 +36,13 @@ const Actions = ({flagID}: {flagID: number}) => {
 
 
   return (
-    <div>
+    <div className=' border-red-400'>
 
         <AlertDialog>
   <DropdownMenu>
     <DropdownMenuTrigger asChild>
-      <Button variant="outline" className="rounded-sm">
-        <div className='text-sm font-bold'>Actions</div>
+      <Button variant="secondary" className="rounded-sm">
+        <div className='text-sm font-bold flex justify-center items-center gap-1'>Actions <ChevronDown className='mt-0.5' /> </div>
       </Button>
     </DropdownMenuTrigger>
 

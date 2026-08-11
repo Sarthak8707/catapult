@@ -235,6 +235,14 @@ export const events = pgTable("events", {
 export const automationActions = pgTable("automation_actions", {
     id: serial("id").primaryKey(),
 
+    // name
+
+    name: text("name"),
+
+    // desc
+
+    description: text("description"),
+
     // (flag env id and service) is unique
 
     flagEnvironmentID: integer("flag_environment_id").references(() => environmentFlagConfig.id, {

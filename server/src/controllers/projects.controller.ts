@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { getAllProjectsOfUserService, getProjectInfoService, getRecentActivityService } from "../services/projects.service";
 
 import { createNewFlagService, getAllFLagsOfProjectService } from "../services/featureFlag.service";
+import { getGuardrailsService } from "../services/guardrails.service";
 
 export const getAllProjectsOfUserController = async (req: Request, res: Response, next: NextFunction) => {
 
@@ -83,6 +84,13 @@ export const getRecentActivityController = async (req: Request, res: Response, n
         console.log(err);
         next(err);
     }
+}
+
+export const getGuardrailsController = async (req: Request, res: Response, next: NextFunction) => {
+
+    const projectID = Number(req.params.id);
+    const result = await getGuardrailsService(projectID);
+    res.status(200).json(result);
 }
 
 

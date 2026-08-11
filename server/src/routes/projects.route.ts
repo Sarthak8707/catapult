@@ -1,5 +1,5 @@
 import express from "express";
-import { createFlagInProjectController, getAllEnvironmentsController, getAllFlagsOfProjectController, getAllProjectsOfUserController, getProjectInfoController, getRecentActivityController } from "../controllers/projects.controller";
+import { createFlagInProjectController, getAllEnvironmentsController, getAllFlagsOfProjectController, getAllProjectsOfUserController, getGuardrailsController, getProjectInfoController, getRecentActivityController } from "../controllers/projects.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 
 const router = express.Router();
@@ -35,5 +35,11 @@ router.post("/:id/flags", authMiddleware, createFlagInProjectController);
 // Get recent activity of a project
 
 router.get("/:id/activity", getRecentActivityController);
+
+// Get Guardrails of a project
+
+router.get("/:id/guardrails", getGuardrailsController);
+
+
 
 export {router as projectsRouter}

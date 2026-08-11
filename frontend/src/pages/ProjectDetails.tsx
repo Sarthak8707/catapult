@@ -4,7 +4,7 @@ import { Card, CardHeader, CardTitle, CardPanel, CardFooter, CardDescription } f
 import { Separator } from '@/components/ui/separator';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import axios from 'axios';
-import { ArrowRight, CircleCheckIcon, Dot, EllipsisVertical, Plus, PlusIcon } from 'lucide-react';
+import { ArrowRight, CircleCheckIcon, Dot, EllipsisVertical, Plus, PlusIcon, Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 
@@ -17,12 +17,6 @@ const ProjectDetails = () => {
     const id = Number(ID.id);
     let token = window.localStorage.getItem("token");
     if(token == null) token = ""
-    const [environments, setEnvironments] = useState<{
-        id: number,
-        name: string,
-        createdAt: string
-    }[]
-    >([]);
 
     const [flags, setFlags] = useState<{
         flagID: number,
@@ -41,6 +35,17 @@ const ProjectDetails = () => {
     }[]>([])
 
     const [loading, setLoading] = useState(true);
+
+    const [search, setSearch] = useState("");
+
+    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearch(e.target.value);
+    }
+
+    const filteredFlags = flags?.filter((flag) => {
+        const query = search.toLowerCase()
+        return flag.flagName.toLowerCase().includes(query);
+    })
 
     useEffect(() => {
         const getProjectData = async () => {
@@ -75,9 +80,10 @@ const ProjectDetails = () => {
         <Separator className="my-2" />
 
 
-        {/* Flags */}
+        <div className=' mt-10 flex gap-5  h-150 '>
 
-        <div className='mt-10 flex gap-5'>
+            {/* Flags */}
+
             <div className='w-200'>
             <div className='flex border-red-200'>
                 <div className='text-xl font-medium'> Flags </div>
@@ -89,7 +95,17 @@ const ProjectDetails = () => {
             </div>
 
             <div className='mt-3'>
-                <div className='h-8 w-120 border rounded-sm text-gray-400 py-1 px-2'> Search... </div>
+                <div className="relative">
+    <Search className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+
+    <input
+        type="text"
+        value={search}
+        onChange={handleSearch}
+        placeholder="Search flag by name, key or description..."
+        className="h-8 w-120 rounded-sm border pl-8 text-sm"
+    />
+</div>
             </div>
 
                 {loading ? (<div className='h-50 flex items-center justify-center'> Loading Flags </div>) : 
@@ -105,7 +121,12 @@ const ProjectDetails = () => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                            {flags?.map((flag) => {
+                        {
+                            filteredFlags?.length == 0 ? (
+                                <div className='py-5 text-center'> No matching results </div>
+                            ) : (
+                                
+                                filteredFlags?.map((flag) => {
                                const dev = flag.envs.find(
                              (env) => env.environment === "dev"
                              );
@@ -133,7 +154,9 @@ const ProjectDetails = () => {
                             </TableCell>
                           </TableRow>
                         );
-                    })}
+                    }
+                ))
+                        }
                 </TableBody>
             </Table>
             </div>
@@ -141,7 +164,7 @@ const ProjectDetails = () => {
             
             </div>
 
-
+            <Separator orientation="vertical" />
 
             <div>
 
@@ -149,16 +172,19 @@ const ProjectDetails = () => {
 
             <div>
                 <div className=' flex border-red-400'>
-                    <div className='text-xl'> Recent Activity</div> <div className='text-sm ml-auto mr-8 flex gap-2 text-blue-700 items-center'>View all <ArrowRight className='h-3 w-3'/> </div>
+                    <div className='text-xl font-medium'> Recent Activity</div> <div className='ml-auto'> <button className='border border-gray-300 px-3 py-2 font-medium text-sm text-gray-800 rounded-sm cursor-pointer'> View All</button> </div>
                 </div>
-            <div className='border h-70 w-90 mt-5 rounded-sm pt-3 px-2'>
-                {activity.map((act, idx) => (
+            <div className=' h-70 w-90 rounded-sm pt-3 '>
+                {loading ? (<div className=' h-20 flex items-center justify-center'> Loading Recent Activity </div>) : (
+                    <>
+                    {activity.map((act, idx) => (
                     <>
                     <div className='flex flex-col gap-5'> 
-                        <div className='mt-3 text-gray-800 text-md flex gap-0'> <Dot /> {act.message} </div>
+                        <div className='mt-5 text-gray-700 text-sm gap-0'> <div className='flex'><Dot /> {act.message}</div> <div className="text-gray-500 text-[12px] ml-5"> 36 min ago </div> </div>
                     </div>
                     </>
                 ))}
+                    </>)}
             </div>
             </div>
 

@@ -14,6 +14,7 @@ import { Field, FieldLabel } from "@/components/ui/field";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
+import { Plus } from "lucide-react";
 import { useState, type SubmitEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -57,8 +58,8 @@ export default function FlagDialog({id, token}: {id: number, token: string}) {
 
   return (
     <Dialog>
-      <DialogTrigger render={<button className='bg-blue-700 text-white px-6 py-2 font-bold text-sm rounded-sm cursor-pointer'></button>}>
-        Create Flag
+      <DialogTrigger render={<button className='bg-blue-700 text-white px-3 py-2 font-medium text-sm rounded-sm cursor-pointer'></button>}>
+       <div> Create Flag </div>
       </DialogTrigger>
       <DialogPopup className="sm:max-w-sm">
         <DialogHeader>

@@ -37,11 +37,11 @@ const EvalCard = ({conditions, rollouts}: RuleType) => {
                                 {conditions.conditions.map((condition, index) => (
                                 <div className='flex flex-col items-center gap-2'>
 
-                                <Card className="w-170 h-20 flex justify-center px-8 rounded-sm">
+                                <Card className="w-170 h-20 flex justify-center px-8 rounded-sm text-sm">
                                 <div className="flex ">
-                                <div className='w-30 text-gray-500'>Constraint</div>
-                                <div>  If {condition.field} {` `} {condition.operator} {` `} <Badge variant="secondary" size="lg">
-                                    {condition.value}
+                                <div className='w-30 text-gray-600'>Constraint</div>
+                                <div className='text-gray-600 flex gap-1'>  If <div className='font-semibold'>{condition.field}</div> {` `} {condition.operator} {` `} <Badge variant="secondary" size="lg">
+                                    <div className='font-medium text-gray-600'>{condition.value}</div>
                                     </Badge>  </div>
                                 </div>
                                 </Card>
@@ -49,7 +49,7 @@ const EvalCard = ({conditions, rollouts}: RuleType) => {
 
                                 {(index != conditions.conditions.length - 1)  && 
 
-                                (<Badge variant="default"> AND </Badge>)
+                                (<div className='text-sm text-gray-600 font-semibold'>And</div>)
                                 
                                 }
 
@@ -60,14 +60,14 @@ const EvalCard = ({conditions, rollouts}: RuleType) => {
 
                                 <div className='flex flex-col items-center gap-2'>
 
-                                <Badge variant="default">THEN</Badge> 
+                                <div className='text-sm text-gray-600 font-semibold'>Then</div> 
 
-                                <Card className="w-170  flex justify-center px-8 rounded-sm">
+                                <Card className="w-170  flex justify-center px-8 rounded-sm text-sm">
                                 <div className=" flex  py-4 border-red-400">
-                                <div className='w-30 text-gray-500  border-blue-500 flex items-center'>Rollout %</div>
+                                <div className='w-30 text-gray-600  border-blue-600 flex items-center'>Rollout %</div>
                                 <div > {rollouts.map((rollout, index) => (
-                                  <div> 
-                                    {rollout?.percentage} % of users get {rollout?.value?.val} 
+                                  <div className='text-gray-600 flex gap-1'> 
+                                    <div className='font-semibold'> {rollout?.percentage}% </div> of users get <div className='font-medium'>{rollout?.value?.val}</div> 
                                   </div>
                                 ))} </div>
                                 </div>

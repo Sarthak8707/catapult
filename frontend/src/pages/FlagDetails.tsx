@@ -98,9 +98,10 @@ const FlagDetails = () => {
            
            {/* Flag Rules */}
             
-            <div className='text-xl mt-10'>Flag Evaluation</div>
+            <div className='text-xl mt-10 font-semibold'>Flag Evaluation</div>
+            <div className='text-gray-600 mt-1 flex gap-1 text-sm'> The release flow of the flag across various rules. In case server is unreachable, <div className='text-blue-700 font-medium'>default rule</div> will be applied.</div>
     
-            <div className='border-red-500 w-220  mt-5'>
+            <div className='border-red-500 w-220  mt-10'>
                 <Card className=' rounded-sm'>
                     <CardHeader>
                         <CardTitle className='flex'> <div className=''>Flag is On</div> <Switch className="ml-auto [--thumb-size:--spacing(4)] cursor-pointer"/>
@@ -123,11 +124,11 @@ const FlagDetails = () => {
                                 <TabsPanel value="tab-1">
 
                                     {devRules ? (<EvaluationCards rules={devRules} />) : 
-                                    (<div className='flex items-center justify-center'>Loading Release FLow</div>)}
+                                    (<div className='flex items-center justify-center'>Loading Release Flow</div>)}
                                 </TabsPanel>
                                 <TabsPanel value="tab-2">
                                     {stagRules ? (<EvaluationCards rules={stagRules} />) : 
-                                    (<div className='flex items-center justify-center'>Loading Release FLow</div>)}
+                                    (<div className='flex items-center justify-center'>Loading Release Flow</div>)}
                                 </TabsPanel>
 
                             </Tabs>
@@ -138,23 +139,26 @@ const FlagDetails = () => {
                     </CardPanel>
                 </Card>
             </div>
-    
-            
+
+            <div className='mt-10'></div>
+
+
+            <div className="my-2 h-[0.5px] w-full bg-border" />
     
             {/* About Flag */}
 
-            <div className='text-xl mt-20'>About</div>
-            <div className='mt-1 text-gray-600'> Details about the flag </div>
+            <div className='text-xl mt-10 font-semibold'>About</div>
+            <div className='mt-1 text-gray-600 text-sm'> Details about the flag </div>
             <div className='mt-5 border-red-300 bg-white text-sm flex'>
 
-                <div className='flex flex-col border-red-600 w-140 pt-5 pb-5 pl-10 gap-3'>
-                    <div className='flex'> <div className='text-gray-500 w-40'>Type</div> Release flag  </div>
+                <div className='flex flex-col border-red-600 w-140 pt-5 pb-5 pl-10 gap-3 text-sm'>
+                    <div className='flex text-sm'> <div className='text-gray-500 w-40'>Type</div> Release flag  </div>
                     <div className='flex'> <div className='text-gray-500 w-40'>Environment</div> Production </div>
                     <div className='flex'> <div className='text-gray-500 w-40'>Type</div> { flagInfo ? (flagInfo.type) : (<>type</>) }  </div>
                 </div>
 
                 <div className='flex flex-col  border-amber-800 w-140 pt-5 pb-5 pl-10 gap-3 ml-auto'>
-                    <div className='flex'> <div className='text-gray-500 w-40'>Created </div> 23 June, 2026 </div>
+                    <div className='flex text-sm'> <div className='text-gray-500 w-40'>Created </div> 23 June, 2026 </div>
                     <div className='flex'> <div className='text-gray-500 w-40'>Created by</div> Nick  </div>
                     <div className='flex'> <div className='text-gray-500 w-40'>Tags</div> Dashboard  </div>
                 </div>

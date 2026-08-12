@@ -35,8 +35,8 @@ export const createNewFlag = async (req: Request, res: Response) => {
 
 export const changeFlag = async (req: Request, res: Response) => {
     const flagID = Number(req.params.id);
-    //const newData = req.body.newData;
-    const data = await changeFlagService(flagID);
+    const {flagConfigID, enabled} = req.body;
+    const data = await changeFlagService(flagConfigID, flagID, enabled);
     res.json(data);
 }
 

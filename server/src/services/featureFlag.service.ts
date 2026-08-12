@@ -84,6 +84,7 @@ const data = await db
   .select({
     configID: environmentFlagConfig.id,
     environment: environmentFlagConfig.environment,
+    enabled: environmentFlagConfig.enabled,
 
     ruleID: flagRules.id,
     ruleName: flagRules.name,
@@ -124,6 +125,7 @@ for (const row of data) {
     groupedByConfig.set(row.configID, {
       configID: row.configID,
       environment: row.environment,
+      enabled: row.enabled,
 
       //   Map < ruleID, data >
       rules: new Map<number | null, any>(),
@@ -160,6 +162,7 @@ for (const row of data) {
 const result = [...groupedByConfig.values()].map((config) => ({
   configID: config.configID,
   environment: config.environment,
+  enabled: config.enabled,
   rules: [...config.rules.values()],
 }));
   return result
@@ -202,10 +205,19 @@ export const createNewFlagService = async (name: string, description: string, pr
 
 // Update a flag
 
-export const changeFlagService = async (flagID: number) => {
-    const newData = {};
-    const data = await db.update(flags).set(newData).where(eq(flags.id, flagID));
+export const changeFlagService = async (flagConfigID: number, flagID: number, enabled: boolean) => {
+   
+    try{
+      const data = await db.update(environmentFlagConfig)
+    .set({enabled: enabled})
+    .where(eq(environmentFlagConfig.id, flagConfigID));
+
     return {msg: "Updated successfully!"};
+    }
+    catch(err){
+      console.log(err);
+    }
+    
 }
 
 // Delete a flag

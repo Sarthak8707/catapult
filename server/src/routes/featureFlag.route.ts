@@ -20,7 +20,7 @@ router.post("/", createNewFlag)
 
 // Update a flag
 
-router.put("/:id", validate(updateFlagSchema), changeFlag)
+router.put("/:id", changeFlag)
 
 // Delete a flag
 

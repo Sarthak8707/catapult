@@ -44,6 +44,11 @@ const FlagDetails = () => {
     const [stagRules, setStagRules] = useState<RulesType[]>([]);    
 
     const [flagInfo, setFlagInfo] = useState<{name: string, description: string, type: string}>();
+    const [devEnabled, setDevEnabled] = useState(false);
+    const [stagEnabled, setStagEnabled] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [fcID1, setFcID1] = useState("");
+    const [fcID2, setFcID2] = useState("");
 
     useEffect(() => {
         const getFlagData = async () => {
@@ -62,10 +67,33 @@ const FlagDetails = () => {
             else setStagRules([])
             console.log(dev)
 
+            setFcID1(response.data[0].configID);
+            setFcID2(response.data[1].configID)
+            setDevEnabled(response.data[0].enabled);
+            setStagEnabled(response.data[1].enabled);
+            setLoading(false);
+
         }
 
         getFlagData();
     }, [])
+
+    const [disabled, setDisabled] = useState(false);
+
+    const handleChange = async (check: boolean, env: string) => {
+        setDisabled(true);
+
+        let flagConfigID = fcID1;
+        if(env == "stag") flagConfigID = fcID2;
+
+        const data = await axios.put(`http://localhost:3000/flags/${id}/`, {
+            enabled: check,
+            flagConfigID
+        })
+        setDisabled(false);
+        if(env == "dev") setDevEnabled(check);
+        else setStagEnabled(check);
+    }
 
   return (
     <div className='min-h-screen px-10 py-5 bg-white'>
@@ -101,10 +129,22 @@ const FlagDetails = () => {
             <div className='text-xl mt-10 font-semibold'>Flag Evaluation</div>
             <div className='text-gray-600 mt-1 flex gap-1 text-sm'> The release flow of the flag across various rules. In case server is unreachable, <div className='text-blue-700 font-medium'>default rule</div> will be applied.</div>
     
+            {loading ? <div className=' h-100 w-220  mt-10 rounded-sm text-gray-600 font-medium border flex items-center justify-center' > Loading Flag Evaluation... </div> : 
+            <>
             <div className='border-red-500 w-220  mt-10'>
-                <Card className=' rounded-sm'>
+
+            <Tabs >
+                    <TabsList variant="underline" className="mb-5">
+                                    <TabsTab value="tab-1">Development</TabsTab>
+                                    <TabsTab value="tab-2">Staging</TabsTab>
+                    </TabsList>
+
+                    <TabsPanel value="tab-1">
+
+
+            <Card className=' rounded-sm'>
                     <CardHeader>
-                        <CardTitle className='flex'> <div className=''>Flag is On</div> <Switch className="ml-auto [--thumb-size:--spacing(4)] cursor-pointer"/>
+                        <CardTitle className='flex'> <div className=''>Flag is On {devEnabled ? <>True</>: <>False</> }  </div> <Switch className="ml-auto [--thumb-size:--spacing(4)] cursor-pointer" checked = {devEnabled} onCheckedChange={(check) => {handleChange(check, "dev")}} disabled = {disabled} />
                         </CardTitle>
                     </CardHeader>
                     <Separator />
@@ -115,30 +155,42 @@ const FlagDetails = () => {
 
                             {/* Evaluation Cards */}
 
-                            <Tabs >
-                                <TabsList variant="underline" className="mb-5">
-                                    <TabsTab value="tab-1">Development</TabsTab>
-                                    <TabsTab value="tab-2">Staging</TabsTab>
-                                </TabsList>
-
-                                <TabsPanel value="tab-1">
-
-                                    {devRules ? (<EvaluationCards rules={devRules} />) : 
-                                    (<div className='flex items-center justify-center'>Loading Release Flow</div>)}
-                                </TabsPanel>
-                                <TabsPanel value="tab-2">
-                                    {stagRules ? (<EvaluationCards rules={stagRules} />) : 
-                                    (<div className='flex items-center justify-center'>Loading Release Flow</div>)}
-                                </TabsPanel>
-
-                            </Tabs>
+                            {devRules && <EvaluationCards rules={devRules} />}
 
                             
 
                         </div>
                     </CardPanel>
-                </Card>
-            </div>
+            </Card>                
+                        </TabsPanel>
+                        <TabsPanel value="tab-2">
+
+            <Card className=' rounded-sm'>
+                    <CardHeader>
+                        <CardTitle className='flex'> <div className=''>Flag is On {stagEnabled ? <>True</>: <>False</> }  </div> <Switch className="ml-auto [--thumb-size:--spacing(4)] cursor-pointer" checked = {stagEnabled} onCheckedChange={(check) => {handleChange(check, "stag")}} disabled = {disabled} />
+                        </CardTitle>
+                    </CardHeader>
+                    <Separator />
+                    <CardPanel className=''>
+                        <div className='mt-5'>
+                            <div className='mt-8 mb-5'> Release Flow</div>
+                             
+
+                            {/* Evaluation Cards */}
+
+                           {stagRules && <EvaluationCards rules={stagRules} />}
+
+                            
+
+                        </div>
+                    </CardPanel>
+            </Card>                 
+                        </TabsPanel>
+
+        </Tabs>
+
+        </div>
+            </> }
 
             <div className='mt-10'></div>
 

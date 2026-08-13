@@ -37,7 +37,7 @@ const EvalCard = ({conditions, rollouts}: RuleType) => {
                                 {conditions.conditions.map((condition, index) => (
                                 <div className='flex flex-col items-center gap-2'>
 
-                                <Card className="w-170 h-20 flex justify-center px-8 rounded-sm text-sm">
+                                <Card className=" w-170 h-20 flex justify-center px-8 rounded-sm text-sm">
                                 <div className="flex ">
                                 <div className='w-30 text-gray-600'>Constraint</div>
                                 <div className='text-gray-600 flex gap-1'>  If <div className='font-semibold'>{condition.field}</div> {` `} {condition.operator} {` `} <Badge variant="secondary" size="lg">

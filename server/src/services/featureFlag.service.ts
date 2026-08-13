@@ -78,9 +78,8 @@ export const getAllFLagsOfProjectService = async (projectID: number) => {
 
 export const getFlagInfoService = async (flagID: number) => {
 
-
-
-const data = await db
+try{
+  const data = await db
   .select({
     configID: environmentFlagConfig.id,
     environment: environmentFlagConfig.environment,
@@ -166,6 +165,11 @@ const result = [...groupedByConfig.values()].map((config) => ({
   rules: [...config.rules.values()],
 }));
   return result
+}
+
+catch (err){
+  console.log(err)
+}
 
 }
 
@@ -205,9 +209,13 @@ export const createNewFlagService = async (name: string, description: string, pr
 
 // Update a flag
 
-export const changeFlagService = async (flagConfigID: number, flagID: number, enabled: boolean) => {
+export const changeFlagService = async (requestBody: any, flagID: number) => {
    
-    try{
+  const {flagConfigID, enabled, description} = requestBody;
+  console.log("description:", description)
+  
+  if(enabled != undefined){
+      try{
       const data = await db.update(environmentFlagConfig)
     .set({enabled: enabled})
     .where(eq(environmentFlagConfig.id, flagConfigID));
@@ -217,6 +225,20 @@ export const changeFlagService = async (flagConfigID: number, flagID: number, en
     catch(err){
       console.log(err);
     }
+  }
+
+  if(description != undefined){
+    try{
+      const data = await db.update(flags)
+      .set({description: description})
+      .where(eq(flags.id, flagID));
+
+      return {msg: "Updated successfully!"};
+    }
+    catch(err){
+      console.log(err);
+    }
+  }
     
 }
 

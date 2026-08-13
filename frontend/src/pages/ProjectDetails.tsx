@@ -4,7 +4,7 @@ import { Card, CardHeader, CardTitle, CardPanel, CardFooter, CardDescription } f
 import { Separator } from '@/components/ui/separator';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import axios from 'axios';
-import { ArrowRight, CircleCheckIcon, Dot, EllipsisVertical, Plus, PlusIcon, Search } from 'lucide-react';
+import { ArrowRight, ChevronRight, CircleCheckIcon, Dot, EllipsisVertical, Plus, PlusIcon, Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 
@@ -17,7 +17,7 @@ const ProjectDetails = () => {
     const id = Number(ID.id);
     let token = window.localStorage.getItem("token");
     if(token == null) token = ""
-
+   
     const [flags, setFlags] = useState<{
         flagID: number,
         flagName: string,
@@ -172,7 +172,7 @@ const ProjectDetails = () => {
 
             <div>
                 <div className=' flex border-red-400'>
-                    <div className='text-xl font-medium'> Recent Activity</div> <div className='ml-auto'> <button className='border border-gray-300 px-3 py-2 font-medium text-sm text-gray-800 rounded-sm cursor-pointer'> View All</button> </div>
+                    <div className='text-xl font-medium'> Recent Activity</div> <div className='ml-auto'> <button className=' font-medium text-sm text-blue-700 rounded-sm cursor-pointer flex items-center justify-center gap-1'> View All <ArrowRight className='h-3 w-3'/> </button> </div>
                 </div>
             <div className=' h-70 w-90 rounded-sm pt-3 '>
                 {loading ? (<div className=' h-20 flex items-center justify-center'> Loading Recent Activity </div>) : (

@@ -10,6 +10,7 @@ import { Tabs, TabsList, TabsPanel, TabsTab } from '@/components/ui/tabs';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import Actions from '@/components/Actions';
+import { Pencil } from 'lucide-react';
 
 
 type RulesType = {
@@ -50,13 +51,16 @@ const FlagDetails = () => {
     const [fcID1, setFcID1] = useState("");
     const [fcID2, setFcID2] = useState("");
 
+    const [editing, setEditing] = useState(false);
+    const [description, setDescription] = useState("");
+    const [saving, setSaving] = useState(false);    
+
     useEffect(() => {
         const getFlagData = async () => {
             const response = await axios.get(`http://localhost:3000/flags/${id}`);
 
             const res2 = await axios.get(`http://localhost:3000/flags/${id}/summary`);
             setFlagInfo(res2.data);
-            console.log(response.data)
 
             const dev = response.data.find((c: any) => c.environment == "dev");
             if(dev)  setDevRules(dev.rules);
@@ -65,14 +69,18 @@ const FlagDetails = () => {
             const stag = response.data.find((c: any) => c.environment == "stag");
             if(stag)  setStagRules(stag.rules);
             else setStagRules([])
-            console.log(dev)
 
-            setFcID1(response.data[0].configID);
-            setFcID2(response.data[1].configID)
-            setDevEnabled(response.data[0].enabled);
-            setStagEnabled(response.data[1].enabled);
+            //console.log(response.data)
+
+            if(response.data.length) setFcID1(response.data[0].configID);
+            if(response.data.length) setFcID2(response.data[1].configID)
+            if(response.data.length) setDevEnabled(response.data[0].enabled);
+            if(response.data.length) setStagEnabled(response.data[1].enabled);
             setLoading(false);
-
+            setDescription(res2.data.description)
+            console.log(description)
+            //console.log(dev.rules);
+            
         }
 
         getFlagData();
@@ -95,24 +103,66 @@ const FlagDetails = () => {
         else setStagEnabled(check);
     }
 
+
+
+const handleSaveDescription = async () => {
+    setSaving(true);
+    console.log("here")
+    try{
+        const data = await axios.put(`http://localhost:3000/flags/${id}`, {
+        description: description
+        });
+    console.log("done");
+    setFlagInfo(prev => 
+        prev ? {...prev, description} : prev
+    )
+    }
+    catch(err){
+        console.log("error:", err);
+        setDescription(flagInfo?.description ?? "")
+    }
+    finally{
+        setSaving(false);
+        setEditing(false);
+    }
+};
+
   return (
     <div className='min-h-screen px-10 py-5 bg-white'>
     
     
             <div className='mb-5'>
             <div className=' border-amber-950 ml-0'>
+                {/* */}
                 <div>
-                    <div className=''> 
-                        <div className=' border-red-950 flex'>
-                             <div className='text-2xl font-medium'>{ flagInfo ? (flagInfo.name) : (<>Flag Name</>) }</div>
-                              <div className='ml-auto mr-5'> 
-                                <Actions flagID={Id}/>
-                              </div>
-                         </div>
-                    <div className='text-gray-600'> { flagInfo ? (flagInfo.description) : (<>Flag Description</>) } </div>
-                    </div>
-                    
+    <div className="border-red-950 flex">
+        <div className="text-2xl font-medium">
+            {flagInfo ? flagInfo.name : "Flag Name"}
+        </div>
+
+        <div className="ml-auto mr-5">
+            <Actions flagID={Id} />
+        </div>
+    </div>
+        
+        {editing ? <div className='mt-2 flex gap-2 text-sm'> 
+        <input type = "text" value={description} onChange={(e) => {setDescription(e.target.value)}} className='border border-gray-300 w-150 rounded-xs'/>
+        <button onClick={handleSaveDescription} className='cursor-pointer text-blue-700'> {saving ? <>Saving...</> : <>Save</>} </button>
+        { !saving && <button onClick={() => {setEditing(false); setDescription(flagInfo?.description ?? "")}} className='cursor-pointer' > Cancel </button> }
+         </div> : <div>
+
+        <div> {flagInfo ? 
+            <div className='flex'> {flagInfo.description }
+                  <button className='cursor-pointer ml-2 text-blue-700' onClick={() => {setEditing(true)}}> <Pencil className='h-4 w-4'/> </button>
+            </div> : "flag description"}  </div>
+
+        </div>
+        }
+
+    
                 </div>
+
+                {/* */}
             </div>
                 
             </div>

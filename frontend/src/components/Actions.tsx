@@ -41,9 +41,9 @@ const Actions = ({flagID}: {flagID: number}) => {
         <AlertDialog>
   <DropdownMenu>
     <DropdownMenuTrigger asChild>
-      <Button variant="secondary" className="rounded-sm">
-        <div className='text-sm font-bold flex justify-center items-center gap-1'>Actions <ChevronDown className='mt-0.5' /> </div>
-      </Button>
+      <button className='border border-gray-300 px-2 py-1 font- text-sm rounded-sm cursor-pointer'>
+        <div className='text-sm font-bold flex justify-center items-center gap-1'>Actions <ChevronDown className='mt-0.5 h-4 w-4' /> </div>
+      </button>
     </DropdownMenuTrigger>
 
     <DropdownMenuContent>

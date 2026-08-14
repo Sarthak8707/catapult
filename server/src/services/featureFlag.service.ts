@@ -211,9 +211,10 @@ export const createNewFlagService = async (name: string, description: string, pr
 
 export const changeFlagService = async (requestBody: any, flagID: number) => {
    
-  const {flagConfigID, enabled, description} = requestBody;
-  console.log("description:", description)
+  const {flagConfigID, enabled, description, rules} = requestBody;
+  console.log("rulesconditions:::", rules.conditions);
   
+  // Switch 
   if(enabled != undefined){
       try{
       const data = await db.update(environmentFlagConfig)
@@ -227,11 +228,34 @@ export const changeFlagService = async (requestBody: any, flagID: number) => {
     }
   }
 
+  // Description
+
   if(description != undefined){
     try{
       const data = await db.update(flags)
       .set({description: description})
       .where(eq(flags.id, flagID));
+
+      return {msg: "Updated successfully!"};
+    }
+    catch(err){
+      console.log(err);
+    }
+  }
+
+  // Conditions
+
+  if(rules != undefined){
+    try{
+      const ruleID = rules.ruleID;
+      const conditions = rules.conditions;
+
+      const data = await db.update(flagRules)
+      .set({conditions: {
+        "operator": "AND",
+        "conditions": conditions
+      }})
+      .where(eq(flagRules.id, ruleID));
 
       return {msg: "Updated successfully!"};
     }

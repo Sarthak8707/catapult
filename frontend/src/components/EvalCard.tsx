@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card } from './ui/card'
 import { Badge } from './ui/badge'
+import RuleEditor from './RuleEditor'
 
 
 type RuleType = {
@@ -25,6 +26,9 @@ type RuleType = {
 }
 
 const EvalCard = ({conditions, rollouts}: RuleType) => {
+
+  return <RuleEditor conditions={conditions.conditions} rollouts={rollouts}/>
+
   return (
     <div>
                         <div >

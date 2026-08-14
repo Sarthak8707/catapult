@@ -11,6 +11,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Button } from '@/components/ui/button';
 import Actions from '@/components/Actions';
 import { Pencil } from 'lucide-react';
+import RuleEditor from '@/components/RuleEditor';
 
 
 type RulesType = {
@@ -41,7 +42,7 @@ const FlagDetails = () => {
     const {id} = useParams();
     const Id = Number(id);
 
-    const [devRules, setDevRules] = useState<RulesType[]>();
+    const [devRules, setDevRules] = useState<RulesType[]>([]);
     const [stagRules, setStagRules] = useState<RulesType[]>([]);    
 
     const [flagInfo, setFlagInfo] = useState<{name: string, description: string, type: string}>();
@@ -127,6 +128,12 @@ const handleSaveDescription = async () => {
     }
 };
 
+//   return (
+//     <>
+//     <RuleEditor />
+//     </>
+//   )
+
   return (
     <div className='min-h-screen px-10 py-5 bg-white'>
     
@@ -137,7 +144,7 @@ const handleSaveDescription = async () => {
                 <div>
     <div className="border-red-950 flex">
         <div className="text-2xl font-medium">
-            {flagInfo ? flagInfo.name : "Flag Name"}
+            {flagInfo ? flagInfo?.name : "Flag Name"}
         </div>
 
         <div className="ml-auto mr-5">
@@ -152,7 +159,7 @@ const handleSaveDescription = async () => {
          </div> : <div>
 
         <div> {flagInfo ? 
-            <div className='flex'> {flagInfo.description }
+            <div className='flex'> {flagInfo?.description }
                   <button className='cursor-pointer ml-2 text-blue-700' onClick={() => {setEditing(true)}}> <Pencil className='h-4 w-4'/> </button>
             </div> : "flag description"}  </div>
 
@@ -256,7 +263,7 @@ const handleSaveDescription = async () => {
                 <div className='flex flex-col border-red-600 w-140 pt-5 pb-5 pl-10 gap-3 text-sm'>
                     <div className='flex text-sm'> <div className='text-gray-500 w-40'>Type</div> Release flag  </div>
                     <div className='flex'> <div className='text-gray-500 w-40'>Environment</div> Production </div>
-                    <div className='flex'> <div className='text-gray-500 w-40'>Type</div> { flagInfo ? (flagInfo.type) : (<>type</>) }  </div>
+                    <div className='flex'> <div className='text-gray-500 w-40'>Type</div> { flagInfo ? (flagInfo?.type) : (<>type</>) }  </div>
                 </div>
 
                 <div className='flex flex-col  border-amber-800 w-140 pt-5 pb-5 pl-10 gap-3 ml-auto'>

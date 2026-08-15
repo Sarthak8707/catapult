@@ -212,7 +212,7 @@ export const createNewFlagService = async (name: string, description: string, pr
 export const changeFlagService = async (requestBody: any, flagID: number) => {
    
   const {flagConfigID, enabled, description, rules} = requestBody;
-  console.log("rulesconditions:::", rules.conditions);
+ // console.log("rulesconditions:::", rules.conditions);
   
   // Switch 
   if(enabled != undefined){

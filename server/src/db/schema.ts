@@ -210,6 +210,18 @@ export const flagEvaluation = pgTable("flag_evaluation", {
 
 })
 
+export const segments = pgTable("segments", {
+    
+    id: serial("id").primaryKey(),
+
+    name: text("name"),
+
+    description: text("description"),
+
+    conditions: jsonb("conditions").$type<Record<string, any>>(),
+
+})
+
 // Incoming Events Table
 
 export const events = pgTable("events", {
@@ -249,6 +261,8 @@ export const automationActions = pgTable("automation_actions", {
         onDelete: "cascade", onUpdate: "cascade"
     }),
 
+    // Dependency Services
+
     service: text("service"),
 
     // threshold at which flag will be disabled
@@ -260,3 +274,5 @@ export const automationActions = pgTable("automation_actions", {
     action: text("action").default("turn_off")
 
 })
+
+

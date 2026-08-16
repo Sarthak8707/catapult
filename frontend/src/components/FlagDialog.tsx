@@ -27,6 +27,8 @@ export default function FlagDialog({id, token}: {id: number, token: string}) {
         description: ""
     })
 
+    const [creating, setCreating] = useState(false);
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
@@ -36,6 +38,7 @@ export default function FlagDialog({id, token}: {id: number, token: string}) {
 
     const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setCreating(true);
 
         try{
             const response = await axios.post(`http://localhost:3000/projects/${id}/flags`, formData, {
@@ -46,6 +49,8 @@ export default function FlagDialog({id, token}: {id: number, token: string}) {
 
             console.log(response.data)
             navigate(`/flags/${response.data.flagID}`)
+
+            setCreating(false);
             
         }
         catch(err){
@@ -80,6 +85,7 @@ export default function FlagDialog({id, token}: {id: number, token: string}) {
               <FieldLabel>Description</FieldLabel>
               <Input type="text" name="description" value={formData.description} onChange={handleChange} />
             </Field>
+            <div> {creating && <div className="text-center"> Creating Flag... </div>} </div>
           </DialogPanel>
           <DialogFooter>
             <DialogClose render={<Button variant="ghost" />}>

@@ -5,6 +5,7 @@ import RuleEditor from './RuleEditor'
 
 
 type RuleType = {
+    ruleID: number
     ruleName: string,
     conditions: {
       operator: string,
@@ -25,9 +26,9 @@ type RuleType = {
     }[]
 }
 
-const EvalCard = ({conditions, rollouts}: RuleType) => {
+const EvalCard = ({conditions, rollouts, ruleID}: RuleType) => {
 
-  return <RuleEditor conditions={conditions.conditions} rollouts={rollouts}/>
+  
 
   return (
     <div>

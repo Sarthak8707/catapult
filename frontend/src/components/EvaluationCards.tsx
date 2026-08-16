@@ -3,6 +3,8 @@ import { Separator } from '@/components/ui/separator';
 import EvalCard from './EvalCard';
 import { EllipsisVertical, Pencil, Trash2, } from 'lucide-react';
 import { Button } from './ui/button';
+import RuleEditor from './RuleEditor';
+import { useState } from 'react';
 
 type RuleType = {
     ruleID: number,
@@ -27,9 +29,11 @@ type RuleType = {
 }
 
 
-interface EvaluationCardsProps { rules: RuleType[] }
+interface EvaluationCardsProps { rules: RuleType[], setDevRules: React.Dispatch<React.SetStateAction<any>>}
 
-const EvaluationCards = ({rules}: EvaluationCardsProps) => {
+const EvaluationCards = ({rules, setDevRules}: EvaluationCardsProps) => {
+
+  const [editing, setEditing] = useState<number | null>(null);
 
   if(rules.length == 0){
     return <>
@@ -46,12 +50,22 @@ const EvaluationCards = ({rules}: EvaluationCardsProps) => {
                 {rules.map((rule, index) => (
                     <div>
                         <div className='ml-10 mr-10 flex'>Rule {index + 1}  <div className='ml-auto flex border border-gray-200 rounded'> 
-                          <Button variant="ghost" className='border-none'> <Pencil /> </Button>
+                          {index == editing ? <>
+                              <button className='border cursor-pointer' onClick={() => setEditing(null)}>Cancel</button>
+                          </> : <>
+                              <Button variant="ghost" className='border-none' onClick={() => setEditing(index)} > <Pencil /> </Button>
+                          </> }
                           <Button variant="ghost" className='border-none'> <EllipsisVertical /> </Button>
                           <Button variant="destructive-outline" className='border-none'> <Trash2 /> </Button>
                           
                            </div>  </div>
-                        <EvalCard {...rule}/>
+
+                        {index == editing ? <> <RuleEditor conditions={rule.conditions.conditions} 
+                            rollouts = {rule.rollouts} ruleID={rule.ruleID} setEditing={setEditing} 
+                            setDevRules={setDevRules}
+                         /> </> : <> <EvalCard {...rule}/> </> }
+
+
                         {(index != rules.length - 1) && 
                            <Separator className="my-8"/>
                         }

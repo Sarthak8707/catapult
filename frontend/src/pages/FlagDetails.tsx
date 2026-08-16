@@ -62,9 +62,10 @@ const FlagDetails = () => {
 
             const res2 = await axios.get(`http://localhost:3000/flags/${id}/summary`);
             setFlagInfo(res2.data);
+          //  console.log(response.data)
 
             const dev = response.data.find((c: any) => c.environment == "dev");
-            if(dev)  setDevRules(dev.rules);
+            if(dev) { setDevRules(dev.rules); console.log(dev.rules);}
             else setDevRules([])
 
             const stag = response.data.find((c: any) => c.environment == "stag");
@@ -128,11 +129,6 @@ const handleSaveDescription = async () => {
     }
 };
 
-//   return (
-//     <>
-//     <RuleEditor />
-//     </>
-//   )
 
   return (
     <div className='min-h-screen px-10 py-5 bg-white'>
@@ -212,7 +208,7 @@ const handleSaveDescription = async () => {
 
                             {/* Evaluation Cards */}
 
-                            {devRules && <EvaluationCards rules={devRules} />}
+                            {devRules && <EvaluationCards rules={devRules}  setDevRules={setDevRules}/>}
 
                             
 
@@ -235,7 +231,7 @@ const handleSaveDescription = async () => {
 
                             {/* Evaluation Cards */}
 
-                           {stagRules && <EvaluationCards rules={stagRules} />}
+                           {stagRules && <EvaluationCards rules={stagRules} setDevRules={setDevRules}/>}
 
                             
 

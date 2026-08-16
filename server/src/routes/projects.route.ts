@@ -1,6 +1,7 @@
 import express from "express";
 import { createFlagInProjectController, getAllEnvironmentsController, getAllFlagsOfProjectController, getAllProjectsOfUserController, getGuardrailsController, getProjectInfoController, getRecentActivityController } from "../controllers/projects.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
+import { getAllSegmentsController, getSegmentController } from "../controllers/segments.controller";
 
 const router = express.Router();
 
@@ -40,6 +41,8 @@ router.get("/:id/activity", getRecentActivityController);
 
 router.get("/:id/guardrails", getGuardrailsController);
 
+// Get Segments of project
 
+router.get("/:id/segments", getAllSegmentsController);
 
 export {router as projectsRouter}

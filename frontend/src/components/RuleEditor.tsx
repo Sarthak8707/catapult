@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React, { useState } from 'react'
 
 type RuleType = {
@@ -37,7 +38,11 @@ type rolloutsType = {
     }
 }[]
 
-const RuleEditor = ({conditions, rollouts}: {conditions: ConditionsType, rollouts: rolloutsType}) => {
+const RuleEditor = ({conditions, rollouts, ruleID, setEditing, setDevRules} :
+    {conditions: ConditionsType, rollouts: rolloutsType, ruleID: number, 
+    setEditing: React.Dispatch<React.SetStateAction<number | null>>,
+    setDevRules: React.Dispatch<React.SetStateAction<RuleType[]>>
+}) => {
 
     const [conditionsNew, setConditionsNew] = useState<ConditionsType>(conditions ?? [
         {
@@ -52,6 +57,8 @@ const RuleEditor = ({conditions, rollouts}: {conditions: ConditionsType, rollout
         percentage: 0,
         value: { param: "", val: "" }
     }])
+
+    const [saving, setSaving] = useState(false);
 
     const updateConditions = (idx: number, field: string, newValue: string) => {
 
@@ -128,10 +135,32 @@ const RuleEditor = ({conditions, rollouts}: {conditions: ConditionsType, rollout
         ))
     }
 
-    
+    const handleSave = async () => {
+        setSaving(true);
+        const response = await axios.put(`http://localhost:3000/flags/17`, {
+            "rules": {
+                "ruleID": ruleID,
+                "conditions": conditionsNew
+            }
+        })
+        setSaving(false);
+        setEditing(null);
+
+        setDevRules((prev) => (
+            prev.map((rule, i) => (
+                rule.ruleID == ruleID ? {
+                    ...rule,
+                    conditions: {
+                        operator: "AND",
+                        conditions: conditionsNew
+                    }
+                } : rule
+            ))
+        ))
+    }
 
   return (
-    <div className='flex flex-col gap-8'>
+    <div className='flex flex-col gap-8 text-sm'>
         {conditionsNew.map((condition, idx) => (
             <div className='flex  gap-1'>
                 <div>
@@ -169,6 +198,10 @@ const RuleEditor = ({conditions, rollouts}: {conditions: ConditionsType, rollout
         ))}
 
         <button onClick={addCondition} className='border border-gray-600 cursor-pointer w-40'>Add Condition</button>
+        
+        {saving ? <div> Saving... </div> : (
+            <button onClick={handleSave} className='border border-green-600 cursor-pointer w-40 rounded-xs'>Save Conditions</button>
+        ) }
 
 
         <div className='flex flex-col gap-3'>

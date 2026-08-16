@@ -220,6 +220,10 @@ export const segments = pgTable("segments", {
 
     conditions: jsonb("conditions").$type<Record<string, any>>(),
 
+    projectID: integer("project_id").references(() => projects.id, {
+        onDelete: "cascade", onUpdate: "cascade"
+    })
+
 })
 
 // Incoming Events Table

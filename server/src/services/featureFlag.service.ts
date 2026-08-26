@@ -9,9 +9,12 @@ import { Rule, SDKFlagConfig } from "../types/flag.types";
 
 export const getFlagSummaryService = async (flagID: number) => {
 
-  const [data] = await db.select().from(flags).where(eq(flags.id, flagID));
+  let [data] = await db.select().from(flags).where(eq(flags.id, flagID));
 
-  return data;
+  let variants = await db.select().from(flagVariants).where(eq(flagVariants.flagID, flagID));
+
+  const summary = { ...data, variants: variants }
+  return summary;
 
 }
 
@@ -211,7 +214,7 @@ export const createNewFlagService = async (name: string, description: string, pr
 
 export const changeFlagService = async (requestBody: any, flagID: number) => {
    
-  const {flagConfigID, enabled, description, rules} = requestBody;
+  const {flagConfigID, enabled, description, rules, rollouts} = requestBody;
  // console.log("rulesconditions:::", rules.conditions);
   
   // Switch 
@@ -263,7 +266,33 @@ export const changeFlagService = async (requestBody: any, flagID: number) => {
       console.log(err);
     }
   }
+
+  // Rollouts
+
+  if(rollouts != undefined){
     
+    try{
+
+      for(const rollout of rollouts){
+
+      await db.update(flagRollouts)
+      .set({
+        percentage: rollout.percentage,
+        variantID: rollout.variantID
+      })
+      .where(eq(flagRollouts.id, rollout.rolloutID))
+    }
+
+    return {msg: "Updated successfully!"};
+
+    }
+    catch(err){
+      console.log(err);
+    }
+    
+  }
+    
+
 }
 
 // Delete a flag

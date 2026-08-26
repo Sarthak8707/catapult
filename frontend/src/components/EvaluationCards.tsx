@@ -6,6 +6,15 @@ import { Button } from './ui/button';
 import RuleEditor from './RuleEditor';
 import { useState } from 'react';
 
+type VariantsType = {
+    variantName: string,
+      variantID: number,
+      value: {
+        param: string,
+        val: any
+      }
+}[]
+
 type RuleType = {
     ruleID: number,
     ruleName: string,
@@ -19,8 +28,10 @@ type RuleType = {
     },
     
     rollouts: {
+      rolloutID: number,
       percentage: number,
       variantName: string,
+      variantID: number,
       value: {
         param: string,
         val: any
@@ -29,9 +40,9 @@ type RuleType = {
 }
 
 
-interface EvaluationCardsProps { rules: RuleType[], setDevRules: React.Dispatch<React.SetStateAction<any>>}
+interface EvaluationCardsProps { rules: RuleType[], setDevRules: React.Dispatch<React.SetStateAction<any>>, variants: VariantsType}
 
-const EvaluationCards = ({rules, setDevRules}: EvaluationCardsProps) => {
+const EvaluationCards = ({rules, setDevRules, variants}: EvaluationCardsProps) => {
 
   const [editing, setEditing] = useState<number | null>(null);
 
@@ -51,7 +62,7 @@ const EvaluationCards = ({rules, setDevRules}: EvaluationCardsProps) => {
                     <div>
                         <div className='ml-10 mr-10 flex'>Rule {index + 1}  <div className='ml-auto flex border border-gray-200 rounded'> 
                           {index == editing ? <>
-                              <button className='border cursor-pointer' onClick={() => setEditing(null)}>Cancel</button>
+                              <button className='hover:bg-neutral-100 rounded-xs px-1 text-gray-600 font-medium text-sm cursor-pointer' onClick={() => setEditing(null)}>Cancel</button>
                           </> : <>
                               <Button variant="ghost" className='border-none' onClick={() => setEditing(index)} > <Pencil /> </Button>
                           </> }
@@ -62,7 +73,7 @@ const EvaluationCards = ({rules, setDevRules}: EvaluationCardsProps) => {
 
                         {index == editing ? <> <RuleEditor conditions={rule.conditions.conditions} 
                             rollouts = {rule.rollouts} ruleID={rule.ruleID} setEditing={setEditing} 
-                            setDevRules={setDevRules}
+                            setDevRules={setDevRules} variants={variants}
                          /> </> : <> <EvalCard {...rule}/> </> }
 
 

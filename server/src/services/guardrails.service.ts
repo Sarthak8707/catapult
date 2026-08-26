@@ -9,6 +9,8 @@ export const getGuardrailsService = async (projectID: number) => {
         description: automationActions.description,
         service: automationActions.service, 
         errorThreshold: automationActions.errorThreshold,
+        actionType: automationActions.actionType,
+        action: automationActions.action
     })
     .from(flags)
     .innerJoin(environmentFlagConfig,

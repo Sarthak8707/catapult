@@ -140,12 +140,14 @@ export const flagTargets = pgTable("flag_targets", {
 export const flagVariants = pgTable("flag_variants", {
     id: serial("id").primaryKey(),
 
+    // Variants is flag scoped
+
     flagID: integer("flag_id").references(() => flags.id, {
         onDelete: "cascade", onUpdate: "cascade"
     }),
 
     name: text("name").notNull(),
-    value: jsonb("value").$type<Record<string, any>>()
+    value: jsonb("value").$type<boolean | Record<string, any>>()
 
 }, (table) => [
     unique("flag_id_key").on(
@@ -165,8 +167,9 @@ export const flagRules = pgTable("flag_rules", {
     name: text("name").notNull(),
     conditions: jsonb("conditions").$type<Record<string, any>>(),
 
-    // Variant not null only if rule has simple 100% rollout and evaluation ends here. For rollout 
-    // values which are distributed it is null and evaluated through rollouts.
+    // Variant not null only if rule has simple rollout and evaluation ends here. In this case,
+    // users lying in the percentage which is defined here (if not, then it is 100) simply get the 
+    // variant. For rollout values which are distributed it is null and evaluated through rollouts.
 
     variantID: integer("variant_id").references(() => flagVariants.id, {
         onDelete: "restrict", onUpdate: "cascade"
@@ -217,6 +220,8 @@ export const segments = pgTable("segments", {
     name: text("name"),
 
     description: text("description"),
+
+    type: text("type"),
 
     conditions: jsonb("conditions").$type<Record<string, any>>(),
 
@@ -272,6 +277,8 @@ export const automationActions = pgTable("automation_actions", {
     // threshold at which flag will be disabled
 
     errorThreshold: integer("error_threshold").notNull(),
+
+    actionType: text("action_type").default("kill switch"),
 
     // action to be performed
 

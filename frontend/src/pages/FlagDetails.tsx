@@ -12,7 +12,17 @@ import { Button } from '@/components/ui/button';
 import Actions from '@/components/Actions';
 import { Pencil } from 'lucide-react';
 import RuleEditor from '@/components/RuleEditor';
+import FlagEvaluation from '@/components/FlagEvaluation';
+import FlagVariants from '@/components/FlagVariants';
 
+type VariantsType = {
+    variantName: string,
+      variantID: number,
+      value: {
+        param: string,
+        val: any
+      }
+}[]
 
 type RulesType = {
     
@@ -28,8 +38,10 @@ type RulesType = {
     },
     
     rollouts: {
+      rolloutID: number,
       percentage: number,
       variantName: string,
+      variantID: number,
       value: {
         param: string,
         val: any
@@ -45,7 +57,7 @@ const FlagDetails = () => {
     const [devRules, setDevRules] = useState<RulesType[]>([]);
     const [stagRules, setStagRules] = useState<RulesType[]>([]);    
 
-    const [flagInfo, setFlagInfo] = useState<{name: string, description: string, type: string}>();
+    const [flagInfo, setFlagInfo] = useState<{name: string, description: string, type: string, variants: VariantsType}>();
     const [devEnabled, setDevEnabled] = useState(false);
     const [stagEnabled, setStagEnabled] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -144,7 +156,7 @@ const handleSaveDescription = async () => {
         </div>
 
         <div className="ml-auto mr-5">
-            <Actions flagID={Id} />
+            {/* <Actions flagID={Id} /> */}
         </div>
     </div>
         
@@ -170,82 +182,32 @@ const handleSaveDescription = async () => {
                 
             </div>
 
-            <Separator className="my-2" />
-    
-            {/* Top Analytics */}
-
-            
+            <Separator className="my-2" />        
 
            
            {/* Flag Rules */}
             
-            <div className='text-xl mt-10 font-semibold'>Flag Evaluation</div>
-            <div className='text-gray-600 mt-1 flex gap-1 text-sm'> The release flow of the flag across various rules. In case server is unreachable, <div className='text-blue-700 font-medium'>default rule</div> will be applied.</div>
-    
-            {loading ? <div className=' h-100 w-220  mt-10 rounded-sm text-gray-600 font-medium border flex items-center justify-center' > Loading Flag Evaluation... </div> : 
-            <>
-            <div className='border-red-500 w-220  mt-10'>
 
-            <Tabs >
-                    <TabsList variant="underline" className="mb-5">
-                                    <TabsTab value="tab-1">Development</TabsTab>
-                                    <TabsTab value="tab-2">Staging</TabsTab>
-                    </TabsList>
-
-                    <TabsPanel value="tab-1">
-
-
-            <Card className=' rounded-sm'>
-                    <CardHeader>
-                        <CardTitle className='flex'> <div className=''>Flag is On {devEnabled ? <>True</>: <>False</> }  </div> <Switch className="ml-auto [--thumb-size:--spacing(4)] cursor-pointer" checked = {devEnabled} onCheckedChange={(check) => {handleChange(check, "dev")}} disabled = {disabled} />
-                        </CardTitle>
-                    </CardHeader>
-                    <Separator />
-                    <CardPanel className=''>
-                        <div className='mt-5'>
-                            <div className='mt-8 mb-5'> Release Flow</div>
-                             
-
-                            {/* Evaluation Cards */}
-
-                            {devRules && <EvaluationCards rules={devRules}  setDevRules={setDevRules}/>}
-
-                            
-
-                        </div>
-                    </CardPanel>
-            </Card>                
-                        </TabsPanel>
-                        <TabsPanel value="tab-2">
-
-            <Card className=' rounded-sm'>
-                    <CardHeader>
-                        <CardTitle className='flex'> <div className=''>Flag is On {stagEnabled ? <>True</>: <>False</> }  </div> <Switch className="ml-auto [--thumb-size:--spacing(4)] cursor-pointer" checked = {stagEnabled} onCheckedChange={(check) => {handleChange(check, "stag")}} disabled = {disabled} />
-                        </CardTitle>
-                    </CardHeader>
-                    <Separator />
-                    <CardPanel className=''>
-                        <div className='mt-5'>
-                            <div className='mt-8 mb-5'> Release Flow</div>
-                             
-
-                            {/* Evaluation Cards */}
-
-                           {stagRules && <EvaluationCards rules={stagRules} setDevRules={setDevRules}/>}
-
-                            
-
-                        </div>
-                    </CardPanel>
-            </Card>                 
-                        </TabsPanel>
-
-        </Tabs>
-
-        </div>
-            </> }
-
-            <div className='mt-10'></div>
+            <div className='mt-10'>
+                <Tabs>
+                <TabsList variant='underline'>
+                    <TabsTab value="val-1" className="w-40">Evaluation</TabsTab>
+                    <TabsTab value="val-2" className="w-40">Variants</TabsTab>
+                    <TabsTab value="val-3" className="w-40">Audit Log</TabsTab>
+                </TabsList>
+                <TabsPanel value="val-1">
+                    <FlagEvaluation loading={loading} devEnabled={devEnabled} devRules={devRules} stagRules={stagRules} 
+                    stagEnabled={stagEnabled} disabled={disabled} handleChange={handleChange} setDevRules={setDevRules} 
+                    variants={flagInfo?.variants} />
+                </TabsPanel>
+                <TabsPanel value="val-2">
+                    <div className='h-200'> <FlagVariants /> </div>
+                </TabsPanel>
+                <TabsPanel value="val-3">
+                    <div className='h-100'> Audit Log </div>
+                </TabsPanel>
+            </Tabs>
+            </div>
 
 
             <div className="my-2 h-[0.5px] w-full bg-border" />

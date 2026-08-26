@@ -46,7 +46,7 @@ const Segments = () => {
     <div className='min-h-screen px-10 py-5 bg-white'>
         <div className='flex items-center justify-center'> 
             <div className='text-2xl font-medium'> Segments </div>
-            <div className='ml-auto flex gap-5'>
+            <div className='ml-auto flex gap-2'>
                 <button className=' px-3 py-2 text-gray-700 hover:bg-gray-100 text-sm rounded-sm font-medium cursor-pointer flex gap-1 items-center'> <SquareArrowRightExit className='h-3 w-3'/> <div>Export</div> </button>
                 <button className='bg-blue-700 text-white px-3 py-2 font-medium text-sm rounded-sm cursor-pointer'> Create Segment </button>
             </div>

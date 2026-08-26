@@ -69,7 +69,7 @@ const EvalCard = ({conditions, rollouts, ruleID}: RuleType) => {
 
                                 <Card className="w-170  flex justify-center px-8 rounded-sm text-sm">
                                 <div className=" flex  py-4 border-red-400">
-                                <div className='w-30 text-gray-600  border-blue-600 flex items-center'>Rollout %</div>
+                                <div className='w-30 text-gray-600  border-blue-600 flex items-center'>Rollout </div>
                                 <div > {rollouts.map((rollout, index) => (
                                   <div className='text-gray-600 flex gap-1'> 
                                     <div className='font-semibold'> {rollout?.percentage}% </div> of users get <div className='font-medium'>{rollout?.value?.val}</div> 

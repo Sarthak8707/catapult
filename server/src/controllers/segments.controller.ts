@@ -19,6 +19,7 @@ export const getSegmentController = async (req: Request, res: Response, next: Ne
     try{
         const id = Number(req.params.id);
         const data = await getSegmentService(id);
+        return res.status(200).json(data);
     }
     catch(err){
         console.log(err);

@@ -67,7 +67,6 @@ const EvaluationCards = ({rules, setDevRules, variants}: EvaluationCardsProps) =
                               <Button variant="ghost" className='border-none' onClick={() => setEditing(index)} > <Pencil /> </Button>
                           </> }
                           <Button variant="ghost" className='border-none'> <EllipsisVertical /> </Button>
-                          <Button variant="destructive-outline" className='border-none'> <Trash2 /> </Button>
                           
                            </div>  </div>
 

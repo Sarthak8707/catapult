@@ -227,7 +227,9 @@ export const segments = pgTable("segments", {
 
     projectID: integer("project_id").references(() => projects.id, {
         onDelete: "cascade", onUpdate: "cascade"
-    })
+    }),
+
+    createdAt: timestamp("created_at").defaultNow(),
 
 })
 

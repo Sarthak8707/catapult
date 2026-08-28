@@ -210,7 +210,7 @@ const RuleEditor = ({conditions, rollouts, ruleID, setEditing, setDevRules, vari
     }
 
   return (
-    <div className='flex flex-col gap-8 text-sm border border-gray-200 rounded-sm pt-4 px-4 mt-4'>
+    <div className='flex flex-col gap-8 text-sm border bg-gray-50 border-gray-200 rounded-sm pt-4 px-4 mt-4'>
         {conditionsNew.map((condition, idx) => (
             <div className='flex gap-1'>
                 <div className=' border-red-300 flex flex-col gap-2'>
@@ -247,7 +247,7 @@ const RuleEditor = ({conditions, rollouts, ruleID, setEditing, setDevRules, vari
             </div>
         ))}
 
-        <button onClick={addCondition} className='bg-gray-700 hover:bg-gray-600 rounded-xs text-white font-medium cursor-pointer w-40 px-2 py-0.5 transition-colors duration-200'><div className='flex items-center gap-2'><Plus className='h-3 w-3'/> Add Condition</div></button>
+        <button onClick={addCondition} className='bg-white hover:bg-blue-50 border border-blue-600 rounded-xs text-blue-600 font-medium cursor-pointer w-40 px-2 py-0.5 transition-colors duration-200'><div className='flex items-center gap-2'><Plus className='h-3 w-3'/> Add Condition</div></button>
         
         {saving ? <div> Saving... </div> : (
             <button onClick={handleSave} className='bg-blue-700 hover:bg-blue-600 text-white font-medium cursor-pointer w-40 px-2 py-0.5 transition-colors duration-200 rounded-xs'>Save Conditions</button>

@@ -1,7 +1,7 @@
 import { Separator } from '@/components/ui/separator';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import {
   Table,
   TableBody,
@@ -15,8 +15,11 @@ import { Search, SquareArrowRightExit } from 'lucide-react';
 const Segments = () => {
     const {id} = useParams();
     const [segments, setSegments] = useState<{
+        id: number,
         name: string,
         description: string,
+        type?: string,
+        createdAt: string,
         conditions: {
             operator: string,
             conditions: {
@@ -26,6 +29,7 @@ const Segments = () => {
             }[]
         }
     }[]>([]);
+    const [loading, setLoading] = useState(true);
 
 
     useEffect(() => {
@@ -38,6 +42,9 @@ const Segments = () => {
             catch(err){
                 console.log("errr:::", err)
             }
+            finally{
+              setLoading(false);
+            }
         }
 
         getSegments();
@@ -46,9 +53,9 @@ const Segments = () => {
     <div className='min-h-screen px-10 py-5 bg-white'>
         <div className='flex items-center justify-center'> 
             <div className='text-2xl font-medium'> Segments </div>
-            <div className='ml-auto flex gap-2'>
-                <button className=' px-3 py-2 text-gray-700 hover:bg-gray-100 text-sm rounded-sm font-medium cursor-pointer flex gap-1 items-center'> <SquareArrowRightExit className='h-3 w-3'/> <div>Export</div> </button>
-                <button className='bg-blue-700 text-white px-3 py-2 font-medium text-sm rounded-sm cursor-pointer'> Create Segment </button>
+            <div className='ml-auto flex gap-3'>
+                <button className=' px-3 py-2 text-foreground hover:bg-gray-100 transition-colors duration-200 text-sm rounded-sm font-medium cursor-pointer flex gap-1 items-center'> <SquareArrowRightExit className='h-3 w-3'/> <div>Export</div> </button>
+                <button className='bg-blue-700 hover:bg-blue-600 text-white px-3 py-2 font-medium text-sm transition-colors duration-200 rounded-sm cursor-pointer'> Create Segment </button>
             </div>
         </div>
 
@@ -68,40 +75,36 @@ const Segments = () => {
             </div>
         </div>
 
-        <div className=' border-gray-300 w-300 mt-10'> 
+        {loading ? <div className='flex items-center justify-center h-100 w-220'> Loading Segments... </div> : <div> 
+          <div className=' border-red-300 w-300 mt-10'> 
             <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Product</TableHead>
+          <TableHead>Name</TableHead>
           <TableHead>Tags</TableHead>
           <TableHead className="">Created</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow>
-          <TableCell className="font-medium">Wireless Mouse</TableCell>
-          <TableCell>$29.99</TableCell>
+        
+        {segments.map((segment, idx) => (
+          
+            <TableRow>
+           <TableCell className=""> <Link to={`/segments/${segment.id}`}> {segment.name}</Link> </TableCell>
+          <TableCell> {segment.type ? segment.type : "No tags" } </TableCell>
           <TableCell className="">
-            12/05/2026
+            { new Date(segment.createdAt).toLocaleDateString() }
           </TableCell>
         </TableRow>
-        <TableRow>
-          <TableCell className="font-medium">Mechanical Keyboard</TableCell>
-          <TableCell>$129.99</TableCell>
-          <TableCell className="text-right">
-            
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell className="font-medium">USB-C Hub</TableCell>
-          <TableCell>$49.99</TableCell>
-          <TableCell className="text-right">
-            
-          </TableCell>
-        </TableRow>
+          
+        ))}
+        
       </TableBody>
     </Table>
         </div>
+          </div> }
+
+        
     </div>
   )
 }

@@ -13,6 +13,7 @@ import EnvironmentDetails from "./pages/EnvironmentDetails";
 import FlagDetails from "./pages/FlagDetails";
 import Guardrails from "./pages/Guardrails";
 import Segments from "./pages/Segments";
+import SegmentDetails from "./pages/SegmentDetails";
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
         <Route path="environments/:id" element={<EnvironmentDetails />} />
         <Route path="flags/:id" element={<FlagDetails />} />
         <Route path="projects/:id/segments" element={<Segments />} />
+        <Route path="segments/:id" element={<SegmentDetails />} />
       </Route>
     </Routes>
   );

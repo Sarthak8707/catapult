@@ -3,15 +3,8 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Separator } from '@/components/ui/separator';
 import axios from 'axios';
-import { Card, CardHeader, CardPanel, CardTitle } from '@/components/ui/card';
-import { Switch } from '@/components/ui/switch';
-import EvaluationCards from '@/components/EvaluationCards';
 import { Tabs, TabsList, TabsPanel, TabsTab } from '@/components/ui/tabs';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Button } from '@/components/ui/button';
-import Actions from '@/components/Actions';
 import { Pencil } from 'lucide-react';
-import RuleEditor from '@/components/RuleEditor';
 import FlagEvaluation from '@/components/FlagEvaluation';
 import FlagVariants from '@/components/FlagVariants';
 
@@ -75,7 +68,7 @@ const FlagDetails = () => {
             const res2 = await axios.get(`http://localhost:3000/flags/${id}/summary`);
             setFlagInfo(res2.data);
           //  console.log(response.data)
-
+          //  console.log("variants at first", res2.data?.variants)
             const dev = response.data.find((c: any) => c.environment == "dev");
             if(dev) { setDevRules(dev.rules); console.log(dev.rules);}
             else setDevRules([])
@@ -92,7 +85,7 @@ const FlagDetails = () => {
             if(response.data.length) setStagEnabled(response.data[1].enabled);
             setLoading(false);
             setDescription(res2.data.description)
-            console.log(description)
+          //  console.log(description)
             //console.log(dev.rules);
             
         }
@@ -140,7 +133,6 @@ const handleSaveDescription = async () => {
         setEditing(false);
     }
 };
-
 
   return (
     <div className='min-h-screen px-10 py-5 bg-white'>
@@ -201,7 +193,7 @@ const handleSaveDescription = async () => {
                     variants={flagInfo?.variants} />
                 </TabsPanel>
                 <TabsPanel value="val-2">
-                    <div className='h-200'> <FlagVariants /> </div>
+                    <div className='h-200'> {flagInfo?.variants && <FlagVariants variants={flagInfo?.variants} /> } </div>
                 </TabsPanel>
                 <TabsPanel value="val-3">
                     <div className='h-100'> Audit Log </div>

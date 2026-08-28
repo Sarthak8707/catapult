@@ -17,7 +17,7 @@ export const getAllSegmentsService = async (projectID: number) => {
 export const getSegmentService = async (id: number) => {
 
     try{
-        const data = await db.select().from(segments).where(eq(segments.id, id));
+        const [data] = await db.select().from(segments).where(eq(segments.id, id));
 
         return data;
     }

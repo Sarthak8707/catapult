@@ -13,6 +13,11 @@ export const getFlagSummaryService = async (flagID: number) => {
 
   let variants = await db.select().from(flagVariants).where(eq(flagVariants.flagID, flagID));
 
+  variants = variants.map((variant) => ({
+    ...variant,
+    variantName: variant.name,
+    
+  }))
   const summary = { ...data, variants: variants }
   return summary;
 

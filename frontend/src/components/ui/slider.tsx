@@ -43,7 +43,7 @@ export function Slider({
           data-slot="slider-track"
         >
           <SliderPrimitive.Indicator
-            className="select-none rounded-full bg-primary data-[orientation=horizontal]:ms-0.5 data-[orientation=vertical]:mb-0.5"
+            className="select-none rounded-full bg-blue-600 data-[orientation=horizontal]:ms-0.5 data-[orientation=vertical]:mb-0.5"
             data-slot="slider-indicator"
           />
           {Array.from({ length: _values.length }, (_, index) => (

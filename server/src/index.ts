@@ -7,6 +7,7 @@ import { environmentsRouter } from "./routes/environments.route";
 import { authRouter } from "./routes/auth.route";
 import { eventsRouter } from "./routes/events.route";
 import { segmentsRouter } from "./routes/segments.route";
+import { guardrailRouter } from "./routes/guardrails.route";
 
 const app = express();
 
@@ -44,6 +45,10 @@ app.use("/events", eventsRouter);
 // Segments Routes
 
 app.use("/segments", segmentsRouter);
+
+// Guardrails Routes
+
+app.use("/guardrails", guardrailRouter);
 
 
 

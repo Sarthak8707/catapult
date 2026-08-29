@@ -276,15 +276,21 @@ export const automationActions = pgTable("automation_actions", {
 
     service: text("service"),
 
+    // trigger metric
+
+    triggerMetric: text("trigger_metric").default("error").array().default(["error rate"]),
+
     // threshold at which flag will be disabled
 
-    errorThreshold: integer("error_threshold").notNull(),
+    errorThreshold: integer("error_threshold").notNull().default(5),
+
+    // actions type
 
     actionType: text("action_type").default("kill switch"),
 
     // action to be performed
 
-    action: text("action").default("turn_off")
+    action: text("action").default("turn off")
 
 })
 

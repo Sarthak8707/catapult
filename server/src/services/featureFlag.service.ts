@@ -186,32 +186,32 @@ catch (err){
 
 export const createNewFlagService = async (name: string, description: string, projectID: number, userID: number) => {
 
-    // Add flag to Flags db
-    const [flag] = await db.insert(flags).values([
+      // Add flag to Flags db
+      const [flag] = await db.insert(flags).values([
+          {
+              name, description, createdBy: userID, projectID
+          },
+
+      ]).returning({id: flags.id});
+
+      // Add environment flag configs to db
+
+      await db.insert(environmentFlagConfig).values([
+        { flagID: flag.id, environment: "dev" },
+        { flagID: flag.id, environment: "stag" }
+      ])
+      
+      // Push Audit Logs
+
+      db.insert(auditLogs).values(
         {
-            name, description, createdBy: userID, projectID
-        },
+          projectID, actorUserID: userID, action: "created", resourceType: "flag", resourceID: flag.id
+        }
+      )
 
-    ]).returning({id: flags.id});
-
-    // Add environment flag configs to db
-
-    await db.insert(environmentFlagConfig).values([
-      { flagID: flag.id, environment: "dev" },
-      { flagID: flag.id, environment: "stag" }
-    ])
-    
-    // Push Audit Logs
-
-     db.insert(auditLogs).values(
-      {
-        projectID, actorUserID: userID, action: "created", resourceType: "flag", resourceID: flag.id
-      }
-    )
-
-    return {
-        flagID: flag.id,
-    };
+      return {
+          flagID: flag.id,
+      };
 
 }
 

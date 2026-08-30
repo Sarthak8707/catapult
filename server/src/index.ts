@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import {flagRouter} from "./routes/featureFlag.route"
-import { organizationsRouter } from "./routes/organizations.route";
 import { projectsRouter } from "./routes/projects.route";
 import { environmentsRouter } from "./routes/environments.route";
 import { authRouter } from "./routes/auth.route";
@@ -17,10 +16,6 @@ app.use(express.json());
 
 
         // Routes
-
-// Organization Routes
-
-app.use("/organizations", organizationsRouter);
 
 // Projects Routes
 

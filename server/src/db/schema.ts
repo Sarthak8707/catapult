@@ -4,19 +4,6 @@ import { integer, pgTable, boolean, serial, text, timestamp } from "drizzle-orm/
 import { Rule } from "../types/flag.types";
 import { unique } from "drizzle-orm/pg-core";
 
-
-
-// Organizations Table
-
-export const organizations = pgTable("organizations", {
-    id: serial("id").primaryKey(),
-    name: text("name").notNull(),
-    createdBy: integer("created_by").notNull().references(() => users.id, {
-        onDelete: "restrict", onUpdate: "cascade"
-    }) ,
-    createdAt: timestamp("created_at").defaultNow(),
-})
-
 // Users Table
 
 export const users = pgTable("users", {
@@ -34,7 +21,7 @@ export const members = pgTable("members", {
     userID: integer("user_id").notNull().references(() => users.id, {
         onDelete: "cascade", onUpdate: "cascade"
     }),
-    organizationID: integer("organization_id").notNull().references(() => organizations.id, {
+    projectID: integer("organization_id").notNull().references(() => projects.id, {
         onDelete: "cascade", onUpdate: "cascade"
     }),
     role: text("role"),
@@ -46,9 +33,6 @@ export const members = pgTable("members", {
 export const projects = pgTable("projects", {
     id: serial("id").primaryKey(),
     name: text("name").notNull(),
-    organizationID: integer("organization_id").notNull().references(() => organizations.id, {
-        onDelete: "cascade", onUpdate: "cascade"
-    }),
     createdAt: timestamp("created_at").defaultNow(),
     createdBy: integer("created_by").notNull().references(() => users.id, {
         onDelete: "restrict", onUpdate: "cascade"

@@ -3,6 +3,7 @@ import { getAllProjectsOfUserService, getProjectInfoService, getRecentActivitySe
 
 import { createNewFlagService, getAllFLagsOfProjectService } from "../services/featureFlag.service";
 import { getGuardrailsService } from "../services/guardrails.service";
+import { getProjectMembers } from "../services/members.service";
 
 export const getAllProjectsOfUserController = async (req: Request, res: Response, next: NextFunction) => {
 
@@ -91,6 +92,15 @@ export const getGuardrailsController = async (req: Request, res: Response, next:
     const projectID = Number(req.params.id);
     const result = await getGuardrailsService(projectID);
     res.status(200).json(result);
+}
+
+
+export const getMembersController = async (req: Request, res: Response, next: NextFunction) => {
+    
+    const projectID = Number(req.params.id);
+    const result = await getProjectMembers(projectID);
+    res.status(200).json(result);
+    
 }
 
 

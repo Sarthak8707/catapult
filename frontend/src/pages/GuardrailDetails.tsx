@@ -50,8 +50,8 @@ const GuardrailDetails = () => {
                         </div>
                         </div>
 
-                        <div className='border-red-400 text-foreground flex flex-col gap-3'>
-                            <div className='flex border bg-gray-100 rounded-xs h-15 items-center pl-2  gap-9'>
+                        <div className=' border-red-400 text-foreground flex flex-col gap-2'>
+                            <div className='flex rounded-xs h-15 items-center pl-2  gap-9'>
                                 <Checkbox className='size-6 cursor-pointer' />
                                 <div className='flex '>
                                     <div className=''> Error Rate reaches </div>
@@ -59,7 +59,8 @@ const GuardrailDetails = () => {
                                     <div className='ml-45'> within 30 minutes </div>
                                 </div>
                             </div>
-                            <div className='flex border bg-gray-100 rounded-xs h-15 items-center pl-2 gap-9'>
+                            <div className=" h-[0.5px] w-full bg-border" />
+                            <div className='flex  rounded-xs h-15 items-center pl-2 gap-9'>
                                 <Checkbox className='size-6 cursor-pointer' />
                                 <div className='flex '>
                                     <div className=''> Latency reaches </div>
@@ -67,7 +68,8 @@ const GuardrailDetails = () => {
                                     <div className='ml-43'> within 30 minutes </div>
                                 </div>
                             </div>
-                            <div className='flex border bg-gray-100 rounded-xs h-15 items-center pl-2 gap-9'>
+                            <div className=" h-[0.5px] w-full bg-border" />
+                            <div className='flex  rounded-xs h-15 items-center pl-2 gap-9'>
                                 <Checkbox className='size-6 cursor-pointer' />
                                 <div className='flex '>
                                     <div className=''> Traffic spikes upto </div>

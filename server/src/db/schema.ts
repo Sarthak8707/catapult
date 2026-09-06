@@ -21,9 +21,9 @@ export const members = pgTable("members", {
     userID: integer("user_id").notNull().references(() => users.id, {
         onDelete: "cascade", onUpdate: "cascade"
     }),
-    projectID: integer("organization_id").notNull().references(() => projects.id, {
+    projectID: integer("project_id").notNull().references(() => projects.id, {
         onDelete: "cascade", onUpdate: "cascade"
-    }),
+    }).default(2),
     role: text("role"),
     joinedAt: timestamp("joined_at").defaultNow()
 })

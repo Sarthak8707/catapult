@@ -11,7 +11,7 @@ const SlideBar = () => {
           <Link to ={`/projects/2`}>  <Button variant="ghost" className="w-full justify-start rounded-sm"> <Notebook /> Flags </Button> </Link>
           <Link to={`/projects/2/segments`}>  <Button variant="ghost" className="w-full justify-start rounded-sm"> <Users />  Segments  </Button> </Link>
           <Link to={`/projects/2/guardrails`}>  <Button variant="secondary" className="w-full justify-start rounded-sm"> <NotebookPen /> Guardrails </Button> </Link>
-            <Button variant="ghost" className="w-full justify-start rounded-sm"> <UserCog /> Members</Button>
+          <Link to={`projects/2/members`}> <Button variant="ghost" className="w-full justify-start rounded-sm"> <UserCog /> Members</Button> </Link>
             <Button variant="ghost" className="w-full justify-start rounded-sm"> <Lightbulb /> Audit Trails</Button>
             
         </div>

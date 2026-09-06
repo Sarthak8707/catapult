@@ -174,7 +174,7 @@ const handleSaveDescription = async () => {
                 
             </div>
 
-            <Separator className="my-2" />        
+            {/* <Separator className="my-2" />         */}
 
            
            {/* Flag Rules */}

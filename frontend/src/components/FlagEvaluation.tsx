@@ -4,6 +4,7 @@ import { Card, CardHeader, CardTitle, CardPanel } from './ui/card'
 import { Separator } from './ui/separator'
 import { Switch } from './ui/switch'
 import EvaluationCards from './EvaluationCards'
+import { Spinner } from './ui/spinner'
 
 const FlagEvaluation = ({loading, devRules, setDevRules, devEnabled, stagRules, stagEnabled, handleChange, 
     disabled, variants
@@ -19,7 +20,7 @@ const FlagEvaluation = ({loading, devRules, setDevRules, devEnabled, stagRules, 
                 <div className='text-xl mt-10 font-semibold'>Flag Evaluation</div>
             <div className='text-gray-600 mt-1 flex gap-1 text-sm'> The release flow of the flag across various rules. In case server is unreachable, <div className='text-blue-700 font-medium'>default rule</div> will be applied.</div>
     
-            {loading ? <div className=' h-100 w-220  mt-10 rounded-sm text-gray-600 font-medium border flex items-center justify-center' > Loading Flag Evaluation... </div> : 
+            {loading ? <div className=' h-150 w-220  mt-10 rounded-sm font-medium border flex flex-col gap-2 text-gray-700 items-center justify-center' > <Spinner /> Loading Flag Evaluation... </div> : 
             <>
             <div className='border-red-500 w-220  mt-10'>
 

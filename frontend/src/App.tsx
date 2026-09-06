@@ -15,6 +15,7 @@ import Guardrails from "./pages/Guardrails";
 import Segments from "./pages/Segments";
 import SegmentDetails from "./pages/SegmentDetails";
 import GuardrailDetails from "./pages/GuardrailDetails";
+import Members from "./pages/Members";
 
 export default function App() {
   return (
@@ -34,6 +35,7 @@ export default function App() {
         <Route path="projects/:id/segments" element={<Segments />} />
         <Route path="segments/:id" element={<SegmentDetails />} />
         <Route path="guardrails/:id" element={<GuardrailDetails />} />
+        <Route path="projects/:id/members" element={<Members />} />
       </Route>
     </Routes>
   );

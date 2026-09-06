@@ -11,6 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Search, SquareArrowRightExit } from 'lucide-react';
+import { Spinner } from '@/components/ui/spinner';
 
 const Segments = () => {
     const {id} = useParams();
@@ -75,7 +76,7 @@ const Segments = () => {
             </div>
         </div>
 
-        {loading ? <div className='flex items-center justify-center h-100 w-220'> Loading Segments... </div> : <div> 
+        {loading ? <div className='flex flex-col gap-2 text-gray-700 items-center justify-center h-100 w-220'> <Spinner /> Loading Segments </div> : <div> 
           <div className=' border-red-300 w-300 mt-10'> 
             <Table>
       <TableHeader>

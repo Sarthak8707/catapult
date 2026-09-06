@@ -2,6 +2,7 @@ import FlagDialog from '@/components/FlagDialog';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardPanel, CardFooter, CardDescription } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { Spinner } from '@/components/ui/spinner';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import axios from 'axios';
 import { ArrowRight, ChevronRight, CircleCheckIcon, Dot, EllipsisVertical, Plus, PlusIcon, Search } from 'lucide-react';
@@ -108,7 +109,7 @@ const ProjectDetails = () => {
 </div>
             </div>
 
-                {loading ? (<div className='h-50 flex items-center justify-center'> Loading Flags </div>) : 
+                {loading ? (<div className='h-100 flex items-center justify-center text-gray-800'> <div className='flex flex-col items-center gap-3'> <Spinner /> Loading Flags </div> </div>) : 
                 (<>
                   <div className='mt-5 bg-white rounded-[6px] border'>
                   <Table>

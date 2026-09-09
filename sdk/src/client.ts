@@ -15,8 +15,14 @@ export class FlagClient {
 
     // Initialize 
     async init () {
-        const data = await fetchFlags(this.baseUrl, this.sdkKey);
-        this.cache.setFlags(data.flags);
+        //const data = await fetchFlags(this.baseUrl, this.sdkKey);
+        const data = await fetchFlags();
+        this.cache.setSomething(data);
+        //this.cache.setFlags(data.flags);
+    }
+
+    testSomething(){
+        return this.cache.getSomething();
     }
 
     // Check for enabled
@@ -27,8 +33,8 @@ export class FlagClient {
 
     // Refresh
     async refresh(){
-        const data = await fetchFlags(this.baseUrl, this.sdkKey);
-        this.cache.setFlags(data.flags);
+        // const data = await fetchFlags(this.baseUrl, this.sdkKey);
+        // this.cache.setFlags(data.flags);
     }
 
     // Evaluate flag against context

@@ -1,7 +1,6 @@
 export type Flag = {
     key: string,
     enabled: boolean,
-    rolloutPercentage: number,
     variants?: Variant[],
     rules: Rule[],
 } 
@@ -26,13 +25,40 @@ export type Variant = {
 }
 
 export type Rule = {
-    conditions: Condition[],
-    rolloutPercentage: number,
-    variant: Variant
+    
+    ruleID: number,
+    ruleName: string,
+    conditions: {
+      operator: string,
+      conditions: {
+        field: string,
+        value: string,
+        operator: string
+      }[]
+    },
+    
+    rollouts: {
+      rolloutID: number,
+      percentage: number,
+      variantName: string,
+      variantID: number,
+      value: {
+        param: string,
+        val: any
+      }
+    }[]
 }
 
-export type Condition = {
-    attribute: string,
-    values: any [],
-    operator: "equals" | "or" | "in" | "more than" | "less than"
-}
+// export type Rule__ = {
+//     conditions: Condition[],
+//     rolloutPercentage: number,
+//     variant: Variant
+// }
+
+// export type Condition = {
+//     attribute: string,
+//     values: any,
+//     operator: "equals" | "more than" | "less than"
+// }
+
+

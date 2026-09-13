@@ -3,6 +3,6 @@ import { getSDKFlagsController } from "../controllers/sdk.controller";
 
 const router = express.Router();
 
-router.get("/flags", getSDKFlagsController);
+router.get("/projects/:id", getSDKFlagsController);
 
 export {router as sdkRouter}

@@ -1,9 +1,48 @@
+
+
 export type Flag = {
+
+    id: number,
+    name: string,
     key: string,
-    enabled: boolean,
+    type: string,
+    environments?: Environment[],
+
+
     variants?: Variant[],
-    rules: Rule[],
+    rules?: Rule[],
 } 
+
+export type Environment = {
+
+  configID: number,
+  environment: string,
+  enabled: boolean,
+  rules: Rule[]
+}
+
+export type Rule = {
+    
+    ruleID: number,
+    ruleName: string,
+    conditions: Conditions,
+    rollouts: any
+}
+
+
+export type Conditions = {
+
+  operator: string,
+  conditions: {
+    field: string,
+    value: any,
+    operator: string
+  }[]
+
+}
+
+
+//////-------
 
 export type FlagsResponse = {
     flags: Flag[];
@@ -24,30 +63,7 @@ export type Variant = {
     weight: number
 }
 
-export type Rule = {
-    
-    ruleID: number,
-    ruleName: string,
-    conditions: {
-      operator: string,
-      conditions: {
-        field: string,
-        value: string,
-        operator: string
-      }[]
-    },
-    
-    rollouts: {
-      rolloutID: number,
-      percentage: number,
-      variantName: string,
-      variantID: number,
-      value: {
-        param: string,
-        val: any
-      }
-    }[]
-}
+
 
 // export type Rule__ = {
 //     conditions: Condition[],

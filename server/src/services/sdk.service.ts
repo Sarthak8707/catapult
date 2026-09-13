@@ -111,10 +111,10 @@ export const getSDKFlagsService = async (projectID: number) => {
 
     // Convert Maps → arrays
     const result = [...groupedByFlag.values()].map((flag) => ({
-      flagID: flag.flagID,
-      flagName: flag.flagName,
-      flagKey: flag.flagKey,
-      flagType: flag.flagType,
+      id: flag.flagID,
+      name: flag.flagName,
+      key: flag.flagKey,
+      type: flag.flagType,
 
       environments: [...flag.configs.values()].map((config) => ({
         configID: config.configID,

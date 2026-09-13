@@ -4,9 +4,9 @@ import { applyRule } from "./rule/applyRule";
 import { matchRule } from "./rule/ruleMatcher";
 import { selectVariant } from "./variant/selectVariant";
 
-export function evaluateFlag(flagKey: string, flag: Flag, context: Context) {
+export function evaluateFlag(flagKey: string, env: string, flag: Flag, context: Context) {
 
-  if (!flag.enabled) return {enabled: false};
+  if (!flag?.environments) return {enabled: false};
 
 
   // Check against rules 

@@ -17,18 +17,23 @@ export class FlagClient {
     async init () {
         //const data = await fetchFlags(this.baseUrl, this.sdkKey);
         const data = await fetchFlags();
-        this.cache.setSomething(data);
-        //this.cache.setFlags(data.flags);
+        this.cache.setFlags(data);
     }
 
     testSomething(){
-        return this.cache.getSomething();
+        let a = this.cache.getFlag("greeting")?.environments;
+        return a
     }
 
     // Check for enabled
-    isEnabled(key: string): boolean {
-        const flag = this.cache.getFlag(key);
-        return flag?.enabled ?? false 
+    isEnabled(key: string, env: string): boolean {
+        const envs = this.cache.getFlag(key)?.environments;
+        
+        const e = envs?.filter((obj) => obj.environment == env);
+
+        if(e) return e[0].enabled
+
+        return false
     }
 
     // Refresh
@@ -43,7 +48,7 @@ export class FlagClient {
         const flag = this.cache.getFlag(flagKey);
         if(flag === undefined) throw new Error("flag does not exist!");
         
-        return evaluateFlag(flagKey, flag, context);
+        return evaluateFlag(flagKey, "dev", flag, context);
     }
 
     

@@ -9,7 +9,7 @@ console.log(`Loading data, please wait...`);
     
 await client.init();
 
-console.log("data:::::", client.testSomething());
+console.log("data:::::", client.isEnabled("greeting", "dev"));
 
 }
 

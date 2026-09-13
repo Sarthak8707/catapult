@@ -1,8 +1,7 @@
 import FlagDialog from '@/components/FlagDialog';
-import { Button } from '@/components/ui/button';
-import { Card, CardHeader, CardTitle, CardPanel, CardFooter, CardDescription } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Spinner } from '@/components/ui/spinner';
+import { Switch } from '@/components/ui/switch';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import axios from 'axios';
 import { ArrowRight, ChevronRight, CircleCheckIcon, Dot, EllipsisVertical, Plus, PlusIcon, Search } from 'lucide-react';
@@ -33,7 +32,7 @@ const ProjectDetails = () => {
 
     const [activity, setActivity] = useState<{
         message: string
-    }[]>([])
+    }[]>([]);
 
     const [loading, setLoading] = useState(true);
 
@@ -147,11 +146,11 @@ const ProjectDetails = () => {
                             <TableCell>{flag.type}</TableCell>
 
                             <TableCell>
-                              {dev?.enabled ? "True" : "False"}
+                              <Switch className="cursor-pointer" checked={staging?.enabled} />
                             </TableCell>
 
                             <TableCell>
-                              {staging?.enabled ? "True" : "False"}
+                              <Switch className="cursor-pointer" checked={dev?.enabled} />
                             </TableCell>
                           </TableRow>
                         );

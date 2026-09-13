@@ -1,5 +1,6 @@
 import { Plus } from 'lucide-react'
 import React from 'react'
+import VariantDialog from './VariantDialog'
 
 type variantsType = {
     variantName: string,
@@ -10,7 +11,7 @@ type variantsType = {
     }
 }[]
 
-const FlagVariants = ({variants} : {variants: variantsType}) => {
+const FlagVariants = ({variants, flagID} : {variants: variantsType, flagID: number}) => {
 
    // console.log("variants:::", variants)
 
@@ -25,13 +26,11 @@ const FlagVariants = ({variants} : {variants: variantsType}) => {
                 <div className='text-gray-600 mt-1 flex gap-1 text-sm'> Alternative values or behaviors that a single feature flag can return, for custom usecases.</div>
             </div> 
             <div className='ml-auto pt-3'>
-                <button className=' bg-blue-700 mt-5 text-white w-35 px-3 py-2 font-medium text-sm rounded-sm cursor-pointer hover:bg-blue-600 transition-colors duration-200'>
-              <div className='flex items-center gap-1'> <Plus className='h-4 w-4'/>  Add Variant </div>
-            </button> 
+                <VariantDialog id={flagID} /> 
             </div>
         </div>
 
-        <div className='flex flex-col mt-10'>
+        <div className=' flex flex-col mt-10'>
             <div className='flex flex-col gap-5'>
                 {variants.map((variant, idx) => (
                     

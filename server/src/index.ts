@@ -7,6 +7,7 @@ import { authRouter } from "./routes/auth.route";
 import { eventsRouter } from "./routes/events.route";
 import { segmentsRouter } from "./routes/segments.route";
 import { guardrailRouter } from "./routes/guardrails.route";
+import { sdkRouter } from "./routes/sdk.route";
 
 const app = express();
 
@@ -44,6 +45,10 @@ app.use("/segments", segmentsRouter);
 // Guardrails Routes
 
 app.use("/guardrails", guardrailRouter);
+
+// SDK Routes
+
+app.use("/sdk", sdkRouter);
 
 
 

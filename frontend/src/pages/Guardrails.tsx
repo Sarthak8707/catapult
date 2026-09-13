@@ -1,6 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator'
+import { Spinner } from '@/components/ui/spinner';
 import axios from 'axios';
 import { CircleAlert, Search, ShieldCheck } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
@@ -119,7 +120,7 @@ const Guardrails = () => {
                     </div>
                 </div>
 
-                {loading ? (<div className='text-center mt-30'> Loading Guardrails... </div>) : (
+                {loading ? (<div className='flex flex-col items-center justify-center gap-3 mt-30'> <Spinner /> Loading Guardrails... </div>) : (
 
                     <div>
                         {filteredGuardrails.length == 0 ? (
@@ -142,7 +143,7 @@ const Guardrails = () => {
                                                 <div className='font-semibold'>
                                                     {guardrail.name}
                                                 </div>
-                                                <div className=' text-gray-800 mt-2 text-sm'>
+                                                <div className=' text-gray-600 mt-2 text-sm'>
                                                     {guardrail.description}
                                                 </div>
                                                 <div className='mt-2'>

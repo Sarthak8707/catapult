@@ -193,7 +193,7 @@ const handleSaveDescription = async () => {
                     variants={flagInfo?.variants} />
                 </TabsPanel>
                 <TabsPanel value="val-2">
-                    <div className='h-200'> {flagInfo?.variants && <FlagVariants variants={flagInfo?.variants} /> } </div>
+                    <div className=''> {flagInfo?.variants && <FlagVariants variants={flagInfo?.variants} flagID={Id} /> } </div>
                 </TabsPanel>
                 <TabsPanel value="val-3">
                     <div className='h-100'> Audit Log </div>

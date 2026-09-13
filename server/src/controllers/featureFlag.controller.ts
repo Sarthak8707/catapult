@@ -23,13 +23,6 @@ export const getFlagSummaryController = async (req: Request, res: Response) => {
 
 }
 
-// Create a new flag
-
-export const createNewFlag = async (req: Request, res: Response) => {
-    const {name, enabled, environmentID, rolloutPercentage} = req.body;
-    // const data = createNewFlagService(name, enabled, environmentID, rolloutPercentage);
-    // res.json(data);
-} 
 
 // Update a flag
 

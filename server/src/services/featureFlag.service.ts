@@ -122,7 +122,7 @@ try{
        
         
         
-        // Gruoup by config
+        // Group by config
 
   const groupedByConfig = new Map<number, any>();
 
@@ -219,7 +219,7 @@ export const createNewFlagService = async (name: string, description: string, pr
 
 export const changeFlagService = async (requestBody: any, flagID: number) => {
    
-  const {flagConfigID, enabled, description, rules, rollouts} = requestBody;
+  const {flagConfigID, enabled, description, rules, rollouts, newVariant} = requestBody;
  // console.log("rulesconditions:::", rules.conditions);
   
   // Switch 
@@ -295,6 +295,25 @@ export const changeFlagService = async (requestBody: any, flagID: number) => {
       console.log(err);
     }
     
+  }
+
+  // New Variant
+
+  if(newVariant != undefined){
+    
+    try{
+      await db.insert(flagVariants).values([
+        {
+          flagID: flagID,
+          name: newVariant.name, 
+          value: { "param": newVariant.param, "val": newVariant.val }
+        }
+      ]);
+      return {msg: "done"}
+    }
+    catch(err){
+      console.log(err);
+    }
   }
     
 

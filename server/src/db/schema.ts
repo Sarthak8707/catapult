@@ -47,6 +47,8 @@ export const flags = pgTable("flags", {
     name: text("name").notNull(),
     description: text("description"),
 
+    key: text("key"),
+
     type: text("type").notNull().default("release"),
 
     projectID: integer("project_id").notNull().references(() => projects.id , {

@@ -9,7 +9,6 @@ import Flags from "./pages/Flags";
 import OrganizationDetails from "./pages/OrganizationDetails";
 import Projects from "./pages/Projects";
 import ProjectDetails from "./pages/ProjectDetails";
-import EnvironmentDetails from "./pages/EnvironmentDetails";
 import FlagDetails from "./pages/FlagDetails";
 import Guardrails from "./pages/Guardrails";
 import Segments from "./pages/Segments";
@@ -30,7 +29,6 @@ export default function App() {
         <Route path="projects" element={<Projects />} />
         <Route path="projects/:id" element={<ProjectDetails />} />
         <Route path="projects/:id/guardrails" element={<Guardrails />} />
-        <Route path="environments/:id" element={<EnvironmentDetails />} />
         <Route path="flags/:id" element={<FlagDetails />} />
         <Route path="projects/:id/segments" element={<Segments />} />
         <Route path="segments/:id" element={<SegmentDetails />} />

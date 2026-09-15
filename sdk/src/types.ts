@@ -10,7 +10,7 @@ export type Flag = {
 
 
     variants?: Variant[],
-    rules?: Rule[],
+    
 } 
 
 export type Environment = {
@@ -26,19 +26,33 @@ export type Rule = {
     ruleID: number,
     ruleName: string,
     conditions: Conditions,
-    rollouts: any
+    rollouts: Rollout[]
 }
 
 
 export type Conditions = {
 
   operator: string,
-  conditions: {
+  conditions: Condition[]
+
+}
+
+export type Condition = {
+
     field: string,
     value: any,
     operator: string
-  }[]
 
+}
+
+export type Rollout = {
+
+    rolloutID: number,
+    percentage: number,
+    variantID: number,
+    variantName: string,
+    value: { param: string, value: any }
+    //bucketBy?: any
 }
 
 

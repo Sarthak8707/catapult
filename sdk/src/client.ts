@@ -21,8 +21,13 @@ export class FlagClient {
     }
 
     testSomething(){
-        let a = this.cache.getFlag("greeting")?.environments;
-        return a
+        let a = this.cache.getFlag("greeting")?.environments || [] ;
+        const b = a.filter((e) => e.environment == "dev");
+        const r = b[0].rules;
+        return r[1].rollouts;
+
+        
+
     }
 
     // Check for enabled
@@ -43,7 +48,7 @@ export class FlagClient {
     }
 
     // Evaluate flag against context
-    evaluate(flagKey: string, context: Context) {
+    evaluate(flagKey: string, context: Context): any {
 
         const flag = this.cache.getFlag(flagKey);
         if(flag === undefined) throw new Error("flag does not exist!");

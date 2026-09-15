@@ -6,22 +6,30 @@ import { selectVariant } from "./variant/selectVariant";
 
 export function evaluateFlag(flagKey: string, env: string, flag: Flag, context: Context) {
 
-  if (!flag?.environments) return {enabled: false};
+  if (!flag?.environments) return { enabled: false };
 
 
   // Check against rules 
 
-  for(const rule of flag.rules || []){
-    if(matchRule(rule, context)){
+  const [selectedEnv] = flag.environments.filter((e) => e.environment == env);
 
+  for (const rule of selectedEnv.rules || []) {
+
+    if (matchRule(rule, context)) {
+      console.log("matched", rule.conditions.conditions, context)
+      return true
       // Rule matched
-      return applyRule(rule, flag, context);
+      // return applyRule(rule, flag, context);
     }
+
   }
 
-     // Rule didn't match
+  console.log("not matched")
+  return false;
 
-     
+  // Rule didn't match
+
+
   // Apply default behaviour
 
 
@@ -30,13 +38,13 @@ export function evaluateFlag(flagKey: string, env: string, flag: Flag, context: 
 
   const passes = evaluateRollout(flagKey, flag, context);
 
-  if(!passes) return {enabled: false};
-  
-  if(flag.variants?.length){
+  if (!passes) return { enabled: false };
+
+  if (flag.variants?.length) {
     const variant = selectVariant(flagKey, flag, context);
-    return {enabled: true, variant}
+    return { enabled: true, variant }
   }
 
-  return {enabled: true};
+  return { enabled: true };
 
 }

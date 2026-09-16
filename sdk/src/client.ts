@@ -24,7 +24,7 @@ export class FlagClient {
         let a = this.cache.getFlag("greeting")?.environments || [] ;
         const b = a.filter((e) => e.environment == "dev");
         const r = b[0].rules;
-        return r[1].rollouts;
+        return r[1].conditions;
 
         
 

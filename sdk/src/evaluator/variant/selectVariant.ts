@@ -1,22 +1,29 @@
-import { Context, Flag, Variant } from "../../types";
+import { Context, Flag, Rollout, Variant } from "../../types";
 import { getVariantBucket } from "./variantBucket";
 
-export const selectVariant = (flagKey: string, flag: Flag, context: Context)  => {
+export const selectVariant = (rollouts: Rollout[], flag: Flag, context: Context)  => {
+    
     const {userId} = context;
-    const variants = flag.variants;
 
-    if(variants === undefined) throw new Error("Variant does not exist!");
+    // const variants = flag.variants;
 
-    const bucket = getVariantBucket(flagKey, userId);
+    // if(variants === undefined) throw new Error("Variant does not exist!");
+
+    const bucket = getVariantBucket(userId);
+    //console.log("bucket", bucket);
 
     let cumulative = 0;
 
-    for(const variant of variants){
-        cumulative += variant.weight;
+    for(const rollout of rollouts){
+        cumulative += rollout.percentage
+       // console.log("rollout percentage", rollout.percentage)
+       // console.log("cumulative", cumulative);
 
         if(bucket < cumulative){
-            return variant;
+            return { variantName: rollout.variantName, value: rollout.value }
         }
     }
+
+    throw new Error ("Percentages must add up to 100")
     
 }

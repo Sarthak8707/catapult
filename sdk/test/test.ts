@@ -9,11 +9,13 @@ console.log(`Loading data, please wait...`);
     
 await client.init();
 
-console.log(client.testSomething()) ;
+//console.log(client.testSomething()) ;
 
-// const att = { age: 25, region: "Germany" };
+ const att = { age: 25, plan: "platinum", device: "android" };
 
-// console.log("data::::", client.evaluate("greeting", {userId: 43, attributes: att}));
+ {
+    console.log("test results:", client.evaluate("greeting", {userId: 414, attributes: att}));
+ }
 
 //console.log("data:::::", client.isEnabled("greeting", "dev"));
 

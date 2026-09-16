@@ -280,4 +280,25 @@ export const automationActions = pgTable("automation_actions", {
 
 })
 
+// Invitations
+
+export const invitations = pgTable("invitations", {
+
+    id: serial("id").primaryKey(),
+
+    projectID: integer("project_id").references(() => projects.id, {
+        onDelete: "cascade", onUpdate: "cascade"
+    }),
+
+    invitedUserID: integer("invited_user_id").references(() => users.id, {
+        onDelete: "cascade", onUpdate: "cascade"
+    }),
+    invitedByID: integer("invited_by_id").references(() => users.id, {
+        onDelete: "cascade", onUpdate: "cascade"
+    }),
+
+    // pending or accepted or rejected
+    status: text("status").notNull().default("pending"),
+})
+
 

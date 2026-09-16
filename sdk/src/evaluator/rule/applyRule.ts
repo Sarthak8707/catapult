@@ -3,21 +3,24 @@ import { evaluateRollout } from "../rollout/rollout";
 import { selectVariant } from "../variant/selectVariant";
 
 export const applyRule = (rule: Rule, flag: Flag, context: Context) => {
-    if(rule.rolloutPercentage){
-        const flagKey = flag.key;
 
-        // Assuming for every rule there is same rollout percentage which is flag.rolloutPercentage
+    // if(rule.rolloutPercentage){
+    //     const flagKey = flag.key;
 
-        const check = evaluateRollout(flagKey, flag, context);
-        if(!check) return {enabled: false};
-    }
+    //     // Assuming for every rule there is same rollout percentage which is flag.rolloutPercentage
 
-    // If variant is already present in rule
-    if(rule.variant) return rule.variant;
+    //     const check = evaluateRollout(flagKey, flag, context);
+    //     if(!check) return {enabled: false};
+    // }
 
-    // If variant is not present
+    // If variant is already present in rule -> Normal Rollout
+
+    // if(rule.variant) return rule.variant;
+
+    // If variant is not present -> Distributed Rollout
+
     const flagKey = flag.key;
-    return selectVariant(flagKey, flag, context);
+    return selectVariant(rule.rollouts, flag, context);
 
 
 }

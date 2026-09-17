@@ -1,5 +1,5 @@
 import express from "express";
-import { createFlagInProjectController, getAllEnvironmentsController, getAllFlagsOfProjectController, getAllProjectsOfUserController, getGuardrailsController, getMembersController, getProjectInfoController, getRecentActivityController } from "../controllers/projects.controller";
+import { createFlagInProjectController, getAllEnvironmentsController, getAllFlagsOfProjectController, getAllProjectsOfUserController, getGuardrailsController, getInvitationsOfProjectController, getMembersController, getProjectInfoController, getRecentActivityController, inviteUserController } from "../controllers/projects.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { getAllSegmentsController, getSegmentController } from "../controllers/segments.controller";
 
@@ -48,6 +48,14 @@ router.get("/:id/segments", getAllSegmentsController);
 // Get Members of project
 
 router.get("/:id/members", getMembersController);
+
+// Get Invitations of project
+
+router.get("/:id/invitations", getInvitationsOfProjectController);
+
+// Send an Invitation in a project
+
+router.post("/:id/invitations", inviteUserController);
 
 
 

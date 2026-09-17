@@ -4,17 +4,18 @@ import { getAllProjectsOfUserService, getProjectInfoService, getRecentActivitySe
 import { createNewFlagService, getAllFLagsOfProjectService } from "../services/featureFlag.service";
 import { getGuardrailsService } from "../services/guardrails.service";
 import { getProjectMembers } from "../services/members.service";
+import { getInvitationsOfProjectService, inviteUserService } from "../services/invitations.service";
 
 export const getAllProjectsOfUserController = async (req: Request, res: Response, next: NextFunction) => {
 
-    try{
+    try {
         const userID = req.user.id;
 
         const result = await getAllProjectsOfUserService(userID);
 
         res.status(200).json(result);
     }
-    catch(err){
+    catch (err) {
         next(err);
     }
 
@@ -33,55 +34,55 @@ export const getAllEnvironmentsController = async (req: Request, res: Response, 
     // }
 }
 
-export const getProjectInfoController = async (req:Request, res: Response, next: NextFunction) => {
+export const getProjectInfoController = async (req: Request, res: Response, next: NextFunction) => {
 
-    try{
+    try {
         const projectID = Number(req.params.id);
         const result = await getProjectInfoService(projectID);
     }
-    catch(err){
+    catch (err) {
         next(err);
     }
 }
 
 export const getAllFlagsOfProjectController = async (req: Request, res: Response, next: NextFunction) => {
 
-    try{
+    try {
         const projectID = Number(req.params.id);
         const result = await getAllFLagsOfProjectService(projectID);
         res.status(200).json(result);
     }
-    catch(err){
+    catch (err) {
         console.log(err);
     }
 }
 
 export const createFlagInProjectController = async (req: Request, res: Response, next: NextFunction) => {
 
-    try{
+    try {
         const projectID = Number(req.params.id);
         console.log(req.user)
-    const userID = req.user.id;
-    const {name, description} = req.body;
+        const userID = req.user.id;
+        const { name, description } = req.body;
 
-    const result = await createNewFlagService(name, description, projectID, userID);
+        const result = await createNewFlagService(name, description, projectID, userID);
 
-    res.status(201).json(result);
+        res.status(201).json(result);
     }
-    catch(err){
+    catch (err) {
         console.log(err);
-        res.status(500).json({error: "error"})
+        res.status(500).json({ error: "error" })
     }
 }
 
 export const getRecentActivityController = async (req: Request, res: Response, next: NextFunction) => {
 
-    try{
+    try {
         const projectID = Number(req.params.id);
         const result = await getRecentActivityService(projectID);
         res.status(200).json(result);
     }
-    catch(err){
+    catch (err) {
         console.log(err);
         next(err);
     }
@@ -96,11 +97,41 @@ export const getGuardrailsController = async (req: Request, res: Response, next:
 
 
 export const getMembersController = async (req: Request, res: Response, next: NextFunction) => {
-    
+
     const projectID = Number(req.params.id);
     const result = await getProjectMembers(projectID);
     res.status(200).json(result);
-    
+
 }
 
+export const getInvitationsOfProjectController = async (req: Request, res: Response, next: NextFunction) => {
+
+    try {
+        const projectID = Number(req.params.id);
+        const result = await getInvitationsOfProjectService(projectID);
+
+        res.status(200).json(result);
+    }
+    catch (err) {
+        console.log(err);
+        next(err);
+    }
+
+}
+
+export const inviteUserController = async (req: Request, res: Response, next: NextFunction) => {
+
+    try {
+        const projectID = Number(req.params.id);
+        const { invitedUserID, invitedByID } = req.body;
+
+        const result = await inviteUserService(projectID, invitedUserID, invitedByID);
+        res.status(200).json(result);
+    }
+    catch (err) {
+        console.log(err);
+        next(err);
+    }
+
+}
 

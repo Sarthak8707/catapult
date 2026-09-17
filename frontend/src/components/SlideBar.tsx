@@ -1,4 +1,4 @@
-import { ArrowRightLeft, Flag, Layers, Lightbulb, Notebook, NotebookPen,  Shield, UserCog, Users, UsersRound } from "lucide-react";
+import { ArrowRightLeft, Flag, Layers, Lightbulb, Mail, Notebook, NotebookPen,  Shield, ToggleRight, UserCog, Users, UsersRound } from "lucide-react";
 import { Button } from "./ui/button";
 import { Link, useLocation } from "react-router-dom";
 
@@ -7,14 +7,16 @@ const SlideBar = () => {
 
   return (
     <div className="w-75 min-h-screen border border-gray-200">
-      <div className="pr-3 flex flex-col gap-2 mt-8 pl-4">
+      <div className="h-170 pr-3 flex flex-col gap-2 mt-8 pl-4">
 
-        <Link to="/projects/2">
+        <div className="flex flex-col gap-2">
+
+          <Link to="/projects/2">
           <Button
             variant={location.pathname === "/projects/2" ? "secondary" : "ghost"}
             className="w-full justify-start rounded-sm"
           >
-            <div className="flex items-center justify-center gap-2"> <Flag /> Flags </div>
+            <div className="flex items-center justify-center gap-2"> <ToggleRight/> Flags </div>
           </Button>
         </Link>
 
@@ -61,6 +63,20 @@ const SlideBar = () => {
         <Button variant="ghost" className="w-full justify-start rounded-sm">
           <div className="flex items-center justify-center gap-2"><ArrowRightLeft /> Activity </div> 
         </Button>
+        </div>
+
+        <div className="mt-auto">
+          <Link to="/invitations">
+          <Button
+            variant={ location.pathname === "/invitations" ? "secondary" : 
+              "ghost"
+            }
+            className="w-full justify-start rounded-sm"
+          >
+            <Mail /> Invitations
+          </Button>
+        </Link>
+        </div>
 
       </div>
     </div>

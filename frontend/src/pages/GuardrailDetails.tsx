@@ -18,7 +18,7 @@ const GuardrailDetails = () => {
 
     const [reducingRollout, setReducingRollout] = useState(true);
     return (
-        <div className='min-h-screen px-10 py-5 bg-gray-50'>
+        <div className='min-h-screen px-10 py-5 bg-white'>
             <div className='flex items-center justify-center'>
                 <div className='text-2xl font-medium'> New checkout guardrail </div>
 
@@ -51,7 +51,7 @@ const GuardrailDetails = () => {
                         </div>
 
                         <div className=' border-red-400 text-foreground flex flex-col gap-2'>
-                            <div className='flex rounded-xs h-15 items-center pl-2  gap-9'>
+                            <div className='bg-gray-100 rounded-md flex  h-15 items-center pl-2  gap-9'>
                                 <Checkbox className='size-6 cursor-pointer' />
                                 <div className='flex '>
                                     <div className=''> Error Rate reaches </div>
@@ -59,8 +59,8 @@ const GuardrailDetails = () => {
                                     <div className='ml-45'> within 30 minutes </div>
                                 </div>
                             </div>
-                            <div className=" h-[0.5px] w-full bg-border" />
-                            <div className='flex  rounded-xs h-15 items-center pl-2 gap-9'>
+                            {/* <div className=" h-[0.5px] w-full bg-border" /> */}
+                            <div className='flex bg-gray-100 rounded-md h-15 items-center pl-2 gap-9'>
                                 <Checkbox className='size-6 cursor-pointer' />
                                 <div className='flex '>
                                     <div className=''> Latency reaches </div>
@@ -68,8 +68,8 @@ const GuardrailDetails = () => {
                                     <div className='ml-43'> within 30 minutes </div>
                                 </div>
                             </div>
-                            <div className=" h-[0.5px] w-full bg-border" />
-                            <div className='flex  rounded-xs h-15 items-center pl-2 gap-9'>
+                            {/* <div className=" h-[0.5px] w-full bg-border" /> */}
+                            <div className='flex bg-gray-100 rounded-md h-15 items-center pl-2 gap-9'>
                                 <Checkbox className='size-6 cursor-pointer' />
                                 <div className='flex '>
                                     <div className=''> Traffic spikes upto </div>

@@ -19,3 +19,12 @@ export default function Layout() {
     </div>
   );
 }
+
+export const FullLayout = () => {
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <Outlet />
+    </div>
+  )
+}
+

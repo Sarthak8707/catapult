@@ -4,8 +4,13 @@ import { invitations } from "../db/schema"
 
 export const getInvitationsOfUserService = async (userID: number) => {
 
-    const data = await db.select().from(invitations).where(eq(invitations.invitedUserID, userID));
-    return data;
+    try {
+        const data = await db.select().from(invitations).where(eq(invitations.invitedUserID, userID));
+        return data;
+    }
+    catch (err) {
+        console.log(err);
+    }
 
 }
 
@@ -21,11 +26,11 @@ export const getInvitationsOfProjectService = async (projectID: number) => {
 export const inviteUserService = async (projectID: number, invitedUserID: number, invitedByID: number) => {
 
     const data = await db.insert(invitations).values({
-        projectID: projectID, 
+        projectID: projectID,
         invitedByID: invitedByID,
         invitedUserID: invitedUserID
     });
 
-    return {msg: "invited!"};
-    
+    return { msg: "invited!" };
+
 }

@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import Layout from "./components/Layout";
+import Layout, { FullLayout } from "./components/Layout";
 
 import Dashboard from "./pages/Dashboard";
 import Organizations from "./pages/Organizations";
@@ -16,6 +16,8 @@ import SegmentDetails from "./pages/SegmentDetails";
 import GuardrailDetails from "./pages/GuardrailDetails";
 import Members from "./pages/Members";
 import Invitations from "./pages/Invitations";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 export default function App() {
   return (
@@ -36,6 +38,12 @@ export default function App() {
         <Route path="guardrails/:id" element={<GuardrailDetails />} />
         <Route path="projects/:id/members" element={<Members />} />
         <Route path="invitations" element={<Invitations />} />
+        
+      </Route>
+
+      <Route path="/" element={<FullLayout />}>
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
       </Route>
     </Routes>
   );

@@ -16,6 +16,9 @@ import { Spinner } from '@/components/ui/spinner';
 
 const Members = () => {
 
+  const { id } = useParams();
+  const Id = Number(id);
+
   const [members, setMembers] = useState<{
     username: string,
     role: string,
@@ -23,13 +26,25 @@ const Members = () => {
   }[]
   >([]);
 
+  const [invitations, setInvitations] = useState<{
+    invitedBy: string,
+    invitedUser: string,
+    status: string
+  }[]
+  >([]);
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getMembers = async () => {
-      const response = await axios.get(`http://localhost:3000/projects/2/members`);
+      const response = await axios.get(`http://localhost:3000/projects/${Id}/members`);
       setMembers(response.data);
       setLoading(false);
+
+      const invs = await axios.get(`http://localhost:3000/projects/${Id}/invitations`);
+      setInvitations(invs.data);
+
+
     }
 
     getMembers();
@@ -38,7 +53,7 @@ const Members = () => {
   return (
     <div className='min-h-screen px-10 py-5 bg-white'>
       <div className='flex items-center justify-center'>
-        <div className='text-2xl font-medium'> Members </div>
+        <div className='text-2xl font-medium'> Collaborate </div>
         <div className='ml-auto flex gap-3'>
           <button className=' px-3 py-2 text-foreground hover:bg-gray-100 transition-colors duration-200 text-sm rounded-sm font-medium cursor-pointer flex gap-1 items-center'> <SquareArrowRightExit className='h-3 w-3' /> <div>Export</div> </button>
           <button className='bg-blue-700 hover:bg-blue-600 text-white px-3 py-2 font-medium text-sm transition-colors duration-200 rounded-sm cursor-pointer'> Add Member </button>
@@ -67,7 +82,7 @@ const Members = () => {
           </div>
 
           {loading ? <div className='flex items-center justify-center h-100 w-220'> <Spinner /> </div> : <div>
-            <div className=' border-red-300 w-300 mt-10'>
+            <div className=' border-red-300  mt-10'>
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -102,7 +117,22 @@ const Members = () => {
 
 
 
-        <TabsPanel value="val-2">Invitations
+        <TabsPanel value="val-2">
+          {invitations.map((invitation, idx) => (
+            <div>
+              <div className='text-gray-800 h-20 w-220 border border-gray-200 rounded-sm flex items-center mt-5 pl-10 pr-10'>
+                <div className='flex'>
+                  <div className='w-50'> {invitation.invitedUser}  </div>
+                  <div className='w-20'> {invitation.invitedBy} </div>
+                  
+                </div>
+
+                <div className='ml-auto flex gap-3'>
+                  <div> {invitation.status} </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </TabsPanel>
       </Tabs>
 

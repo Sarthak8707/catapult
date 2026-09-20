@@ -55,7 +55,7 @@ const SlideBar = () => {
             }
             className="w-full justify-start rounded-sm"
           >
-            <UsersRound /> Members
+            <UsersRound /> Collaborate
           </Button>
         </Link>
         

@@ -1,9 +1,13 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Cookies from "js-cookie";
+import { Spinner } from '@/components/ui/spinner';
 
 const Login = () => {
+
+    const navigate = useNavigate();
+
 
     const [formData, setFormData] = useState<{
         username: string, password: string
@@ -12,18 +16,34 @@ const Login = () => {
         password: ""
     });
 
+    const [logging, setLogging] = useState<boolean>(false);
+    const [loginError, setLoginError] = useState(false);
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = e.target
+        const { name, value } = e.target
 
         setFormData((prev) => ({
             ...prev, [name]: value
         }))
     }
 
+
     const handleSubmit = async () => {
-        const response  = await axios.post(`http://localhost:3000/auth/login`, formData);
-        const token = response.data.token;
-        Cookies.set("token", token);
+        setLogging(true);
+
+        try {
+            const response = await axios.post(`http://localhost:3000/auth/login`, formData);
+            const token = response.data.token;
+            const projectID = response.data.projectID;
+            Cookies.set("token", token);
+            navigate(`/projects/${projectID}`)
+        }
+        catch (err) {
+           if(axios.isAxiosError(err)) setLoginError(true);
+        }
+        finally{
+            setLogging(false);
+        }
     }
 
     return (
@@ -39,24 +59,31 @@ const Login = () => {
                         <div className='text-sm text-gray-600 '>Username</div>
                         <div className='mt-1'>
                             <input type="text" name="username" className='border w-68 h-8 rounded-sm'
-                            value={formData.username} onChange={(e) => handleChange(e)} />
+                                value={formData.username} onChange={(e) => handleChange(e)} />
                         </div>
                     </div>
 
                     <div className='mt-5'>
                         <div className='text-sm text-gray-600'>Password</div>
                         <div className='mt-1'>
-                            <input type="text" name="password" className='border w-68 h-8 rounded-sm' 
-                             value={formData.password} onChange={(e) => handleChange(e)} />
+                            <input type="text" name="password" className='border w-68 h-8 rounded-sm'
+                                value={formData.password} onChange={(e) => handleChange(e)} />
                         </div>
                     </div>
                 </div>
 
-                <div className='mt-12'>
-                    <div>
-                        <button className='bg-indigo-900 w-68 h-8 text-white rounded-full cursor-pointer
+                <div className='mt-4'>
+                    <div className=' border-red-400 h-15 flex flex-col'>
+
+                        <div> {loginError && <> <div className='text-red-600 text-sm text-center'>
+                             Username or Password is incorrect
+                        </div> </>} </div>
+
+                        <button className='mt-auto bg-indigo-900 w-68 h-8 text-white rounded-full cursor-pointer
                         hover:bg-indigo-800 transition-colors duration-200'
-                        onClick={handleSubmit} > Login </button>
+                            onClick={handleSubmit} disabled={logging}> 
+                            {logging ? <div className='flex gap-2 items-center justify-center'><Spinner /> Logging In...</div> : <div>Login</div> }
+                        </button>
                     </div>
 
                     <div className='text-sm text-gray-600 text-center mt-5 flex justify-center gap-1'>

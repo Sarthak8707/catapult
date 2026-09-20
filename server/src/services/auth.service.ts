@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm"
 import { db } from "../db/client"
-import { users } from "../db/schema"
+import { projects, users } from "../db/schema"
 import { LoginInput, RegisterInput } from "../types/auth.types"
 import { AppError } from "../utils/appError"
 import { comparePassword, hashPassword } from "../utils/password"
@@ -18,8 +18,10 @@ export const loginService = async ({username, password}: LoginInput) => {
         throw new AppError("Username or Password is incorrect", 401);
     }
 
+    const [project] = await db.select({id: projects.id}).from(projects).where(eq(projects.createdBy, user.id))
+
     const token =  signToken({username: user.username, id: user.id});
-    return {token, username, password: user.password};
+    return {token, username, password: user.password, projectID: project.id};
 
 }
 

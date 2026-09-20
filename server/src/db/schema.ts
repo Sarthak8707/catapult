@@ -286,14 +286,14 @@ export const invitations = pgTable("invitations", {
 
     id: serial("id").primaryKey(),
 
-    projectID: integer("project_id").references(() => projects.id, {
+    projectID: integer("project_id").notNull().references(() => projects.id, {
         onDelete: "cascade", onUpdate: "cascade"
     }),
 
-    invitedUserID: integer("invited_user_id").references(() => users.id, {
+    invitedUserID: integer("invited_user_id").notNull().references(() => users.id, {
         onDelete: "cascade", onUpdate: "cascade"
     }),
-    invitedByID: integer("invited_by_id").references(() => users.id, {
+    invitedByID: integer("invited_by_id").notNull().references(() => users.id, {
         onDelete: "cascade", onUpdate: "cascade"
     }),
 

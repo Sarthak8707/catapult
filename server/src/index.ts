@@ -9,6 +9,7 @@ import { segmentsRouter } from "./routes/segments.route";
 import { guardrailRouter } from "./routes/guardrails.route";
 import { sdkRouter } from "./routes/sdk.route";
 import { meRouter } from "./routes/me.route";
+import { invitationRouter } from "./routes/invitations.route";
 
 const app = express();
 
@@ -55,6 +56,9 @@ app.use("/sdk", sdkRouter);
 
 app.use("/me", meRouter);
 
+// Invites Routes
+
+app.use("/invitations", invitationRouter);
 
 
 app.listen(3000, () => {

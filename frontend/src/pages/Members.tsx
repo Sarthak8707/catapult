@@ -13,6 +13,7 @@ import {
 import { EllipsisVertical, Search, SquareArrowRightExit } from 'lucide-react';
 import { Tabs, TabsList, TabsPanel, TabsTab } from '@/components/ui/tabs';
 import { Spinner } from '@/components/ui/spinner';
+import MemberDialog from '@/components/MemberDialog';
 
 const Members = () => {
 
@@ -56,7 +57,7 @@ const Members = () => {
         <div className='text-2xl font-medium'> Collaborate </div>
         <div className='ml-auto flex gap-3'>
           <button className=' px-3 py-2 text-foreground hover:bg-gray-100 transition-colors duration-200 text-sm rounded-sm font-medium cursor-pointer flex gap-1 items-center'> <SquareArrowRightExit className='h-3 w-3' /> <div>Export</div> </button>
-          <button className='bg-blue-700 hover:bg-blue-600 text-white px-3 py-2 font-medium text-sm transition-colors duration-200 rounded-sm cursor-pointer'> Add Member </button>
+          <MemberDialog id={78} token={""} />
         </div>
       </div>
 

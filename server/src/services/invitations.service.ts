@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm"
 import { db } from "../db/client"
-import { invitations, projects, users } from "../db/schema"
+import { invitations, members, projects, users } from "../db/schema"
 import { aliasedTable } from "drizzle-orm";
 
 export const getInvitationsOfUserService = async (userID: number) => {
@@ -59,4 +59,33 @@ export const inviteUserService = async (projectID: number, invitedUserID: number
 
     return { msg: "invited!" };
 
+}
+
+export const acceptInviteService = async (invitationID: number) => {
+
+    // Update status to accepted
+
+    const [data] = await db.update(invitations)
+    .set({status: "accepted"})
+    .where(eq(invitations.id, invitationID))
+    .returning({
+        projectID: invitations.projectID,
+        invitedUserID: invitations.invitedUserID,
+        invitedByID: invitations.invitedByID,
+    })
+    
+    // Add invited user to members table
+
+    await db.insert(members).values({projectID: data.projectID, userID: data.invitedUserID, role: "member"});
+
+    return {msg: "done"};
+}
+
+
+export const rejectInviteService = async (invitationID: number) => {
+
+    await db.update(invitations).set({status: "rejected"}).where(eq(invitations.id, invitationID));
+
+    return {msg: "done"};
+    
 }

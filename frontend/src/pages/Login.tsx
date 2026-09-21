@@ -35,8 +35,12 @@ const Login = () => {
             const response = await axios.post(`http://localhost:3000/auth/login`, formData);
             const token = response.data.token;
             const projectID = response.data.projectID;
+            const username = response.data.username;
+            
             Cookies.set("token", token);
-            navigate(`/projects/${projectID}`)
+            window.localStorage.setItem("username", username);
+            if(projectID)  navigate(`/projects/${projectID}`);
+            else navigate(`/projects/723`)
         }
         catch (err) {
            if(axios.isAxiosError(err)) setLoginError(true);

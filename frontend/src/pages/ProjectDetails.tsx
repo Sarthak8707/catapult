@@ -84,7 +84,7 @@ const ProjectDetails = () => {
 
             {/* Flags */}
 
-            <div className='w-200'>
+            <div className='w-220'>
             <div className='flex border-red-200'>
                 <div className='text-xl font-medium'> Flags </div>
                 <div className='ml-auto mr-5'> 
@@ -171,10 +171,10 @@ const ProjectDetails = () => {
             {/* Recent Activity */}
 
             <div>
-                <div className=' flex border-red-400'>
-                    <div className='text-xl font-medium'> Recent Activity</div> <div className='ml-auto'> <button className=' font-medium text-sm text-blue-700 rounded-sm cursor-pointer flex items-center justify-center gap-1'> View All <ArrowRight className='h-3 w-3'/> </button> </div>
+                <div className=' flex border-red-400 items-center'>
+                    <div className='text-xl font-medium'> Recent Activity</div> <div className='ml-auto'> <button className='pl-2 pr-1.5 py-0.5 font-medium text-xs text-blue-700 border border-blue-600 rounded-full cursor-pointer flex items-center justify-center gap-1'> View All <ArrowRight className='h-3 w-3'/> </button> </div>
                 </div>
-            <div className=' h-70 w-90 rounded-sm pt-3 '>
+            <div className=' h-70 w-70 rounded-sm pt-3 '>
                 {loading ? (<div className=' h-20 flex items-center justify-center'> Loading Recent Activity </div>) : (
                     <>
                     {activity.map((act, idx) => (

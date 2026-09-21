@@ -7,6 +7,7 @@ export const getInvitationsOfUserService = async (userID: number) => {
 
     try {
         const data = await db.select({
+            id: invitations.id,
             invitedBy: users.username, 
             projectName: projects.name, 
             status: invitations.status
@@ -49,12 +50,14 @@ export const getInvitationsOfProjectService = async (projectID: number) => {
 }
 
 
-export const inviteUserService = async (projectID: number, invitedUserID: number, invitedByID: number) => {
+export const inviteUserService = async (projectID: number, invitedByID: number, invitee: string) => {
+
+    const [user] = await db.select().from(users).where(eq(users.username, invitee));
 
     const data = await db.insert(invitations).values({
         projectID: projectID,
         invitedByID: invitedByID,
-        invitedUserID: invitedUserID
+        invitedUserID: user.id
     });
 
     return { msg: "invited!" };

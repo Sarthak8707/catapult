@@ -55,7 +55,7 @@ router.get("/:id/invitations", getInvitationsOfProjectController);
 
 // Send an Invitation in a project
 
-router.post("/:id/invitations", inviteUserController);
+router.post("/:id/invitations", authMiddleware, inviteUserController);
 
 
 

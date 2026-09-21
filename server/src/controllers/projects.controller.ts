@@ -123,9 +123,11 @@ export const inviteUserController = async (req: Request, res: Response, next: Ne
 
     try {
         const projectID = Number(req.params.id);
-        const { invitedUserID, invitedByID } = req.body;
+        const invitedByID = req.user.id;
+        const { invitee } = req.body;
 
-        const result = await inviteUserService(projectID, invitedUserID, invitedByID);
+        console.log("invite::::", projectID, invitedByID, invitee);
+        const result = await inviteUserService(projectID, invitedByID, invitee);
         res.status(200).json(result);
     }
     catch (err) {

@@ -82,7 +82,7 @@ const SlideBar = () => {
           </div>
           <Separator />
           <div className=" flex items-center text-sm justify-between mt-2  rounded-xs px-2 py-1.5 mb-2">
-            <div className="flex items-center gap-1.5 text-gray-700 font-semibold"> <CircleUserRound strokeWidth={1.5} className="size-5" /> {username} </div>
+            <div className="flex items-center gap-1.5 text-gray-700 font-semibold"> <CircleUserRound strokeWidth={1.5} className="size-5 text-indigo-700" /> {username} </div>
             <div className="text-white rounded-full px-2 bg-indigo-700 text-xs py-1 flex gap-1 items-center pl-3 cursor-pointer"> Logout <ArrowRight strokeWidth={1.5} className="size-3"  /> </div>
           </div>
         </div>

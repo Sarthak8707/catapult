@@ -14,16 +14,21 @@ import { Field, FieldLabel } from "@/components/ui/field";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
+import Cookies from "js-cookie";
 import { Plus } from "lucide-react";
 import { useState, type SubmitEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
-export default function MemberDialog({id, token}: {id: number, token: string}) {
+export default function MemberDialog() {
 
     const navigate = useNavigate();
+    const {id} = useParams();
+    const projectID = Number(id);
+    const token = Cookies.get("token");
+
     const [formData, setFormData] = useState({
-        username: ""
+        invitee: ""
     })
 
     const [inviting, setInviting] = useState(false);
@@ -40,20 +45,20 @@ export default function MemberDialog({id, token}: {id: number, token: string}) {
         setInviting(true);
 
         try{
-            const response = await axios.post(`http://localhost:3000/projects/${id}/flags`, formData, {
+            const response = await axios.post(`http://localhost:3000/projects/${projectID}/invitations`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
 
             console.log(response.data)
-            navigate(`/flags/${response.data.flagID}`)
+            navigate(0);
 
             setInviting(false);
             
         }
         catch(err){
-            console.log(err);
+            console.log("invite error", err);
         }
 
     }
@@ -79,7 +84,7 @@ export default function MemberDialog({id, token}: {id: number, token: string}) {
 
             <Field>
               <FieldLabel>Username</FieldLabel>
-              <Input type="text" name="username" value={formData.username} onChange={handleChange}/>
+              <Input type="text" name="invitee" value={formData.invitee} onChange={handleChange}/>
             </Field>
 
             <div> {inviting && <div className="text-center"> Sending Invite... </div>} </div>

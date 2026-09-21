@@ -6,11 +6,11 @@ const router = express.Router();
 
 // Accept invitation
 
-router.put("/:id", acceptInviteController);
+router.put("/:id/accept", acceptInviteController);
 
 // Reject invitation
 
-router.put("/:id", rejectInviteController);
+router.put("/:id/reject", rejectInviteController);
 
 
 export {router as invitationRouter}

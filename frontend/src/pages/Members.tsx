@@ -57,7 +57,7 @@ const Members = () => {
         <div className='text-2xl font-medium'> Collaborate </div>
         <div className='ml-auto flex gap-3'>
           <button className=' px-3 py-2 text-foreground hover:bg-gray-100 transition-colors duration-200 text-sm rounded-sm font-medium cursor-pointer flex gap-1 items-center'> <SquareArrowRightExit className='h-3 w-3' /> <div>Export</div> </button>
-          <MemberDialog id={78} token={""} />
+          <MemberDialog/>
         </div>
       </div>
 
@@ -119,9 +119,20 @@ const Members = () => {
 
 
         <TabsPanel value="val-2">
+          <div className='text-gray-600 h-8 w-220 text-sm font-medium rounded-sm flex items-center mt-5 pl-10 pr-10'>
+                <div className='flex'>
+                  <div className='w-50'> Invitee </div>
+                  <div className='w-20'> Invited by </div>
+                  
+                </div>
+
+                <div className='ml-auto flex gap-3'>
+                  <div> Status </div>
+                </div>
+              </div>
           {invitations.map((invitation, idx) => (
             <div>
-              <div className='text-gray-800 h-20 w-220 border border-gray-200 rounded-sm flex items-center mt-5 pl-10 pr-10'>
+              <div className='text-gray-800 text-sm h-20 w-220 border border-gray-200 rounded-sm flex items-center mt-5 pl-10 pr-10'>
                 <div className='flex'>
                   <div className='w-50'> {invitation.invitedUser}  </div>
                   <div className='w-20'> {invitation.invitedBy} </div>

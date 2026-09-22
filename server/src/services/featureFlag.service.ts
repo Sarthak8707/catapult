@@ -16,7 +16,7 @@ export const getFlagSummaryService = async (flagID: number) => {
   variants = variants.map((variant) => ({
     ...variant,
     variantName: variant.name,
-    
+
   }))
   const summary = { ...data, variants: variants }
   return summary;
@@ -28,57 +28,57 @@ export const getFlagSummaryService = async (flagID: number) => {
 
 export const getAllFLagsOfProjectService = async (projectID: number) => {
 
-    try{
-        const data = await db.select({
+  try {
+    const data = await db.select({
 
-            flagID: flags.id,
-            flagName: flags.name,
-            type: flags.type,
-            updated: flags.updatedAt,
-            
-            envs: {
-                environment: environmentFlagConfig.environment,
-                enabled: environmentFlagConfig.enabled,
-                status: environmentFlagConfig.status,               
-            }
+      flagID: flags.id,
+      flagName: flags.name,
+      type: flags.type,
+      updated: flags.updatedAt,
 
+      envs: {
+        environment: environmentFlagConfig.environment,
+        enabled: environmentFlagConfig.enabled,
+        status: environmentFlagConfig.status,
+      }
+
+    })
+      .from(flags)
+      .innerJoin(
+        environmentFlagConfig,
+        eq(environmentFlagConfig.flagID, flags.id)
+      )
+      .where(eq(flags.projectID, projectID));
+
+
+
+    const groupedByFlag = new Map<number, any>();
+
+    for (const row of data) {
+      if (!groupedByFlag.has(row.flagID)) {
+        groupedByFlag.set(row.flagID, {
+          flagID: row.flagID,
+          flagName: row.flagName,
+          type: row.type,
+
+          envs: []
         })
-        .from(flags)
-        .innerJoin(
-            environmentFlagConfig,
-            eq(environmentFlagConfig.flagID, flags.id)
-        )
-        .where(eq(flags.projectID, projectID));
+      }
 
-        
-
-        const groupedByFlag = new Map<number, any>();
-
-        for(const row of data){
-            if(!groupedByFlag.has(row.flagID)){
-                groupedByFlag.set(row.flagID, {
-                    flagID: row.flagID,
-                    flagName: row.flagName,
-                    type: row.type,
-
-                    envs: []
-                })
-            }
-
-            groupedByFlag.get(row.flagID).envs.push({
-                environment: row.envs.environment,
-                enabled: row.envs.enabled,
-                status: row.envs.status
-            })
-        }
-
-        const result = [...groupedByFlag.values()];
-        return result;
-
+      groupedByFlag.get(row.flagID).envs.push({
+        environment: row.envs.environment,
+        enabled: row.envs.enabled,
+        status: row.envs.status
+      })
     }
-    catch(err){
-        console.log(err);
-    }
+
+    const result = [...groupedByFlag.values()];
+    return result;
+
+  }
+  catch (err) {
+    console.log(err);
+  }
 
 }
 
@@ -86,98 +86,98 @@ export const getAllFLagsOfProjectService = async (projectID: number) => {
 
 export const getFlagInfoService = async (flagID: number) => {
 
-try{
-  const data = await db
-  .select({
-    configID: environmentFlagConfig.id,
-    environment: environmentFlagConfig.environment,
-    enabled: environmentFlagConfig.enabled,
+  try {
+    const data = await db
+      .select({
+        configID: environmentFlagConfig.id,
+        environment: environmentFlagConfig.environment,
+        enabled: environmentFlagConfig.enabled,
 
-    ruleID: flagRules.id,
-    ruleName: flagRules.name,
-    conditions: flagRules.conditions,
+        ruleID: flagRules.id,
+        ruleName: flagRules.name,
+        conditions: flagRules.conditions,
 
-    rolloutID: flagRollouts.id,
-    percentage: flagRollouts.percentage,
-    bucketBy: flagRollouts.bucketBy,
+        rolloutID: flagRollouts.id,
+        percentage: flagRollouts.percentage,
+        bucketBy: flagRollouts.bucketBy,
 
-    variantID: flagVariants.id,
-    variantName: flagVariants.name,
-    value: flagVariants.value,
-  })
-  .from(environmentFlagConfig)
-  .leftJoin(
-    flagRules,
-    eq(flagRules.envFlagConfigID, environmentFlagConfig.id)
-  )
-  .leftJoin(
-    flagRollouts,
-    eq(flagRollouts.ruleID, flagRules.id)
-  )
-  .leftJoin(
-    flagVariants,
-    eq(flagVariants.id, flagRollouts.variantID)
-  )
-  .where(eq(environmentFlagConfig.flagID, flagID));
-       
-        
-        
-        // Group by config
+        variantID: flagVariants.id,
+        variantName: flagVariants.name,
+        value: flagVariants.value,
+      })
+      .from(environmentFlagConfig)
+      .leftJoin(
+        flagRules,
+        eq(flagRules.envFlagConfigID, environmentFlagConfig.id)
+      )
+      .leftJoin(
+        flagRollouts,
+        eq(flagRollouts.ruleID, flagRules.id)
+      )
+      .leftJoin(
+        flagVariants,
+        eq(flagVariants.id, flagRollouts.variantID)
+      )
+      .where(eq(environmentFlagConfig.flagID, flagID));
 
-  const groupedByConfig = new Map<number, any>();
 
-for (const row of data) {
-  // Create config if it doesn't exist
-  if (!groupedByConfig.has(row.configID)) {
-    groupedByConfig.set(row.configID, {
-      configID: row.configID,
-      environment: row.environment,
-      enabled: row.enabled,
 
-      //   Map < ruleID, data >
-      rules: new Map<number | null, any>(),
-    });
+    // Group by config
+
+    const groupedByConfig = new Map<number, any>();
+
+    for (const row of data) {
+      // Create config if it doesn't exist
+      if (!groupedByConfig.has(row.configID)) {
+        groupedByConfig.set(row.configID, {
+          configID: row.configID,
+          environment: row.environment,
+          enabled: row.enabled,
+
+          //   Map < ruleID, data >
+          rules: new Map<number | null, any>(),
+        });
+      }
+
+      const config = groupedByConfig.get(row.configID);
+
+      // Skip if there is no rule
+      if (row.ruleID === null) continue;
+
+      // Create rule if it doesn't exist
+      if (!config.rules.has(row.ruleID)) {
+        config.rules.set(row.ruleID, {
+          ruleID: row.ruleID,
+          ruleName: row.ruleName,
+          conditions: row.conditions,
+          rollouts: [],
+        });
+      }
+
+      // Add rollout
+      config.rules.get(row.ruleID).rollouts.push({
+        rolloutID: row.rolloutID,
+        percentage: row.percentage,
+        bucketBy: row.bucketBy,
+        variantID: row.variantID,
+        variantName: row.variantName,
+        value: row.value,
+      });
+    }
+
+    // Convert nested Maps to arrays
+    const result = [...groupedByConfig.values()].map((config) => ({
+      configID: config.configID,
+      environment: config.environment,
+      enabled: config.enabled,
+      rules: [...config.rules.values()],
+    }));
+    return result
   }
 
-  const config = groupedByConfig.get(row.configID);
-
-  // Skip if there is no rule
-  if (row.ruleID === null) continue;
-
-  // Create rule if it doesn't exist
-  if (!config.rules.has(row.ruleID)) {
-    config.rules.set(row.ruleID, {
-      ruleID: row.ruleID,
-      ruleName: row.ruleName,
-      conditions: row.conditions,
-      rollouts: [],
-    });
+  catch (err) {
+    console.log(err)
   }
-
-  // Add rollout
-  config.rules.get(row.ruleID).rollouts.push({
-    rolloutID: row.rolloutID,
-    percentage: row.percentage,
-    bucketBy: row.bucketBy,
-    variantID: row.variantID,
-    variantName: row.variantName,
-    value: row.value,
-  });
-}
-
-// Convert nested Maps to arrays
-const result = [...groupedByConfig.values()].map((config) => ({
-  configID: config.configID,
-  environment: config.environment,
-  enabled: config.enabled,
-  rules: [...config.rules.values()],
-}));
-  return result
-}
-
-catch (err){
-  console.log(err)
-}
 
 }
 
@@ -186,178 +186,190 @@ catch (err){
 
 export const createNewFlagService = async (name: string, description: string, projectID: number, userID: number) => {
 
-      // Add flag to Flags db
-      const [flag] = await db.insert(flags).values([
-          {
-              name, description, createdBy: userID, projectID
-          },
+  // Add flag to Flags db
+  const [flag] = await db.insert(flags).values([
+    {
+      name, description, createdBy: userID, projectID
+    },
 
-      ]).returning({id: flags.id});
+  ]).returning({ id: flags.id });
 
-      // Add environment flag configs to db
+  // Add environment flag configs to db
 
-      await db.insert(environmentFlagConfig).values([
-        { flagID: flag.id, environment: "dev" },
-        { flagID: flag.id, environment: "stag" }
-      ])
-      
-      // Push Audit Logs
+  await db.insert(environmentFlagConfig).values([
+    { flagID: flag.id, environment: "dev" },
+    { flagID: flag.id, environment: "stag" }
+  ])
 
-      db.insert(auditLogs).values(
-        {
-          projectID, actorUserID: userID, action: "created", resourceType: "flag", resourceID: flag.id
-        }
-      )
+  // Push Audit Logs
 
-      return {
-          flagID: flag.id,
-      };
+  db.insert(auditLogs).values(
+    {
+      projectID, actorUserID: userID, action: "created", resourceType: "flag", resourceID: flag.id
+    }
+  )
+
+  return {
+    flagID: flag.id,
+  };
 
 }
 
 // Update a flag
 
 export const changeFlagService = async (requestBody: any, flagID: number) => {
-   
-  const {flagConfigID, enabled, description, rules, rollouts, newVariant} = requestBody;
- // console.log("rulesconditions:::", rules.conditions);
-  
-  // Switch 
-  if(enabled != undefined){
-      try{
-      const data = await db.update(environmentFlagConfig)
-    .set({enabled: enabled})
-    .where(eq(environmentFlagConfig.id, flagConfigID));
 
-    return {msg: "Updated successfully!"};
+  const { flagConfigID, enabled, description, rules, rollouts, newVariant, segment } = requestBody;
+  // console.log("rulesconditions:::", rules.conditions);
+
+  // Switch 
+  if (enabled != undefined) {
+    try {
+      const data = await db.update(environmentFlagConfig)
+        .set({ enabled: enabled })
+        .where(eq(environmentFlagConfig.id, flagConfigID));
+
+      return { msg: "Updated successfully!" };
     }
-    catch(err){
+    catch (err) {
       console.log(err);
     }
   }
 
   // Description
 
-  if(description != undefined){
-    try{
+  if (description != undefined) {
+    try {
       const data = await db.update(flags)
-      .set({description: description})
-      .where(eq(flags.id, flagID));
+        .set({ description: description })
+        .where(eq(flags.id, flagID));
 
-      return {msg: "Updated successfully!"};
+      return { msg: "Updated successfully!" };
     }
-    catch(err){
+    catch (err) {
       console.log(err);
     }
   }
 
   // Conditions
 
-  if(rules != undefined){
-    try{
+  if (rules != undefined) {
+    console.log("rules::::", rules);
+    try {
       const ruleID = rules.ruleID;
       const conditions = rules.conditions;
 
       const data = await db.update(flagRules)
-      .set({conditions: {
-        "operator": "AND",
-        "conditions": conditions
-      }})
-      .where(eq(flagRules.id, ruleID));
+        .set({
+          conditions: {
+            "operator": "AND",
+            "conditions": conditions
+          }
+        })
+        .where(eq(flagRules.id, ruleID));
 
-      return {msg: "Updated successfully!"};
+      return { msg: "Updated successfully!" };
     }
-    catch(err){
+    catch (err) {
       console.log(err);
     }
   }
 
   // Rollouts
 
-  if(rollouts != undefined){
-    
-    try{
+  if (rollouts != undefined) {
 
-      for(const rollout of rollouts){
+    try {
 
-      await db.update(flagRollouts)
-      .set({
-        percentage: rollout.percentage,
-        variantID: rollout.variantID
-      })
-      .where(eq(flagRollouts.id, rollout.rolloutID))
+      for (const rollout of rollouts) {
+
+        await db.update(flagRollouts)
+          .set({
+            percentage: rollout.percentage,
+            variantID: rollout.variantID
+          })
+          .where(eq(flagRollouts.id, rollout.rolloutID))
+      }
+
+      return { msg: "Updated successfully!" };
+
     }
-
-    return {msg: "Updated successfully!"};
-
-    }
-    catch(err){
+    catch (err) {
       console.log(err);
     }
-    
+
   }
 
   // New Variant
 
-  if(newVariant != undefined){
-    
-    try{
+  if (newVariant != undefined) {
+
+    try {
       await db.insert(flagVariants).values([
         {
           flagID: flagID,
-          name: newVariant.name, 
+          name: newVariant.name,
           value: { "param": newVariant.param, "val": newVariant.val }
         }
       ]);
-      return {msg: "done"}
+      return { msg: "done" }
     }
-    catch(err){
+    catch (err) {
       console.log(err);
     }
   }
-    
+
+  // Segment
+
+  if (segment != undefined) {
+
+    //
+
+  }
+
+
 
 }
 
 // Delete a flag
 
 export const deleteFlagService = async (flagID: number) => {
-    const [data] = await db.delete(flags).where(eq(flags.id, flagID)).returning({projectID: flags.projectID});
-    return data;
+  const [data] = await db.delete(flags).where(eq(flags.id, flagID)).returning({ projectID: flags.projectID });
+  return data;
 }
 
 // Config Flag Service
 
 export const getFlagConfig = async (envID: number) => {
-    const flags = await getFlagsForEnvironment(envID);
-    const config: SDKFlagConfig = {
-        flags: {}
-    };
+  const flags = await getFlagsForEnvironment(envID);
+  const config: SDKFlagConfig = {
+    flags: {}
+  };
 
-    // for(const flag of flags){
-    //     config.flags[flag.id] = {
-    //         enabled: flag.enabled, 
-    //         rolloutPercentage: flag.rolloutPercentage
-    //     };
-    // }
-    return config;
+  // for(const flag of flags){
+  //     config.flags[flag.id] = {
+  //         enabled: flag.enabled, 
+  //         rolloutPercentage: flag.rolloutPercentage
+  //     };
+  // }
+  return config;
 }
 
 // Update rules of flag
 
 export const updateFlagRules = async (flagId: number, rules: Rule[]) => {
-   // const data = await db.update(flags).set({rules: rules}).where(eq(flags.id, flagId));
-    return {msg: "Updated rules successfully!"}
+  // const data = await db.update(flags).set({rules: rules}).where(eq(flags.id, flagId));
+  return { msg: "Updated rules successfully!" }
 }
 
 // Create rules for flag
 
-export const createFlagRules = async(flagId: number, rules: Rule[]) => {
-   // const flag = await db.select({existingRules: flags.rules}).from(flags).where(eq(flags.id, flagId)).limit(1);
+export const createFlagRules = async (flagId: number, rules: Rule[]) => {
+  // const flag = await db.select({existingRules: flags.rules}).from(flags).where(eq(flags.id, flagId)).limit(1);
 
-   // const currentRules = flag[0].existingRules || [];
-   // const newRules = [...currentRules, ...rules];
+  // const currentRules = flag[0].existingRules || [];
+  // const newRules = [...currentRules, ...rules];
 
-    await updateFlagRules(flagId, rules);
-    return {msg: "Created rules successfully!"};
+  await updateFlagRules(flagId, rules);
+  return { msg: "Created rules successfully!" };
 }

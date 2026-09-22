@@ -219,6 +219,21 @@ export const segments = pgTable("segments", {
 
 })
 
+export const ruleSegments = pgTable("rule_segments", {
+
+    id: serial("id").primaryKey(),
+    
+    ruleID: integer("rule_id").notNull().references(() => flagRules.id, {
+        onDelete: "cascade", onUpdate: "cascade"
+    }),
+
+    segmentID: integer("segment_id").notNull().references(() => segments.id, {
+        onDelete: "cascade", onUpdate: "cascade"
+    }),
+
+    
+})
+
 // Incoming Events Table
 
 export const events = pgTable("events", {

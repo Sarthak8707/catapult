@@ -29,6 +29,15 @@ type RulesType = {
         operator: string
       }[]
     },
+
+    segmentData: {
+        operator: string,
+        conditions: {
+            field: string,
+            value: any,
+            operator: string
+        }[]
+    },
     
     rollouts: {
       rolloutID: number,

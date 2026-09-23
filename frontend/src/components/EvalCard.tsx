@@ -5,82 +5,122 @@ import RuleEditor from './RuleEditor'
 
 
 type RuleType = {
-    ruleID: number
-    ruleName: string,
+  ruleID: number
+  ruleName: string,
+  conditions: {
+    operator: string,
     conditions: {
-      operator: string,
-      conditions: {
-        field: string,
-        value: string,
-        operator: string
-      }[]
-    },
-    
-    rollouts: {
-      percentage: number,
-      variantName: string,
-      value: {
-        param: string,
-        val: any
-      }
+      field: string,
+      value: string,
+      operator: string
     }[]
+  },
+
+  segmentData: {
+    operator: string,
+    conditions: {
+      field: string,
+      value: any,
+      operator: string
+    }[]
+  },
+
+  rollouts: {
+    percentage: number,
+    variantName: string,
+    value: {
+      param: string,
+      val: any
+    }
+  }[]
 }
 
-const EvalCard = ({conditions, rollouts, ruleID}: RuleType) => {
+const EvalCard = ({ conditions, rollouts, segmentData, ruleID }: RuleType) => {
+  console.log("segmentData:::", segmentData?.conditions)
 
-  
 
   return (
     <div>
-                        <div >
-                            
-                            <div className='border bg-gray-50 rounded-sm border-gray-200 flex flex-col justify-center items-center gap-2 mt-8'>
-                            
-                                    
-                                    {/* Conditions */}
+      <div >
 
-                                {conditions.conditions.map((condition, index) => (
-                                <div className='flex flex-col items-center gap-2'>
-
-                                <div className=" flex items-center w-170 h-20  px-8 rounded-sm text-sm">
-                                <div className="flex ">
-                                <div className='w-30 text-muted-foreground'>Constraint</div>
-                                <div className='text-muted-foreground flex gap-1'>  If <div className='font-medium text-foreground'>{condition.field}</div> {` `} {condition.operator} {` `} <Badge variant="secondary" size="lg">
-                                    <div className='font-medium text-foreground'>{condition.value}</div>
-                                    </Badge>  </div>
-                                </div>
-                                </div>
+        <div className='border bg-gray-50 rounded-sm border-gray-200 flex flex-col justify-center items-center gap-2 mt-8'>
 
 
-                                {(index != conditions.conditions.length - 1)  && 
+          {/* Conditions */}
 
-                                (<div className='text-sm border border-white bg-blue-100 text-info-foreground px-2 rounded-sm font-semibold'>And</div>)
-                                
-                                }
+          {conditions.conditions.map((condition, index) => (
+            <div className='flex flex-col items-center gap-2'>
 
-                                </div>
-                                ))}    
+              <div className=" flex items-center w-170 h-20  px-8 rounded-sm text-sm">
+                <div className="flex ">
+                  <div className='w-30 text-muted-foreground'>Constraint</div>
+                  <div className='text-muted-foreground flex gap-1'>  If <div className='font-medium text-foreground'>{condition.field}</div> {` `} {condition.operator} {` `} <Badge variant="secondary" size="lg">
+                    <div className='font-medium text-foreground'>{condition.value}</div>
+                  </Badge>  </div>
+                </div>
+              </div>
 
-                                {/* Rollouts */}
 
-                                <div className='flex flex-col items-center gap-2'>
+              {(index != conditions.conditions.length - 1) &&
 
-                                <div className='text-sm text-gray-600 font-semibold'>Then</div> 
+                (<div className='text-sm border border-white bg-blue-100 text-info-foreground px-2 rounded-sm font-semibold'>And</div>)
 
-                                <div className="w-170 flex items-center px-8 rounded-sm text-sm">
-                                <div className=" flex  py-4 border-red-400">
-                                <div className='w-30 text-muted-foreground  border-blue-600 flex items-center'>Rollout </div>
-                                <div > {rollouts.map((rollout, index) => (
-                                  <div className='text-muted-foreground flex gap-1'> 
-                                    <div className='font-medium text-foreground'> {rollout?.percentage}% </div> of users get <div className='font-medium text-foreground'>{rollout?.value?.val}</div> 
-                                  </div>
-                                ))} </div>
-                                </div>
-                                </div>
-                                </div>
-                                
-                            </div>
-                        </div>        
+              }
+
+            </div>
+          ))}
+
+          {/* Segments Data */}
+
+          {segmentData && <div>
+            <div className='border rounded-sm bg-white'>
+              <div className='text-muted-foreground text-sm border-red-400 pl-13 pt-3'> Segment </div>
+              <div className='bg-white border-red-400 pl-10'>
+                {segmentData?.conditions.map((condition, index) => (
+                  <div className='flex flex-col items-center gap-2'>
+
+                    <div className=" flex items-center w-170 h-20  px-8 rounded-sm text-sm">
+                      <div className="flex">
+                        <div className='w-30 text-muted-foreground'>Constraint</div>
+                        <div className='text-muted-foreground flex gap-1'>  If <div className='font-medium text-foreground'>{condition.field}</div> {` `} {condition.operator} {` `} <Badge variant="secondary" size="lg">
+                          <div className='font-medium text-foreground'>{condition.value}</div>
+                        </Badge>  </div>
+                      </div>
+                    </div>
+
+
+                    {(index != segmentData.conditions.length - 1) &&
+
+                      (<div className='text-sm border border-white bg-blue-100 text-info-foreground px-2 rounded-sm font-semibold'>And</div>)
+
+                    }
+
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>}
+
+          {/* Rollouts */}
+
+          <div className='flex flex-col items-center gap-2'>
+
+            <div className='text-sm text-gray-600 font-semibold'>Then</div>
+
+            <div className="w-170 flex items-center px-8 rounded-sm text-sm">
+              <div className=" flex  py-4 border-red-400">
+                <div className='w-30 text-muted-foreground  border-blue-600 flex items-center'>Rollout </div>
+                <div > {rollouts.map((rollout, index) => (
+                  <div className='text-muted-foreground flex gap-1'>
+                    <div className='font-medium text-foreground'> {rollout?.percentage}% </div> of users get <div className='font-medium text-foreground'>{rollout?.value?.val}</div>
+                  </div>
+                ))} </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
   )
 }

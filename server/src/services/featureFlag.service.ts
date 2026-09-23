@@ -1,6 +1,6 @@
 import { eq, inArray, or } from "drizzle-orm";
 import { db } from "../db/client";
-import { auditLogs, environmentFlagConfig, flagRollouts, flagRules, flags, flagVariants, projects } from "../db/schema";
+import { auditLogs, environmentFlagConfig, flagRollouts, flagRules, flags, flagVariants, projects, ruleSegments, segments } from "../db/schema";
 import { getFlagsForEnvironment } from "../repositories/flag.repository";
 import { Rule, SDKFlagConfig } from "../types/flag.types";
 
@@ -104,6 +104,10 @@ export const getFlagInfoService = async (flagID: number) => {
         variantID: flagVariants.id,
         variantName: flagVariants.name,
         value: flagVariants.value,
+
+        ruleSegID: ruleSegments.id,
+        segmentID: segments.id,
+        segmentData: segments.conditions
       })
       .from(environmentFlagConfig)
       .leftJoin(
@@ -118,9 +122,18 @@ export const getFlagInfoService = async (flagID: number) => {
         flagVariants,
         eq(flagVariants.id, flagRollouts.variantID)
       )
+      .leftJoin(
+        ruleSegments,
+        eq(ruleSegments.ruleID, flagRules.id)
+      )
+      .leftJoin(
+        segments,
+        eq(segments.id, ruleSegments.segmentID)
+      )
+      
       .where(eq(environmentFlagConfig.flagID, flagID));
 
-
+      //console.log(data);
 
     // Group by config
 
@@ -147,9 +160,14 @@ export const getFlagInfoService = async (flagID: number) => {
       // Create rule if it doesn't exist
       if (!config.rules.has(row.ruleID)) {
         config.rules.set(row.ruleID, {
+
           ruleID: row.ruleID,
           ruleName: row.ruleName,
+
           conditions: row.conditions,
+
+          segmentData: row.segmentData,
+
           rollouts: [],
         });
       }
@@ -172,7 +190,9 @@ export const getFlagInfoService = async (flagID: number) => {
       enabled: config.enabled,
       rules: [...config.rules.values()],
     }));
+   // console.log(result.map((a) => (a.rules)))
     return result
+
   }
 
   catch (err) {

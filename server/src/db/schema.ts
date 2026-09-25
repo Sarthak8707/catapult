@@ -203,11 +203,11 @@ export const segments = pgTable("segments", {
     
     id: serial("id").primaryKey(),
 
-    name: text("name"),
+    name: text("name").notNull(),
 
     description: text("description"),
 
-    type: text("type"),
+    type: text("type").notNull().default("test"),
 
     conditions: jsonb("conditions").$type<Record<string, any>>(),
 

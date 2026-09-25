@@ -5,6 +5,7 @@ import { createNewFlagService, getAllFLagsOfProjectService } from "../services/f
 import { getGuardrailsService } from "../services/guardrails.service";
 import { getProjectMembers } from "../services/members.service";
 import { getInvitationsOfProjectService, inviteUserService } from "../services/invitations.service";
+import { createSegmentService } from "../services/segments.service";
 
 export const getAllProjectsOfUserController = async (req: Request, res: Response, next: NextFunction) => {
 
@@ -95,6 +96,20 @@ export const getGuardrailsController = async (req: Request, res: Response, next:
     res.status(200).json(result);
 }
 
+
+export const createSegmentController = async (req: Request, res: Response, next: NextFunction) => {
+
+    try {
+        const projectID = Number(req.params.id);
+        const {name, description} = req.body;
+        const result = await createSegmentService(projectID, name, description);
+        res.status(200).json(result);
+    }
+    catch (err) {
+        console.log(err);
+        next(err);
+    }
+}
 
 export const getMembersController = async (req: Request, res: Response, next: NextFunction) => {
 

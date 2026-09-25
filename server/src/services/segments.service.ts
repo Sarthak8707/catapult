@@ -25,3 +25,9 @@ export const getSegmentService = async (id: number) => {
         console.log(err);
     }
 }
+
+export const createSegmentService = async (projectID: number, name: string, description: string) => {
+    
+    const [data] = await db.insert(segments).values({projectID, name, description}).returning({id: segments.id});
+    return data;
+}

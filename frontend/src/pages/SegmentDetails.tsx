@@ -40,7 +40,7 @@ const SegmentDetails = () => {
   return (
     <div className='min-h-screen px-10 py-5 bg-white'>
         <div className=''> 
-            <div className='text-2xl font-medium'> Segments </div>
+            <div className='text-2xl font-medium'> {segment && segment.name} </div>
             
         </div>
 
@@ -52,7 +52,7 @@ const SegmentDetails = () => {
         {loading ? <div className='flex items-center justify-center h-100 w-220'> Loading Segment Conditions... </div> : 
         <div> 
           <div className='border h-100 w-220 mt-10 rounded-sm py-5'>
-            {segment && segment.conditions.conditions.map((condition, idx) => (
+            {segment && segment.conditions?.conditions.map((condition, idx) => (
               <div className='flex flex-col items-center gap-2'>
               
                     <div className=" flex items-center w-170 h-20  px-8 rounded-sm text-sm">

@@ -166,21 +166,45 @@ export const getFlagInfoService = async (flagID: number) => {
 
           conditions: row.conditions,
 
-          segmentData: row.segmentData,
+          segments: [],
 
           rollouts: [],
         });
       }
 
-      // Add rollout
-      config.rules.get(row.ruleID).rollouts.push({
-        rolloutID: row.rolloutID,
-        percentage: row.percentage,
-        bucketBy: row.bucketBy,
-        variantID: row.variantID,
-        variantName: row.variantName,
-        value: row.value,
-      });
+      // Add segments
+
+      const rule = config.rules.get(row.ruleID);
+
+if (row.segmentID !== null) {
+  const exists = rule.segments.some(
+    (segment: any) => segment.segmentID === row.segmentID
+  );
+
+  if (!exists) {
+    rule.segments.push({
+      segmentID: row.segmentID,
+      segmentData: row.segmentData,
+    });
+  }
+}
+
+if (row.rolloutID !== null) {
+  const exists = rule.rollouts.some(
+    (rollout: any) => rollout.rolloutID === row.rolloutID
+  );
+
+  if (!exists) {
+    rule.rollouts.push({
+      rolloutID: row.rolloutID,
+      percentage: row.percentage,
+      bucketBy: row.bucketBy,
+      variantID: row.variantID,
+      variantName: row.variantName,
+      value: row.value,
+    });
+  }
+}
     }
 
     // Convert nested Maps to arrays

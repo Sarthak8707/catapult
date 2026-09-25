@@ -27,14 +27,17 @@ type RuleType = {
       }[]
     },
 
-    segmentData: {
-        operator: string,
-        conditions: {
-            field: string,
-            value: any,
-            operator: string
-        }[]
-    },
+    segments: {
+        segmentId: number,
+        segmentData: {
+            operator: string,
+            conditions: {
+                field: string,
+                value: any,
+                operator: string
+            }[]
+        }
+    }[],
     
     rollouts: {
       rolloutID: number,

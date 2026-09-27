@@ -263,7 +263,7 @@ export const createNewFlagService = async (name: string, description: string, pr
 
 export const changeFlagService = async (requestBody: any, flagID: number) => {
 
-  const { flagConfigID, enabled, description, rules, rollouts, newVariant, segment } = requestBody;
+  const { flagConfigID, enabled, description, rules, rollouts, newVariant, segmentData } = requestBody;
   // console.log("rulesconditions:::", rules.conditions);
 
   // Switch 
@@ -365,14 +365,19 @@ export const changeFlagService = async (requestBody: any, flagID: number) => {
 
   // Segment
 
-  if (segment != undefined) {
+  if (segmentData != undefined) {
 
-    //
+    // Delete existing segments of current rule
 
+    await db.delete(ruleSegments).where(eq(ruleSegments.ruleID, segmentData.ruleID));
+
+    // Insert new segments
+
+    for(const segment of segmentData){
+      await db.insert(ruleSegments).values({ruleID: segmentData.ruleID, segmentID: segment.id})
+    }
+    
   }
-
-
-
 }
 
 // Delete a flag

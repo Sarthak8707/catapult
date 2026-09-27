@@ -107,6 +107,7 @@ export const getFlagInfoService = async (flagID: number) => {
 
         ruleSegID: ruleSegments.id,
         segmentID: segments.id,
+        segmentName: segments.name,
         segmentData: segments.conditions
       })
       .from(environmentFlagConfig)
@@ -184,6 +185,7 @@ if (row.segmentID !== null) {
   if (!exists) {
     rule.segments.push({
       segmentID: row.segmentID,
+      segmentName: row.segmentName,
       segmentData: row.segmentData,
     });
   }
@@ -376,7 +378,7 @@ export const changeFlagService = async (requestBody: any, flagID: number) => {
     for(const segment of segmentData){
       await db.insert(ruleSegments).values({ruleID: segmentData.ruleID, segmentID: segment.id})
     }
-    
+
   }
 }
 

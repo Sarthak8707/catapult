@@ -1,7 +1,6 @@
 
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { Separator } from '@/components/ui/separator';
 import axios from 'axios';
 import { Tabs, TabsList, TabsPanel, TabsTab } from '@/components/ui/tabs';
 import { Pencil } from 'lucide-react';
@@ -31,7 +30,8 @@ type RulesType = {
     },
 
     segments: {
-        segmentId: number,
+        segmentID: number,
+        segmentName: string,
         segmentData: {
             operator: string,
             conditions: {
@@ -72,6 +72,7 @@ const FlagDetails = () => {
     const [editing, setEditing] = useState(false);
     const [description, setDescription] = useState("");
     const [saving, setSaving] = useState(false);
+    const [segments, setSegments] = useState<{id: number, name: string}[]>([])
 
     useEffect(() => {
         const getFlagData = async () => {
@@ -79,8 +80,10 @@ const FlagDetails = () => {
 
             const res2 = await axios.get(`http://localhost:3000/flags/${id}/summary`);
             setFlagInfo(res2.data);
-            //  console.log(response.data)
-            //  console.log("variants at first", res2.data?.variants)
+
+            const res3 = await axios.get(`http://localhost:3000/projects/2/segments`);
+            setSegments(res3.data);
+            //console.log(res3.data);
             const dev = response.data.find((c: any) => c.environment == "dev");
             if (dev) { setDevRules(dev.rules); console.log(dev.rules); }
             else setDevRules([])
@@ -89,7 +92,7 @@ const FlagDetails = () => {
             if (stag) setStagRules(stag.rules);
             else setStagRules([])
 
-            //console.log(response.data)
+            
 
             if (response.data.length) setFcID1(response.data[0].configID);
             if (response.data.length) setFcID2(response.data[1].configID)
@@ -97,8 +100,6 @@ const FlagDetails = () => {
             if (response.data.length) setStagEnabled(response.data[1].enabled);
             setLoading(false);
             setDescription(res2.data.description)
-            //  console.log(description)
-            //console.log(dev.rules);
 
         }
 
@@ -202,7 +203,7 @@ const FlagDetails = () => {
                     <TabsPanel value="val-1">
                         <FlagEvaluation loading={loading} devEnabled={devEnabled} devRules={devRules} stagRules={stagRules}
                             stagEnabled={stagEnabled} disabled={disabled} handleChange={handleChange} setDevRules={setDevRules}
-                            variants={flagInfo?.variants} />
+                            variants={flagInfo?.variants} segments={segments}/>
                     </TabsPanel>
                     <TabsPanel value="val-2">
                         <div className=''> {flagInfo?.variants && <FlagVariants variants={flagInfo?.variants} flagID={Id} />} </div>

@@ -15,6 +15,7 @@ type VariantsType = {
       }
 }[]
 
+
 type RuleType = {
     ruleID: number,
     ruleName: string,
@@ -28,7 +29,8 @@ type RuleType = {
     },
 
     segments: {
-        segmentId: number,
+        segmentID: number,
+        segmentName: string,
         segmentData: {
             operator: string,
             conditions: {
@@ -52,10 +54,12 @@ type RuleType = {
 }
 
 
-interface EvaluationCardsProps { rules: RuleType[], setDevRules: React.Dispatch<React.SetStateAction<any>>, variants: VariantsType}
+interface EvaluationCardsProps { rules: RuleType[], setDevRules: React.Dispatch<React.SetStateAction<any>>, variants: VariantsType, segments: {id: number, name: string}[]}
 
-const EvaluationCards = ({rules, setDevRules, variants}: EvaluationCardsProps) => {
+const EvaluationCards = ({rules, setDevRules, variants, segments}: EvaluationCardsProps) => {
 
+  console.log("here::::", rules[0].segments)
+  
   const [editing, setEditing] = useState<number | null>(null);
 
   if(rules.length == 0){
@@ -84,7 +88,7 @@ const EvaluationCards = ({rules, setDevRules, variants}: EvaluationCardsProps) =
 
                         {index == editing ? <> <RuleEditor conditions={rule.conditions.conditions} 
                             rollouts = {rule.rollouts} ruleID={rule.ruleID} setEditing={setEditing} 
-                            setDevRules={setDevRules} variants={variants}
+                            setDevRules={setDevRules} variants={variants} segments={segments} currentSegments={rule.segments}
                          /> </> : <> <EvalCard {...rule}/> </> }
 
 

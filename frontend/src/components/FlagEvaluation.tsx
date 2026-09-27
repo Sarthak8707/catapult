@@ -7,14 +7,14 @@ import EvaluationCards from './EvaluationCards'
 import { Spinner } from './ui/spinner'
 
 const FlagEvaluation = ({ loading, devRules, setDevRules, devEnabled, stagRules, stagEnabled, handleChange,
-    disabled, variants
+    disabled, variants, segments
 }:
     {
         loading: any, devRules: any, setDevRules: any, devEnabled: any, stagRules: any, stagEnabled: any,
-        handleChange: any, disabled: any, variants: any
+        handleChange: any, disabled: any, variants: any, segments: any
     }) => {
 
-
+       // console.log("check", devRules)
     return (
         <div>
             <div className=' border-red-500'>
@@ -47,7 +47,7 @@ const FlagEvaluation = ({ loading, devRules, setDevRules, devEnabled, stagRules,
 
                                                 {/* Evaluation Cards */}
 
-                                                {devRules && <EvaluationCards rules={devRules} variants={variants} setDevRules={setDevRules} />}
+                                                {devRules && <EvaluationCards rules={devRules} variants={variants} setDevRules={setDevRules} segments={segments}/>}
 
 
 
@@ -70,7 +70,7 @@ const FlagEvaluation = ({ loading, devRules, setDevRules, devEnabled, stagRules,
 
                                                 {/* Evaluation Cards */}
 
-                                                {stagRules && <EvaluationCards variants={variants} rules={stagRules} setDevRules={setDevRules} />}
+                                                {stagRules && <EvaluationCards variants={variants} rules={stagRules} setDevRules={setDevRules} segments={segments}/>}
 
 
 

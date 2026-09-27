@@ -17,7 +17,8 @@ type RuleType = {
   },
 
   segments: {
-    segmentId: number,
+    segmentID: number,
+    segmentName: string,
     segmentData: {
       operator: string,
       conditions: {

@@ -131,10 +131,10 @@ export const getFlagInfoService = async (flagID: number) => {
         segments,
         eq(segments.id, ruleSegments.segmentID)
       )
-      
+
       .where(eq(environmentFlagConfig.flagID, flagID));
 
-      //console.log(data);
+    //console.log(data);
 
     // Group by config
 
@@ -177,36 +177,36 @@ export const getFlagInfoService = async (flagID: number) => {
 
       const rule = config.rules.get(row.ruleID);
 
-if (row.segmentID !== null) {
-  const exists = rule.segments.some(
-    (segment: any) => segment.segmentID === row.segmentID
-  );
+      if (row.segmentID !== null) {
+        const exists = rule.segments.some(
+          (segment: any) => segment.segmentID === row.segmentID
+        );
 
-  if (!exists) {
-    rule.segments.push({
-      segmentID: row.segmentID,
-      segmentName: row.segmentName,
-      segmentData: row.segmentData,
-    });
-  }
-}
+        if (!exists) {
+          rule.segments.push({
+            segmentID: row.segmentID,
+            segmentName: row.segmentName,
+            segmentData: row.segmentData,
+          });
+        }
+      }
 
-if (row.rolloutID !== null) {
-  const exists = rule.rollouts.some(
-    (rollout: any) => rollout.rolloutID === row.rolloutID
-  );
+      if (row.rolloutID !== null) {
+        const exists = rule.rollouts.some(
+          (rollout: any) => rollout.rolloutID === row.rolloutID
+        );
 
-  if (!exists) {
-    rule.rollouts.push({
-      rolloutID: row.rolloutID,
-      percentage: row.percentage,
-      bucketBy: row.bucketBy,
-      variantID: row.variantID,
-      variantName: row.variantName,
-      value: row.value,
-    });
-  }
-}
+        if (!exists) {
+          rule.rollouts.push({
+            rolloutID: row.rolloutID,
+            percentage: row.percentage,
+            bucketBy: row.bucketBy,
+            variantID: row.variantID,
+            variantName: row.variantName,
+            value: row.value,
+          });
+        }
+      }
     }
 
     // Convert nested Maps to arrays
@@ -216,7 +216,7 @@ if (row.rolloutID !== null) {
       enabled: config.enabled,
       rules: [...config.rules.values()],
     }));
-   // console.log(result.map((a) => (a.rules)))
+    // console.log(result.map((a) => (a.rules)))
     return result
 
   }
@@ -369,17 +369,26 @@ export const changeFlagService = async (requestBody: any, flagID: number) => {
 
   if (segmentData != undefined) {
 
-    // Delete existing segments of current rule
+    try {
+      // Delete existing segments of current rule
+      const ruleID = segmentData.ruleID;
+      await db.delete(ruleSegments).where(eq(ruleSegments.ruleID, ruleID));
 
-    await db.delete(ruleSegments).where(eq(ruleSegments.ruleID, segmentData.ruleID));
+      // Insert new segments
 
-    // Insert new segments
+      for (const segment of segmentData.segments) {
+        await db.insert(ruleSegments).values({ ruleID: segmentData.ruleID, segmentID: segment.id })
+      }
 
-    for(const segment of segmentData){
-      await db.insert(ruleSegments).values({ruleID: segmentData.ruleID, segmentID: segment.id})
+      return {msg: "done"}
+    }
+    catch (err) {
+      console.log(err);
     }
 
   }
+
+
 }
 
 // Delete a flag

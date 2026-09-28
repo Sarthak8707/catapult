@@ -1,7 +1,4 @@
-import React from 'react'
-import { Card } from './ui/card'
 import { Badge } from './ui/badge'
-import RuleEditor from './RuleEditor'
 
 
 type RuleType = {
@@ -79,7 +76,7 @@ const EvalCard = ({ conditions, rollouts, segments, ruleID }: RuleType) => {
           {segments.map((s) => (<>
             {s.segmentData && <div>
               <div className='border rounded-sm bg-white'>
-                <div className='text-muted-foreground text-sm border-red-400 pl-13 pt-5'> Segment </div>
+                <div className='text-muted-foreground text-sm border-red-400 pl-13 pt-5 flex gap-15'> Segment <div className='text-foreground'> {s.segmentName} </div> </div>
                 <div className='bg-white border-red-400 pl-10'>
                   {s.segmentData?.conditions.map((condition, index) => (
                     <div className='flex flex-col items-center gap-2'>

@@ -1,7 +1,8 @@
 import axios from 'axios'
-import { Plus } from 'lucide-react'
+import { Plus, X } from 'lucide-react'
 import React, { useState } from 'react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
+import { useNavigate } from 'react-router-dom'
 
 type RuleType = {
     ruleID: number,
@@ -108,12 +109,14 @@ const RuleEditor = ({currentSegments, conditions, rollouts, ruleID, setEditing, 
        name: segment.segmentName
     }))
 
-    console.log("seg::::", seg)
+    //console.log("seg::::", seg);
 
     const [segmentsNew, setSegmentsNew] = useState<{id : number, name: string}[]>(seg);
     const segmentsToChoose = segments.filter(s => !segmentsNew.some((item) => item.id == s.id));
 
     const [saving, setSaving] = useState(false);
+
+    const navigate = useNavigate();
 
     const updateConditions = (idx: number, field: string, newValue: string) => {
 
@@ -157,6 +160,14 @@ const RuleEditor = ({currentSegments, conditions, rollouts, ruleID, setEditing, 
         ])
     }
 
+    const deleteSegment = (id: number) => {
+
+        setSegmentsNew((prev) => (
+            prev.filter((segment) => (
+                segment.id != id
+            )) 
+        ))
+    }
 
     const updateRollouts = (index: number, field: string, value: any) => {
         console.log("varID:::::", value);
@@ -256,7 +267,19 @@ const RuleEditor = ({currentSegments, conditions, rollouts, ruleID, setEditing, 
             ))
         }
 
+        if(seg !== segmentsNew){
+            const response = await axios.put(`http://localhost:3000/flags/17`, {
 
+                "segmentData": {
+                    "ruleID": ruleID,
+                    "segments": segmentsNew
+                }
+            })
+
+            setSaving(false);
+            setEditing(null);
+            navigate(0);
+        }
     }
 
     return (
@@ -292,7 +315,7 @@ const RuleEditor = ({currentSegments, conditions, rollouts, ruleID, setEditing, 
                         </div>
                     </div>
                     <div className='ml-auto '>
-                        <button className=' bg-red-700 py-0.5 px-2 font-semibold rounded-xs text-white cursor-pointer' onClick={() => { deleteCondition(idx) }}>Delete Condition</button>
+                        <button className=' bg-white text-red-600 border border-red-600 py-0.5 px-2 font-semibold rounded-xs cursor-pointer' onClick={() => { deleteCondition(idx) }}>Delete Condition</button>
                     </div>
                 </div>
             ))}
@@ -328,7 +351,12 @@ const RuleEditor = ({currentSegments, conditions, rollouts, ruleID, setEditing, 
                 </div>
 
                 <div className='flex gap-2 mt-5'>
-                    {segmentsNew.map((segment) => (<> <div className='bg-white text-xs text-blue-700 border border-blue-600 rounded-full py-0.5 px-2'> {segment.name} </div> </>))}
+                    {segmentsNew.map((segment) => (<>
+                     <div className='bg-white text-xs text-blue-700 border border-blue-600 rounded-full py-0.5 px-2 flex items-center gap-1'>
+                         <div> {segment.name} </div> 
+                         <button className='cursor-pointer' onClick={() => deleteSegment(segment.id)}> <X className='h-2.5 w-2.5'/> </button>
+                     </div> 
+                    </>))}
                 </div>
 
             </div>

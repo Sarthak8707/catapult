@@ -1,5 +1,5 @@
 import express from "express";
-import { changeFlag, deleteFlagController, getFlagInfoController, getFlagSummaryController } from "../controllers/featureFlag.controller";
+import { changeFlag, deleteFlagController, getFlagGuardrailsController, getFlagInfoController, getFlagSummaryController } from "../controllers/featureFlag.controller";
 import { validate } from "../middlewares/validate.middleware";
 import { createNewFlagSchema, updateFlagSchema } from "../schema/flags.schema";
 import { authMiddleware } from "../middlewares/auth.middleware";
@@ -17,7 +17,7 @@ router.get("/:id/summary", getFlagSummaryController)
 
 // Get guardrails of a flag
 
-router.get("/:id/guardrails", () => {});
+router.get("/:id/guardrails", getFlagGuardrailsController);
 
 // Update a flag
 

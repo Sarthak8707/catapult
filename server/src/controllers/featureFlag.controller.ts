@@ -1,5 +1,6 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { changeFlagService, createNewFlagService, deleteFlagService, getFlagInfoService, getFlagSummaryService, } from "../services/featureFlag.service";
+import { getFlagGuardrailsService } from "../services/guardrails.service";
 
 
 // Get info about a certain flag
@@ -9,7 +10,7 @@ export const getFlagInfoController = async (req: Request, res: Response) => {
 
     const result = await getFlagInfoService(flagID);
     res.status(200).json(result);
-    
+
 }
 
 // Get flag summary
@@ -23,11 +24,18 @@ export const getFlagSummaryController = async (req: Request, res: Response) => {
 
 }
 
-export const getFlagGuardrailsController = async (req: Request, res: Response) => {
+export const getFlagGuardrailsController = async (req: Request, res: Response, next: NextFunction) => {
 
-    const flagID = Number(req.params.id);
-    const result = "";
-    res.status(200).json(result);
+    try {
+        const flagID = Number(req.params.id);
+        const result = await getFlagGuardrailsService(flagID);
+        res.status(200).json(result);
+    }
+    catch (err) {
+        console.log(err)
+        next(err);
+    }
+
 }
 
 

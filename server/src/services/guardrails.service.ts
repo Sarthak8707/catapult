@@ -1,67 +1,72 @@
-import { eq } from "drizzle-orm"
-import { db } from "../db/client"
-import { automationActions, environmentFlagConfig, flags } from "../db/schema"
+// import { eq } from "drizzle-orm"
+// import { db } from "../db/client"
+// import { guardrails, environmentFlagConfig, flags } from "../db/schema"
 
 
-type GuardrailType = {
-    name: string,
-    description?: string,
-    flagEnvironmentID: number,
-    service?: string,
-    triggerMetric: string[],
-    errorThreshold: number,
-    actionType: string,
-    action: string
+// type GuardrailType = {
+//     name: string,
+//     description?: string,
+//     flagEnvironmentID: number,
+//     service?: string,
+//     triggerMetric: string[],
+//     errorThreshold: number,
+//     actionType: string,
+//     action: string
 
-}
+// }
 
-export const getGuardrailsService = async (projectID: number) => {
+// export const getGuardrailsService = async (projectID: number) => {
 
-    const data = await db.select({
-        name: automationActions.name,
-        description: automationActions.description,
-        service: automationActions.service, 
-        errorThreshold: automationActions.errorThreshold,
-        actionType: automationActions.actionType,
-        action: automationActions.action
-    })
-    .from(flags)
-    .innerJoin(environmentFlagConfig,
-        eq(environmentFlagConfig.flagID, flags.id)
-    )
-    .innerJoin(automationActions, 
-        eq(automationActions.flagEnvironmentID, environmentFlagConfig.id)
-    )
-    .where(eq(flags.projectID, projectID))
+//     const data = await db.select({
+//         name: guardrails.name,
+//         description: guardrails.description,
+//         service: guardrails.service, 
+//         errorThreshold: guardrails.errorThreshold,
+//         actionType: guardrails.actionType,
+//         action: guardrails.action
+//     })
+//     .from(flags)
+//     .innerJoin(environmentFlagConfig,
+//         eq(environmentFlagConfig.flagID, flags.id)
+//     )
+//     .innerJoin(automationActions, 
+//         eq(automationActions.flagEnvironmentID, environmentFlagConfig.id)
+//     )
+//     .where(eq(flags.projectID, projectID))
 
-    return data;
+//     return data;
     
-}
+// }
+
+// export const getFlagGuardrailsService = async (flagID: number) => {
 
 
-export const createGuardrailsService = async (input: GuardrailType) => {
+// }
+
+
+// export const createGuardrailsService = async (input: GuardrailType) => {
     
-    const data = await db.insert(automationActions).values({
-        name: input.name,
-        description: input.description,
-        flagEnvironmentID: input.flagEnvironmentID,
-        triggerMetric: input.triggerMetric,
-        errorThreshold: input.errorThreshold,
-        action: input.action,
-        actionType: input.actionType
-    })
+//     const data = await db.insert(automationActions).values({
+//         name: input.name,
+//         description: input.description,
+//         flagEnvironmentID: input.flagEnvironmentID,
+//         triggerMetric: input.triggerMetric,
+//         errorThreshold: input.errorThreshold,
+//         action: input.action,
+//         actionType: input.actionType
+//     })
 
-    return data;
+//     return data;
 
-}
+// }
 
 
-export const updateGaurdrailsService = async (input: GuardrailType) => {
+// export const updateGaurdrailsService = async (input: GuardrailType) => {
 
-    const data = await db.update(automationActions)
-    .set(input)
-    .where(eq(automationActions.flagEnvironmentID, input.flagEnvironmentID));
+//     const data = await db.update(automationActions)
+//     .set(input)
+//     .where(eq(automationActions.flagEnvironmentID, input.flagEnvironmentID));
 
-    return data;
+//     return data;
     
-}
+// }

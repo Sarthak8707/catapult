@@ -23,6 +23,13 @@ export const getFlagSummaryController = async (req: Request, res: Response) => {
 
 }
 
+export const getFlagGuardrailsController = async (req: Request, res: Response) => {
+
+    const flagID = Number(req.params.id);
+    const result = "";
+    res.status(200).json(result);
+}
+
 
 // Update a flag
 

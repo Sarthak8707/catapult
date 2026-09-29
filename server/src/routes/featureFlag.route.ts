@@ -15,6 +15,10 @@ router.get("/:id", getFlagInfoController)
 
 router.get("/:id/summary", getFlagSummaryController)
 
+// Get guardrails of a flag
+
+router.get("/:id/guardrails", () => {});
+
 // Update a flag
 
 router.put("/:id", changeFlag)

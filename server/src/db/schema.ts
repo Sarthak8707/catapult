@@ -254,9 +254,9 @@ export const events = pgTable("events", {
 
 })
 
-// Automation Rules
+// Guardrails
 
-export const automationActions = pgTable("automation_actions", {
+export const guardrails = pgTable("guardrails", {
     id: serial("id").primaryKey(),
 
     // name
@@ -267,32 +267,53 @@ export const automationActions = pgTable("automation_actions", {
 
     description: text("description"),
 
-    // (flag env id and service) is unique
+    // flagconfig ID
 
-    flagEnvironmentID: integer("flag_environment_id").references(() => environmentFlagConfig.id, {
+    envFlagConfigID: integer("env_flag_config_id").notNull().references(() => environmentFlagConfig.id, {
         onDelete: "cascade", onUpdate: "cascade"
     }),
 
-    // Dependency Services
+    status: text("status").default("active"),
 
-    service: text("service"),
+    createdAt: timestamp("created_at").defaultNow()
 
-    // trigger metric
+})
 
-    triggerMetric: text("trigger_metric").default("error").array().default(["error rate"]),
+// Guardrails Triggers
 
-    // threshold at which flag will be disabled
+export const guardrailTriggers = pgTable("guardrails_triggers", {
 
-    errorThreshold: integer("error_threshold").notNull().default(5),
+    id: serial("id").primaryKey(),
 
-    // actions type
+    guardrailID: integer("guardrail_id").notNull().references(() => guardrails.id, {
+        onDelete: "cascade", onUpdate: "cascade"
+    }),
 
-    actionType: text("action_type").default("kill switch"),
+    enabled: boolean("enabled").notNull().default(false),
 
-    // action to be performed
+    metric: text("metric").notNull(),
 
-    action: text("action").default("turn off")
+    threshold: integer("threshold").notNull(),
 
+    timeWindow: integer("time_window").notNull(),
+
+})
+
+// Guardrail Actions
+
+export const guardrailActions = pgTable("guardrail_actions", {
+
+    id: serial("id").primaryKey(),
+
+    guardrailID: integer("guardrail_id").notNull().references(() => guardrails.id, {
+        onDelete: "cascade", onUpdate: "cascade"
+    }),
+
+    type: text("type").notNull(),
+
+    enabled: boolean("enabled").notNull().default(false),
+
+    config: jsonb("config")
 })
 
 // Invitations

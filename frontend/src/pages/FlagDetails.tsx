@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import axios from 'axios';
 import { Tabs, TabsList, TabsPanel, TabsTab } from '@/components/ui/tabs';
-import { Pencil } from 'lucide-react';
+import { Pen, Pencil } from 'lucide-react';
 import FlagEvaluation from '@/components/FlagEvaluation';
 import FlagVariants from '@/components/FlagVariants';
+import FlagGuardrails from '../components/FlagGuardrails';
 
 type VariantsType = {
     variantName: string,
@@ -172,8 +173,8 @@ const FlagDetails = () => {
                         </div> : <div>
 
                             <div> {flagInfo ?
-                                <div className='flex'> {flagInfo?.description}
-                                    <button className='cursor-pointer ml-2 text-blue-700' onClick={() => { setEditing(true) }}> <Pencil className='h-4 w-4' /> </button>
+                                <div className='flex text-gray-700 text-sm'> {flagInfo?.description}
+                                    <button className='cursor-pointer ml-2 text-blue-700' onClick={() => { setEditing(true) }}> <Pen className='h-3 w-3' /> </button>
                                 </div> : "flag description"}  </div>
 
                         </div>
@@ -198,7 +199,7 @@ const FlagDetails = () => {
                     <TabsList variant='underline'>
                         <TabsTab value="val-1" className="w-40">Evaluation</TabsTab>
                         <TabsTab value="val-2" className="w-40">Variants</TabsTab>
-                        <TabsTab value="val-3" className="w-40">Audit Log</TabsTab>
+                        <TabsTab value="val-3" className="w-40">Guardrails</TabsTab>
                     </TabsList>
                     <TabsPanel value="val-1">
                         <FlagEvaluation loading={loading} devEnabled={devEnabled} devRules={devRules} stagRules={stagRules}
@@ -209,7 +210,7 @@ const FlagDetails = () => {
                         <div className=''> {flagInfo?.variants && <FlagVariants variants={flagInfo?.variants} flagID={Id} />} </div>
                     </TabsPanel>
                     <TabsPanel value="val-3">
-                        <div className='h-100'> Audit Log </div>
+                        <div className=''> <FlagGuardrails flagID={Id} /> </div>
                     </TabsPanel>
                 </Tabs>
             </div>

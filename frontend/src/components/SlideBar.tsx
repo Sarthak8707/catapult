@@ -1,11 +1,12 @@
 import { ArrowRight, ArrowRightLeft, CircleChevronRight, CircleUserRound, Flag, Layers, Lightbulb, Mail, Notebook, NotebookPen, Shield, ToggleRight, UserCog, Users, UsersRound } from "lucide-react";
 import { Button } from "./ui/button";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { Separator } from "./ui/separator";
 
 const SlideBar = () => {
   const location = useLocation();
   const username = window.localStorage.getItem("username");
+  const {id} = useParams();
 
   return (
     <div className="w-75 min-h-screen border border-gray-200">
@@ -13,19 +14,19 @@ const SlideBar = () => {
 
         <div className="flex flex-col gap-2">
 
-          <Link to="/projects/2">
+          <Link to={`projects/${id}`}>
             <Button
-              variant={(location.pathname === "/projects/2" || location.pathname.startsWith("/flags")) ? "secondary" : "ghost"}
+              variant={(location.pathname === `/projects/${id}` || location.pathname.startsWith("/flags")) ? "secondary" : "ghost"}
               className="w-full justify-start rounded-sm"
             >
               <div className="flex items-center justify-center gap-2"> <ToggleRight /> Flags </div>
             </Button>
           </Link>
 
-          <Link to="/projects/2/segments">
+          <Link to={`projects/${id}/segments`}>
             <Button
               variant={
-                location.pathname === "/projects/2/segments" || location.pathname.startsWith("/segments")
+                location.pathname === `/projects/${id}/segments` || location.pathname.startsWith("/segments")
                   ? "secondary"
                   : "ghost"
               }
@@ -35,10 +36,10 @@ const SlideBar = () => {
             </Button>
           </Link>
 
-          <Link to="/projects/2/guardrails">
+          <Link to={`/projects/${id}/guardrails`}>
             <Button
               variant={
-                location.pathname === "/projects/2/guardrails"
+                location.pathname === `/projects/${id}/guardrails`
                   ? "secondary"
                   : "ghost"
               }
@@ -48,10 +49,10 @@ const SlideBar = () => {
             </Button>
           </Link>
 
-          <Link to="/projects/2/members">
+          <Link to={`projects/${id}/members`}>
             <Button
               variant={
-                location.pathname === "/projects/2/members"
+                location.pathname === `/projects/${id}/members`
                   ? "secondary"
                   : "ghost"
               }

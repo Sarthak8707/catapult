@@ -17,7 +17,7 @@ const Guardrails = () => {
             const response = await axios.get(`http://localhost:3000/projects/${id}/guardrails`);
             setGuardrails(response.data);
             setLoading(false);
-            //  console.log(response.data)
+            console.log(response.data)
         }
         getGuardrails();
     }, [])

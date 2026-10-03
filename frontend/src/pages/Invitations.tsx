@@ -105,14 +105,14 @@ const Invitations = () => {
                                             </div>
 
                                             <div className='ml-auto flex gap-3'>
-                                                <button className='mt-auto bg-green-600 w-40 h-8 text-white text-sm font-medium rounded-md cursor-pointer
-                                     hover:bg-green-500 transition-colors duration-200'
+                                                <button className='mt-auto bg-blue-600 w-40 h-8 text-white text-sm font-medium rounded-full cursor-pointer
+                                     hover:bg-blue-700 transition-colors duration-200'
                                                     onClick={() => acceptInvitation(invitation.id)}
                                                 >
                                                     Accept
                                                 </button>
-                                                <button className='mt-auto border border-red-600 bg-white w-40 h-8 text-red-600 text-sm font-medium rounded-md cursor-pointer
-                                     hover:bg-red-50  transition-colors duration-200'
+                                                <button className='mt-auto border border-gray-600 bg-white w-40 h-8 text-gray-600 text-sm font-medium rounded-full cursor-pointer
+                                     hover:bg-gray-100  transition-colors duration-200'
                                                     onClick={() => rejectInvitation(invitation.id)}
                                                 >
                                                     Reject

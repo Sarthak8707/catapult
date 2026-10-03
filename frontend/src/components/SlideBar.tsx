@@ -15,7 +15,7 @@ const SlideBar = () => {
 
           <Link to="/projects/2">
             <Button
-              variant={location.pathname === "/projects/2" ? "secondary" : "ghost"}
+              variant={(location.pathname === "/projects/2" || location.pathname.startsWith("/flags")) ? "secondary" : "ghost"}
               className="w-full justify-start rounded-sm"
             >
               <div className="flex items-center justify-center gap-2"> <ToggleRight /> Flags </div>
@@ -25,7 +25,7 @@ const SlideBar = () => {
           <Link to="/projects/2/segments">
             <Button
               variant={
-                location.pathname === "/projects/2/segments"
+                location.pathname === "/projects/2/segments" || location.pathname.startsWith("/segments")
                   ? "secondary"
                   : "ghost"
               }

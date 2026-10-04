@@ -14,19 +14,19 @@ const SlideBar = () => {
 
         <div className="flex flex-col gap-2">
 
-          <Link to={`projects/${id}`}>
+          <Link to={`projects/${projectID}`}>
             <Button
-              variant={(location.pathname === `/projects/${id}` || location.pathname.startsWith("/flags")) ? "secondary" : "ghost"}
+              variant={(location.pathname === `/projects/${projectID}` || location.pathname.startsWith(`/projects/${projectID}/flags`)) ? "secondary" : "ghost"}
               className="w-full justify-start rounded-sm"
             >
               <div className="flex items-center justify-center gap-2"> <ToggleRight /> Flags </div>
             </Button>
           </Link>
 
-          <Link to={`projects/${id}/segments`}>
+          <Link to={`projects/${projectID}/segments`}>
             <Button
               variant={
-                location.pathname === `/projects/${id}/segments` || location.pathname.startsWith("/segments")
+                location.pathname.startsWith(`/projects/${projectID}/segments`)
                   ? "secondary"
                   : "ghost"
               }
@@ -36,10 +36,10 @@ const SlideBar = () => {
             </Button>
           </Link>
 
-          <Link to={`/projects/${id}/guardrails`}>
+          <Link to={`/projects/${projectID}/guardrails`}>
             <Button
               variant={
-                location.pathname === `/projects/${id}/guardrails`
+                location.pathname === `/projects/${projectID}/guardrails`
                   ? "secondary"
                   : "ghost"
               }
@@ -49,10 +49,10 @@ const SlideBar = () => {
             </Button>
           </Link>
 
-          <Link to={`projects/${id}/members`}>
+          <Link to={`projects/${projectID}/members`}>
             <Button
               variant={
-                location.pathname === `/projects/${id}/members`
+                location.pathname === `/projects/${projectID}/members`
                   ? "secondary"
                   : "ghost"
               }

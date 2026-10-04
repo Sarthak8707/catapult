@@ -23,8 +23,8 @@ import { useNavigate, useParams } from "react-router-dom";
 export default function SegmentDialog() {
 
     const navigate = useNavigate();
-    const {id} = useParams();
-    const projectID = Number(id);
+    const {projectID} = useParams();
+    // const ID = Number(projectID);
     const token = Cookies.get("token");
 
     const [formData, setFormData] = useState({
@@ -42,18 +42,19 @@ export default function SegmentDialog() {
     }
 
     const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
+      
         e.preventDefault();
         setCreating(true);
 
         try{
-            const response = await axios.post(`http://localhost:3000/projects/${projectID}/segments`, formData, {
+            const response = await axios.post(`http://localhost:3000/projects/${Number(projectID)}/segments`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
 
             console.log(response.data)
-            navigate(`/segments/${response.data.id}`);
+            navigate(`/projects/${Number(projectID)}/segments/${response.data.id}`);
 
             setCreating(false);
             

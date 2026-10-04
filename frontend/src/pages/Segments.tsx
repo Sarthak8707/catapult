@@ -92,7 +92,7 @@ const Segments = () => {
               {segments.map((segment, idx) => (
 
                 <TableRow>
-                  <TableCell className=""> <Link to={`/segments/${segment.id}`}> {segment.name}</Link> </TableCell>
+                  <TableCell className=""> <Link to={`/projects/${projectID}/segments/${segment.id}`}> {segment.name}</Link> </TableCell>
                   <TableCell> {segment.type ? segment.type : "No tags"} </TableCell>
                   <TableCell className="">
                     {new Date(segment.createdAt).toLocaleDateString()}

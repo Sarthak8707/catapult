@@ -1,5 +1,5 @@
 import express from "express";
-import { getSegmentController } from "../controllers/segments.controller";
+import { getSegmentController, updateSegmentController } from "../controllers/segments.controller";
 
 const router = express.Router();
 
@@ -10,9 +10,9 @@ router.get("/", () => {});
 
 router.get("/:id", getSegmentController);
 
-router.post("/", () => {});
+// Update a segment
 
-router.put("/", () => {});
+router.put("/:id", updateSegmentController);
 
 router.delete("/", () => {});
 

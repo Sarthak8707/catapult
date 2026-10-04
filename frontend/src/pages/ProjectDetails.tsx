@@ -138,7 +138,7 @@ const ProjectDetails = () => {
                              return (
                               <TableRow key={flag.flagID}>
                                 <TableCell>
-                                  <Link to={`/flags/${flag.flagID}`}>
+                                  <Link to={`/projects/${projectID}/flags/${flag.flagID}`}>
                                     {flag.flagName}
                                   </Link>
                                 </TableCell>

@@ -15,7 +15,7 @@ import { Spinner } from '@/components/ui/spinner';
 import SegmentDialog from '@/components/SegmentDialog';
 
 const Segments = () => {
-  const { id } = useParams();
+  const { projectID } = useParams();
   const [segments, setSegments] = useState<{
     id: number,
     name: string,
@@ -37,7 +37,7 @@ const Segments = () => {
   useEffect(() => {
     const getSegments = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/projects/${id}/segments`);
+        const response = await axios.get(`http://localhost:3000/projects/${projectID}/segments`);
         setSegments(response.data);
         console.log(response.data);
       }

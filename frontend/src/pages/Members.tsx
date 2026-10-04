@@ -17,8 +17,8 @@ import MemberDialog from '@/components/MemberDialog';
 
 const Members = () => {
 
-  const { id } = useParams();
-  const Id = Number(id);
+  const { projectID } = useParams();
+  const Id = Number(projectID);
 
   const [members, setMembers] = useState<{
     username: string,

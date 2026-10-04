@@ -13,8 +13,8 @@ import { Link, useParams } from 'react-router-dom'
 
 const ProjectDetails = () => {
 
-    const ID = useParams();
-    const id = Number(ID.id);
+    const {projectID} = useParams();
+    const id = Number(projectID);
     let token = window.localStorage.getItem("token");
     if(token == null) token = ""
    

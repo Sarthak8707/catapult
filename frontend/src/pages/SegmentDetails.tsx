@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom'
 
 const SegmentDetails = () => {
 
-    const {id} = useParams();
+    const {segmentID} = useParams();
     const [segment, setSegment] = useState<{
       name: string,
       description: string,
@@ -26,7 +26,7 @@ const SegmentDetails = () => {
 
     useEffect(() => {
       const getSegmentDetails = async () => {
-        const response = await axios.get(`http://localhost:3000/segments/${id}`);
+        const response = await axios.get(`http://localhost:3000/segments/${segmentID}`);
         setSegment(response.data);
         setLoading(false);
         console.log(response.data)

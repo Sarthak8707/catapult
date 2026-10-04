@@ -6,7 +6,7 @@ import { Separator } from "./ui/separator";
 const SlideBar = () => {
   const location = useLocation();
   const username = window.localStorage.getItem("username");
-  const {id} = useParams();
+  const {projectID} = useParams();
 
   return (
     <div className="w-75 min-h-screen border border-gray-200">

@@ -30,13 +30,13 @@ export default function App() {
         <Route path="flags" element={<Flags />} />
         <Route path="organizations/:id" element={<OrganizationDetails />} />
         <Route path="projects" element={<Projects />} />
-        <Route path="projects/:id" element={<ProjectDetails />} />
-        <Route path="projects/:id/guardrails" element={<Guardrails />} />
-        <Route path="flags/:id" element={<FlagDetails />} />
-        <Route path="projects/:id/segments" element={<Segments />} />
-        <Route path="segments/:id" element={<SegmentDetails />} />
-        <Route path="guardrails/:id" element={<GuardrailDetails />} />
-        <Route path="projects/:id/members" element={<Members />} />
+        <Route path="projects/:projectID" element={<ProjectDetails />} />
+        <Route path="projects/:projectID/guardrails" element={<Guardrails />} />
+        <Route path="projects/:projectID/flags/:flagID" element={<FlagDetails />} />
+        <Route path="projects/:projectID/segments" element={<Segments />} />
+        <Route path="projects/:projectID/segments/:segmentID" element={<SegmentDetails />} />
+        <Route path="projects/:projectID/guardrails/:guardrailID" element={<GuardrailDetails />} />
+        <Route path="projects/:projectID/members" element={<Members />} />
         <Route path="invitations" element={<Invitations />} />
         
       </Route>

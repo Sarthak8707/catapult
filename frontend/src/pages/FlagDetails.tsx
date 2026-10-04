@@ -57,8 +57,8 @@ type RulesType = {
 
 
 const FlagDetails = () => {
-    const { id } = useParams();
-    const Id = Number(id);
+    const { flagID } = useParams();
+    const Id = Number(flagID);
 
     const [devRules, setDevRules] = useState<RulesType[]>([]);
     const [stagRules, setStagRules] = useState<RulesType[]>([]);
@@ -77,9 +77,9 @@ const FlagDetails = () => {
 
     useEffect(() => {
         const getFlagData = async () => {
-            const response = await axios.get(`http://localhost:3000/flags/${id}`);
+            const response = await axios.get(`http://localhost:3000/flags/${flagID}`);
 
-            const res2 = await axios.get(`http://localhost:3000/flags/${id}/summary`);
+            const res2 = await axios.get(`http://localhost:3000/flags/${flagID}/summary`);
             setFlagInfo(res2.data);
 
             const res3 = await axios.get(`http://localhost:3000/projects/2/segments`);
@@ -115,7 +115,7 @@ const FlagDetails = () => {
         let flagConfigID = fcID1;
         if (env == "stag") flagConfigID = fcID2;
 
-        const data = await axios.put(`http://localhost:3000/flags/${id}/`, {
+        const data = await axios.put(`http://localhost:3000/flags/${flagID}/`, {
             enabled: check,
             flagConfigID
         })
@@ -130,7 +130,7 @@ const FlagDetails = () => {
         setSaving(true);
         console.log("here")
         try {
-            const data = await axios.put(`http://localhost:3000/flags/${id}`, {
+            const data = await axios.put(`http://localhost:3000/flags/${flagID}`, {
                 description: description
             });
             console.log("done");

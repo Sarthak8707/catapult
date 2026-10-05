@@ -36,13 +36,13 @@ export const createSegmentService = async (projectID: number, name: string, desc
 export const updateSegmentService = async (segmentID: number, conditions: any) => {
 
     console.log("check", segmentID, conditions)
-    const data = await db.update(segments).set({
+    const [data] = await db.update(segments).set({
         conditions: {
             "operator": "AND",
             "conditions": conditions
         }
-    }).where(eq(segments.id, segmentID));
-
+    }).where(eq(segments.id, segmentID)).returning();
+    console.log("updated", data.conditions?.conditions);
     return {msg: "Updated!"} ;
 
 }

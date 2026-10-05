@@ -2,6 +2,7 @@ import SegmentEditor from '@/components/SegmentEditor';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator'
+import { Spinner } from '@/components/ui/spinner';
 import axios from 'axios';
 import { Copy, Pencil, X } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
@@ -10,6 +11,7 @@ import { useParams } from 'react-router-dom'
 const SegmentDetails = () => {
 
   const { segmentID } = useParams();
+
   const [segment, setSegment] = useState<{
     name: string,
     description: string,
@@ -54,7 +56,7 @@ const SegmentDetails = () => {
       <div className='text-xl font-semibold mt-10'> Segment Conditions </div>
       <div className='text-muted-foreground text-sm mt-1'> The set of conditions which a user has to follow to lie in this segment. </div>
 
-      {loading ? <div className='flex items-center justify-center h-100 w-220'> Loading Segment Conditions... </div> :
+      {loading ? <div className='flex items-center justify-center h-100 w-220'> <Spinner /> </div> :
 
 
         // <SegmentEditor />
@@ -77,7 +79,7 @@ const SegmentDetails = () => {
             </div>
           </div>
 
-          {editing ? <> {segment && <SegmentEditor conditions={segment.conditions?.conditions} />} </> : <>
+          {editing ? <> {segment && <SegmentEditor conditions={segment.conditions?.conditions} setSegment={setSegment} setEditing={setEditing} />} </> : <>
 
             <div className='border h-100 w-220 mt-10 rounded-sm py-5'>
               {segment && segment.conditions?.conditions.map((condition, idx) => (

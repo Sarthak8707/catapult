@@ -68,27 +68,28 @@ type variantsType = {
 }[]
 
 type CurrentSegmentsType = {
-        segmentID: number,
-        segmentName: string,
-        segmentData: {
-            operator: string,
-            conditions: {
-                field: string,
-                value: any,
-                operator: string
-            }[]
-        }
-    }[]
+    segmentID: number,
+    segmentName: string,
+    segmentData: {
+        operator: string,
+        conditions: {
+            field: string,
+            value: any,
+            operator: string
+        }[]
+    }
+}[]
 
-const RuleEditor = ({currentSegments, conditions, rollouts, ruleID, setEditing, setDevRules, variants, segments }:
-    {   currentSegments: CurrentSegmentsType,
+const RuleEditor = ({ currentSegments, conditions, rollouts, ruleID, setEditing, setDevRules, variants, segments }:
+    {
+        currentSegments: CurrentSegmentsType,
         conditions: ConditionsType, rollouts: rolloutsType, ruleID: number,
         setEditing: React.Dispatch<React.SetStateAction<number | null>>,
         setDevRules: React.Dispatch<React.SetStateAction<RuleType[]>>, variants: variantsType,
         segments: { id: number, name: string }[]
     }) => {
 
-        
+
 
     const [conditionsNew, setConditionsNew] = useState<ConditionsType>(conditions ?? [
         {
@@ -105,13 +106,13 @@ const RuleEditor = ({currentSegments, conditions, rollouts, ruleID, setEditing, 
     }])
 
     const seg = currentSegments.map((segment) => ({
-       id: segment.segmentID,
-       name: segment.segmentName
+        id: segment.segmentID,
+        name: segment.segmentName
     }))
 
     //console.log("seg::::", seg);
 
-    const [segmentsNew, setSegmentsNew] = useState<{id : number, name: string}[]>(seg);
+    const [segmentsNew, setSegmentsNew] = useState<{ id: number, name: string }[]>(seg);
     const segmentsToChoose = segments.filter(s => !segmentsNew.some((item) => item.id == s.id));
 
     const [saving, setSaving] = useState(false);
@@ -154,7 +155,7 @@ const RuleEditor = ({currentSegments, conditions, rollouts, ruleID, setEditing, 
 
         const a = segments.find(s => s.id == id);
 
-        if(a) setSegmentsNew((prev) => [
+        if (a) setSegmentsNew((prev) => [
             ...prev,
             a
         ])
@@ -165,7 +166,7 @@ const RuleEditor = ({currentSegments, conditions, rollouts, ruleID, setEditing, 
         setSegmentsNew((prev) => (
             prev.filter((segment) => (
                 segment.id != id
-            )) 
+            ))
         ))
     }
 
@@ -267,7 +268,7 @@ const RuleEditor = ({currentSegments, conditions, rollouts, ruleID, setEditing, 
             ))
         }
 
-        if(seg !== segmentsNew){
+        if (seg !== segmentsNew) {
             const response = await axios.put(`http://localhost:3000/flags/17`, {
 
                 "segmentData": {
@@ -324,38 +325,38 @@ const RuleEditor = ({currentSegments, conditions, rollouts, ruleID, setEditing, 
             <div>
                 <div className='flex items-center gap-10'>
                     <div className='text-gray-600'>Add Segments</div>
-                <Select 
-                    onValueChange={(newVal) => addSegment(Number(newVal))}
-                >
+                    <Select
+                        onValueChange={(newVal) => addSegment(Number(newVal))}
+                    >
 
-                    <SelectTrigger className="w-35 border justify-between">
-                        <SelectValue placeholder="Select Segment" />
-                    </SelectTrigger>
+                        <SelectTrigger className="w-35 border justify-between">
+                            <SelectValue placeholder="Select Segment" />
+                        </SelectTrigger>
 
-                    <SelectContent position='popper'>
+                        <SelectContent position='popper'>
 
-                        {segmentsToChoose.map((segment, i) => {
-                            //console.log("valueofSelect::::", variant.id)
-                            return (
-                                <>
-                                    <SelectItem value={String(segment.id)} >
-                                        {segment.name}
-                                    </SelectItem>
-                                </>
-                            )
-                        })}
+                            {segmentsToChoose.map((segment, i) => {
+                                //console.log("valueofSelect::::", variant.id)
+                                return (
+                                    <>
+                                        <SelectItem value={String(segment.id)} >
+                                            {segment.name}
+                                        </SelectItem>
+                                    </>
+                                )
+                            })}
 
 
-                    </SelectContent>
-                </Select>
+                        </SelectContent>
+                    </Select>
                 </div>
 
                 <div className='flex gap-2 mt-5'>
                     {segmentsNew.map((segment) => (<>
-                     <div className='bg-white text-xs text-blue-700 border border-blue-600 rounded-full py-0.5 px-2 flex items-center gap-1'>
-                         <div> {segment.name} </div> 
-                         <button className='cursor-pointer' onClick={() => deleteSegment(segment.id)}> <X className='h-2.5 w-2.5'/> </button>
-                     </div> 
+                        <div className='bg-white text-xs text-blue-700 border border-blue-600 rounded-full py-0.5 px-2 flex items-center gap-1'>
+                            <div> {segment.name} </div>
+                            <button className='cursor-pointer' onClick={() => deleteSegment(segment.id)}> <X className='h-2.5 w-2.5' /> </button>
+                        </div>
                     </>))}
                 </div>
 

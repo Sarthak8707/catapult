@@ -23,8 +23,7 @@ import { useNavigate, useParams } from "react-router-dom";
 export default function MemberDialog() {
 
     const navigate = useNavigate();
-    const {id} = useParams();
-    const projectID = Number(id);
+    const {projectID} = useParams();
     const token = Cookies.get("token");
 
     const [formData, setFormData] = useState({
@@ -45,7 +44,7 @@ export default function MemberDialog() {
         setInviting(true);
 
         try{
-            const response = await axios.post(`http://localhost:3000/projects/${projectID}/invitations`, formData, {
+            const response = await axios.post(`http://localhost:3000/projects/${Number(projectID)}/invitations`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

@@ -53,7 +53,7 @@ export const getInvitationsOfProjectService = async (projectID: number) => {
 export const inviteUserService = async (projectID: number, invitedByID: number, invitee: string) => {
 
     const [user] = await db.select().from(users).where(eq(users.username, invitee));
-
+    console.log("check", projectID, invitedByID, invitee)
     const data = await db.insert(invitations).values({
         projectID: projectID,
         invitedByID: invitedByID,

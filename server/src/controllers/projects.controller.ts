@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { getAllProjectsOfUserService, getProjectInfoService, getRecentActivityService } from "../services/projects.service";
 
 import { createNewFlagService, getAllFLagsOfProjectService } from "../services/featureFlag.service";
-import {  } from "../services/guardrails.service";
+import { getProjectGuardrailsService } from "../services/guardrails.service";
 import { getProjectMembers } from "../services/members.service";
 import { getInvitationsOfProjectService, inviteUserService } from "../services/invitations.service";
 import { createSegmentService } from "../services/segments.service";
@@ -91,10 +91,15 @@ export const getRecentActivityController = async (req: Request, res: Response, n
 
 export const getGuardrailsController = async (req: Request, res: Response, next: NextFunction) => {
 
-    const projectID = Number(req.params.id);
-    // 
-    const result = ""
-    res.status(200).json(result);
+    try {
+        const projectID = Number(req.params.id);
+        const result = await getProjectGuardrailsService(projectID);
+        res.status(200).json(result);
+    }
+    catch (err) {
+        console.log(err);
+        next(err);
+    }
 }
 
 
@@ -102,7 +107,7 @@ export const createSegmentController = async (req: Request, res: Response, next:
 
     try {
         const projectID = Number(req.params.id);
-        const {name, description} = req.body;
+        const { name, description } = req.body;
         const result = await createSegmentService(projectID, name, description);
         res.status(200).json(result);
     }

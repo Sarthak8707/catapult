@@ -15,28 +15,32 @@ type GuardrailType = {
 
 }
 
-// export const getGuardrailsService = async (projectID: number) => {
+export const getProjectGuardrailsService = async (projectID: number) => {
 
-//     const data = await db.select({
-//         name: guardrails.name,
-//         description: guardrails.description,
-//         service: guardrails.service, 
-//         errorThreshold: guardrails.errorThreshold,
-//         actionType: guardrails.actionType,
-//         action: guardrails.action
-//     })
-//     .from(flags)
-//     .innerJoin(environmentFlagConfig,
-//         eq(environmentFlagConfig.flagID, flags.id)
-//     )
-//     .innerJoin(automationActions, 
-//         eq(automationActions.flagEnvironmentID, environmentFlagConfig.id)
-//     )
-//     .where(eq(flags.projectID, projectID))
+    const data = await db.select({
 
-//     return data;
+        name: guardrails.name,
+        description: guardrails.description,
+        status: guardrails.status,
+        createdAt: guardrails.createdAt,
+
+        environment: environmentFlagConfig.environment,
+        flag: flags.name
+
+    })
+    .from(flags)
+    .innerJoin(environmentFlagConfig,
+        eq(environmentFlagConfig.flagID, flags.id)
+    )
+    .innerJoin(guardrails, 
+        eq(guardrails.envFlagConfigID, environmentFlagConfig.id)
+    )
+    .where(eq(flags.projectID, projectID));    
+
+    return data;
     
-// }
+}
+
 
 export const getFlagGuardrailsService = async (flagID: number) => {
 

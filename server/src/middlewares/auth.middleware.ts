@@ -5,12 +5,13 @@ import { env } from "../config/env";
 
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     try{
+        
         const authHeader = req.headers.authorization;
         if(!authHeader || !authHeader.startsWith("Bearer ")){
             throw new AppError("Authentication Required", 401);
         }
         const token = authHeader.split(" ")[1];
-
+        // console.log("token", token)
         const decode = jwt.verify(token, env.JWT_SECRET) as JwtPayload;
         const id = decode.id;
         const username = decode.username;

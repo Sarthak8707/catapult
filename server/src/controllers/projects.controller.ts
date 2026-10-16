@@ -11,7 +11,7 @@ export const getAllProjectsOfUserController = async (req: Request, res: Response
 
     try {
         const userID = req.user.id;
-
+        console.log("userID", userID);
         const result = await getAllProjectsOfUserService(userID);
 
         res.status(200).json(result);
@@ -62,10 +62,10 @@ export const createFlagInProjectController = async (req: Request, res: Response,
 
     try {
         const projectID = Number(req.params.id);
-        console.log(req.user)
+       // console.log(req.user)
         const userID = req.user.id;
         const { name, description } = req.body;
-
+        console.log("pid, uid, n, d", projectID, userID, name, description)
         const result = await createNewFlagService(name, description, projectID, userID);
 
         res.status(201).json(result);
@@ -94,6 +94,7 @@ export const getGuardrailsController = async (req: Request, res: Response, next:
     try {
         const projectID = Number(req.params.id);
         const result = await getProjectGuardrailsService(projectID);
+        console.log("projectID", projectID)
         res.status(200).json(result);
     }
     catch (err) {

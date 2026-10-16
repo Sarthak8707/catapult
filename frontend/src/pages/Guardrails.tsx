@@ -9,12 +9,21 @@ import { useParams } from 'react-router-dom'
 
 const Guardrails = () => {
 
-    const { id } = useParams();
-    const [guardrails, setGuardrails] = useState<any[]>([]);
+    const { projectID } = useParams();
+    const [guardrails, setGuardrails] = useState<{
+        name: string,
+        description: string,
+        status: string,
+        createdAt: string,
+        flag: string,
+        environment: string
+    }[]
+    >([]);
+
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         const getGuardrails = async () => {
-            const response = await axios.get(`http://localhost:3000/projects/${id}/guardrails`);
+            const response = await axios.get(`http://localhost:3000/projects/${Number(projectID)}/guardrails`);
             setGuardrails(response.data);
             setLoading(false);
             console.log(response.data)
@@ -24,13 +33,7 @@ const Guardrails = () => {
 
     const [actionTypeFilter, setActionTypeFilter] = useState("any");
 
-    const filteredGuardrails = guardrails.filter((guardrail) => {
-
-        const matchesActionType = actionTypeFilter == "any" || guardrail.actionType == actionTypeFilter;
-        console.log(guardrail.name, guardrail.actionType, matchesActionType)
-
-        return (matchesActionType)
-    })
+    const filteredGuardrails = guardrails.filter((guardrail) => guardrail);
 
     // console.log(filteredGuardrails)
 
@@ -147,17 +150,17 @@ const Guardrails = () => {
                                                     {guardrail.description}
                                                 </div>
                                                 <div className='mt-2'>
-                                                    <Badge variant="secondary"> <div className='text-gray-600'> {guardrail.service} </div> </Badge>
+                                                    <Badge variant="secondary"> <div className='text-gray-600'> {guardrail.flag} </div> </Badge>
                                                 </div>
                                             </div>
 
                                             <div className='ml-10 pt-8 '>
                                                 <div className='text-sm text-gray-800'>
-                                                    {guardrail.action}
+                                                    {guardrail.environment}
                                                 </div>
                                                 <div className='mt-2'>
-                                                    <Badge className={guardrail.actionType == "Kill Switch" ? "bg-red-100 text-red-800" : "bg-blue-50 text-blue-800"}
-                                                    >  {guardrail.actionType}  </Badge>
+                                                    <Badge className={guardrail.status == "Kill Switch" ? "bg-red-100 text-red-800" : "bg-blue-50 text-blue-800"}
+                                                    >  {guardrail.status}  </Badge>
                                                 </div>
                                             </div>
                                         </div>

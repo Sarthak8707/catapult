@@ -38,6 +38,7 @@ export default function App() {
         <Route path="projects/:projectID/guardrails/:guardrailID" element={<GuardrailDetails />} />
         <Route path="projects/:projectID/members" element={<Members />} />
         <Route path="invitations" element={<Invitations />} />
+        <Route path="projects" element={<Projects />} />
         
       </Route>
 

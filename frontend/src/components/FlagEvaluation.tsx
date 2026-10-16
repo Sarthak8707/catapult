@@ -36,7 +36,7 @@ const FlagEvaluation = ({ loading, devRules, setDevRules, devEnabled, stagRules,
 
                                     <Card className=' rounded-sm'>
                                         <CardHeader>
-                                            <CardTitle className='flex'> <div className=''>Flag is On {devEnabled ? <>True</> : <>False</>}  </div> <Switch  className=" ml-auto [--thumb-size:--spacing(4)] cursor-pointer" checked={devEnabled} onCheckedChange={(check) => { handleChange(check, "dev") }} disabled={disabled} />
+                                            <CardTitle className='flex'> <div className=''>Flag is {devEnabled ? <>On</> : <>Off</>}  </div> <Switch  className=" ml-auto [--thumb-size:--spacing(4)] cursor-pointer" checked={devEnabled} onCheckedChange={(check) => { handleChange(check, "dev") }} disabled={disabled} />
                                             </CardTitle>
                                         </CardHeader>
                                         <Separator />
@@ -59,7 +59,7 @@ const FlagEvaluation = ({ loading, devRules, setDevRules, devEnabled, stagRules,
 
                                     <Card className=' rounded-sm'>
                                         <CardHeader>
-                                            <CardTitle className='flex'> <div className=''>Flag is On {stagEnabled ? <>True</> : <>False</>}  </div> <Switch className="ml-auto [--thumb-size:--spacing(4)] cursor-pointer" checked={stagEnabled} onCheckedChange={(check) => { handleChange(check, "stag") }} disabled={disabled} />
+                                            <CardTitle className='flex'> <div className=''>Flag is {stagEnabled ? <>On</> : <>Off</>}  </div> <Switch className="ml-auto [--thumb-size:--spacing(4)] cursor-pointer" checked={stagEnabled} onCheckedChange={(check) => { handleChange(check, "stag") }} disabled={disabled} />
                                             </CardTitle>
                                         </CardHeader>
                                         <Separator />

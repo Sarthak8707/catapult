@@ -6,6 +6,7 @@ export const getAllSegmentsController = async (req: Request, res: Response, next
     try{
         
         const projectID = Number(req.params.id);
+        
         const data = await getAllSegmentsService(projectID);
         res.status(200).json(data);
     }

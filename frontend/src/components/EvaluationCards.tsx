@@ -58,7 +58,7 @@ interface EvaluationCardsProps { rules: RuleType[], setDevRules: React.Dispatch<
 
 const EvaluationCards = ({rules, setDevRules, variants, segments}: EvaluationCardsProps) => {
 
-  console.log("here::::", rules[0].segments)
+ // console.log("here::::", rules[0].segments)
   
   const [editing, setEditing] = useState<number | null>(null);
 

@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowRightLeft, CircleChevronRight, CircleUserRound, Flag, Layers, Lightbulb, Mail, Notebook, NotebookPen, Shield, ToggleRight, UserCog, Users, UsersRound } from "lucide-react";
+import { ArrowRight, ArrowRightLeft, CircleChevronRight, CircleUserRound, Flag, Layers, Lightbulb, Mail, Notebook, NotebookPen, PanelsTopLeft, Shield, ToggleRight, UserCog, Users, UsersRound } from "lucide-react";
 import { Button } from "./ui/button";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { Separator } from "./ui/separator";
@@ -13,6 +13,15 @@ const SlideBar = () => {
       <div className="h-170 pr-3 flex flex-col gap-2 mt-8 pl-4">
 
         <div className="flex flex-col gap-2">
+
+          <Link to={`projects/`}>
+            <Button
+              variant={(location.pathname === `/projects/` ? "secondary" : "ghost" )}
+              className="w-full justify-start rounded-sm"
+            >
+              <div className="flex items-center justify-center gap-2"> <PanelsTopLeft /> Projects </div>
+            </Button>
+          </Link>
 
           <Link to={`projects/${projectID}`}>
             <Button

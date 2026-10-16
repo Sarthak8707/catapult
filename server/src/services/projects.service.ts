@@ -8,9 +8,9 @@ import { formatAuditLog } from "../utils/auditLogFormatter";
 
 export const getAllProjectsOfUserService = async (userID: number) => {
 
-    const projectsList = await db.select({projectName: projects.name})
-    .from(projects)
-    .leftJoin(members, eq(members.projectID, projects.id))
+    const projectsList = await db.select({name: projects.name, id: projects.id})
+    .from(members)
+    .leftJoin(projects, eq(projects.id, members.projectID))
     .where(eq(members.userID, userID));
 
     return projectsList;

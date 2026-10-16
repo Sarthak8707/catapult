@@ -5,9 +5,7 @@ import { getAllSegmentsController, getSegmentController } from "../controllers/s
 
 const router = express.Router();
 
-// Get all the projects of the logged in user
 
-router.get("/", getAllProjectsOfUserController);
 
 // Get info about a specific project
 

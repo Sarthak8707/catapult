@@ -16,11 +16,12 @@ import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { Plus } from "lucide-react";
 import { useState, type SubmitEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 export default function FlagDialog({id, token}: {id: number, token: string}) {
 
+    const {projectID} = useParams();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: "",
@@ -39,6 +40,7 @@ export default function FlagDialog({id, token}: {id: number, token: string}) {
     const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
         setCreating(true);
+       // console.log("token", token);
 
         try{
             const response = await axios.post(`http://localhost:3000/projects/${id}/flags`, formData, {
@@ -48,7 +50,7 @@ export default function FlagDialog({id, token}: {id: number, token: string}) {
             });
 
             console.log(response.data)
-            navigate(`/flags/${response.data.flagID}`)
+            navigate(`/projects/${projectID}/flags/${response.data.flagID}`)
 
             setCreating(false);
             

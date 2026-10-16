@@ -7,6 +7,7 @@ import { Pen, Pencil } from 'lucide-react';
 import FlagEvaluation from '@/components/FlagEvaluation';
 import FlagVariants from '@/components/FlagVariants';
 import FlagGuardrails from '../components/FlagGuardrails';
+import { toastManager } from '@/components/ui/toast';
 
 type VariantsType = {
     variantName: string,
@@ -122,6 +123,10 @@ const FlagDetails = () => {
         setDisabled(false);
         if (env == "dev") setDevEnabled(check);
         else setStagEnabled(check);
+        toastManager.add({
+            description: "Your changes were successfully saved",
+            title: "Flag Updated!"
+        })
     }
 
 

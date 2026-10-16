@@ -154,7 +154,7 @@ function Toasts({
 
                   <div className="flex flex-col gap-0.5">
                     <Toast.Title
-                      className="font-medium"
+                      className="font-medium text-blue-700"
                       data-slot="toast-title"
                     />
                     <Toast.Description

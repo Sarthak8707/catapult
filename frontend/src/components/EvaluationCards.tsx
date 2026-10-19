@@ -7,100 +7,135 @@ import RuleEditor from './RuleEditor';
 import { useState } from 'react';
 
 type VariantsType = {
-    variantName: string,
-      variantID: number,
-      value: {
-        param: string,
-        val: any
-      }
+  variantName: string,
+  id: number,
+  value: {
+    param: string,
+    val: any
+  }
 }[]
 
 
 type RuleType = {
-    ruleID: number,
-    ruleName: string,
+  ruleID: number,
+  ruleName: string,
+  conditions: {
+    operator: string,
     conditions: {
+      field: string,
+      value: string,
+      operator: string
+    }[]
+  },
+
+  segments: {
+    segmentID: number,
+    segmentName: string,
+    segmentData: {
       operator: string,
       conditions: {
         field: string,
-        value: string,
+        value: any,
         operator: string
       }[]
-    },
+    }
+  }[],
 
-    segments: {
-        segmentID: number,
-        segmentName: string,
-        segmentData: {
-            operator: string,
-            conditions: {
-                field: string,
-                value: any,
-                operator: string
-            }[]
-        }
-    }[],
-    
-    rollouts: {
-      rolloutID: number,
-      percentage: number,
-      variantName: string,
-      variantID: number,
-      value: {
-        param: string,
-        val: any
-      }
-    }[]
+  rollouts: {
+    rolloutID: number,
+    percentage: number,
+    variantName: string,
+    variantID: number,
+    value: {
+      param: string,
+      val: any
+    }
+  }[]
 }
 
 
-interface EvaluationCardsProps { rules: RuleType[], setDevRules: React.Dispatch<React.SetStateAction<any>>, variants: VariantsType, segments: {id: number, name: string}[]}
+interface EvaluationCardsProps { rules: RuleType[], setDevRules: React.Dispatch<React.SetStateAction<any>>, variants: VariantsType, segments: { id: number, name: string }[] }
 
-const EvaluationCards = ({rules, setDevRules, variants, segments}: EvaluationCardsProps) => {
+const EvaluationCards = ({ rules, setDevRules, variants, segments }: EvaluationCardsProps) => {
 
- // console.log("here::::", rules[0].segments)
-  
+  // console.log("here::::", rules[0].segments)
+
   const [editing, setEditing] = useState<number | null>(null);
 
-  if(rules.length == 0){
+  const [creatingNewRule, setCreatingNewRule] = useState<boolean>(false);
+
+
+  if (rules.length == 0) {
     return <>
-     <div className=' flex items-center justify-center'>
-       <button className='bg-blue-700 text-white px-6 py-2 font-bold text-sm rounded-sm cursor-pointer'>Create your Release Flow</button>
-    </div> 
+      
+        {!creatingNewRule ? <>
+        <div className=' h-60 flex items-center justify-center'>
+          <button className='bg-blue-700 text-white px-6 py-2 font-bold text-sm rounded-sm cursor-pointer'
+            onClick={() => { setCreatingNewRule(true) }}
+          > Create your Release Flow </button>
+          </div>
+        </>
+         
+         : <>
+         <div className='flex items-center justify-center'>
+          <button className='border border-gray-600 px-6 py-2 font-semibold text-gray-800 text-sm rounded-sm cursor-pointer'
+            onClick={() => { setCreatingNewRule(false) }}
+          > Cancel </button>
+          </div>
+        </>}
+      
+
+      
+        {creatingNewRule &&
+          <>
+          <div className='h-100'>
+            <RuleEditor conditions={[]}
+              rollouts={
+                [{variantID: variants[0].id,
+                  variantName: "",
+                  percentage: 100,
+                  value: { param: "", val: "" }
+                }]
+              } ruleID={9} setEditing={setEditing}
+              setDevRules={setDevRules} variants={variants} segments={segments} currentSegments={[]}
+            />
+            </div>
+          </>}
+     
     </>
   }
 
   return (
     <div>
-        <div className='border-red-800 min-h-100 mb-10'>
+      <div className='border-red-800 min-h-100 mb-10'>
+        <div>
+          {rules.map((rule, index) => (
             <div>
-                {rules.map((rule, index) => (
-                    <div>
-                        <div className='ml-10 mr-10 flex'>Rule {index + 1}  <div className='ml-auto flex border border-gray-200 rounded'> 
-                          {index == editing ? <>
-                              <button className='hover:bg-neutral-100 rounded-xs px-1 text-gray-600 font-medium text-sm cursor-pointer' onClick={() => setEditing(null)}>Cancel</button>
-                          </> : <>
-                              <Button variant="ghost" className='border-none' onClick={() => setEditing(index)} > <Pencil /> </Button>
-                          </> }
-                          <Button variant="ghost" className='border-none'> <EllipsisVertical /> </Button>
-                          
-                           </div>  </div>
+              <div className='ml-10 mr-10 flex'>Rule {index + 1}  <div className='ml-auto flex border border-gray-200 rounded'>
+                {index == editing ? <>
+                  <button className='hover:bg-neutral-100 rounded-xs px-1 text-gray-600 font-medium text-sm cursor-pointer' onClick={() => setEditing(null)}>Cancel</button>
+                </> : <>
+                  <Button variant="ghost" className='border-none' onClick={() => setEditing(index)} > <Pencil /> </Button>
+                </>}
+                <Button variant="ghost" className='border-none'> <EllipsisVertical /> </Button>
 
-                        {index == editing ? <> <RuleEditor conditions={rule.conditions.conditions} 
-                            rollouts = {rule.rollouts} ruleID={rule.ruleID} setEditing={setEditing} 
-                            setDevRules={setDevRules} variants={variants} segments={segments} currentSegments={rule.segments}
-                         /> </> : <> <EvalCard {...rule}/> </> }
+              </div>  </div>
+
+              {index == editing ? <> <RuleEditor conditions={rule.conditions.conditions}
+                rollouts={rule.rollouts} ruleID={rule.ruleID} setEditing={setEditing}
+                setDevRules={setDevRules} variants={variants} segments={segments} currentSegments={rule.segments}
+              /> </> : <> <EvalCard {...rule} /> </>}
 
 
-                        {(index != rules.length - 1) && 
-                           <Separator className="my-8"/>
-                        }
-                    </div>
-                ))}
+              {(index != rules.length - 1) &&
+                <Separator className="my-8" />
+              }
             </div>
-                             
-                             
+          ))}
         </div>
+
+
+      </div>
     </div>
   )
 }

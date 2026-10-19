@@ -89,6 +89,7 @@ const RuleEditor = ({ currentSegments, conditions, rollouts, ruleID, setEditing,
         segments: { id: number, name: string }[]
     }) => {
 
+    console.log("variants", variants)
 
 
     const [conditionsNew, setConditionsNew] = useState<ConditionsType>(conditions ?? [
@@ -110,7 +111,7 @@ const RuleEditor = ({ currentSegments, conditions, rollouts, ruleID, setEditing,
         name: segment.segmentName
     }))
 
-    //console.log("seg::::", seg);
+    console.log("rollouts::::", rolloutsNew);
 
     const [segmentsNew, setSegmentsNew] = useState<{ id: number, name: string }[]>(seg);
     const segmentsToChoose = segments.filter(s => !segmentsNew.some((item) => item.id == s.id));
@@ -220,68 +221,78 @@ const RuleEditor = ({ currentSegments, conditions, rollouts, ruleID, setEditing,
     }
 
     const handleSave = async () => {
-        // console.log(rolloutsNew);
         setSaving(true);
 
-        if (conditionsNew !== conditions) {
-            const response = await axios.put(`http://localhost:3000/flags/17`, {
-                "rules": {
-                    "ruleID": ruleID,
-                    "conditions": conditionsNew
-                },
-            })
-            setSaving(false);
-            setEditing(null);
+        try {
+            const body: {
+                rules?: object;
+                rollouts?: typeof rolloutsNew;
+                segmentData?: object;
+            } = {};
 
-            setDevRules((prev) => (
-                prev.map((rule, i) => (
-                    rule.ruleID == ruleID ? {
-                        ...rule,
-                        conditions: {
-                            operator: "AND",
-                            conditions: conditionsNew
-                        }
-                    } : rule
-                ))
-            ))
-        }
+            if (JSON.stringify(conditionsNew) !== JSON.stringify(conditions)) {
+                body.rules = {
+                    ruleID,
+                    conditions: conditionsNew,
+                };
+            }
 
-        if (rolloutsNew !== rollouts) {
-            console.log("OLD", rollouts)
-            console.log("NEW", rolloutsNew)
-            const response = await axios.put(`http://localhost:3000/flags/17`, {
+            if (JSON.stringify(rolloutsNew) !== JSON.stringify(rollouts)) {
+                body.rollouts = rolloutsNew;
+            }
 
-                "rollouts": rolloutsNew
-            })
+            if (JSON.stringify(seg) !== JSON.stringify(segmentsNew)) {
+                body.segmentData = {
+                    ruleID,
+                    segments: segmentsNew,
+                };
+            }
 
-            setSaving(false);
-            setEditing(null);
+            // Send only if something changed
+            if (Object.keys(body).length > 0) {
+                await axios.put("http://localhost:3000/flags/17", body);
 
-
-            setDevRules((prev) => (
-                prev.map((rule, i) => (
-                    rule.ruleID == ruleID ? {
-                        ...rule,
-                        rollouts: rolloutsNew
-                    } : rule
-                ))
-            ))
-        }
-
-        if (seg !== segmentsNew) {
-            const response = await axios.put(`http://localhost:3000/flags/17`, {
-
-                "segmentData": {
-                    "ruleID": ruleID,
-                    "segments": segmentsNew
+                // Update local state only for the fields that changed
+                if (body.rules) {
+                    setDevRules((prev) =>
+                        prev.map((rule) =>
+                            rule.ruleID === ruleID
+                                ? {
+                                    ...rule,
+                                    conditions: {
+                                        operator: "AND",
+                                        conditions: conditionsNew,
+                                    },
+                                }
+                                : rule
+                        )
+                    );
                 }
-            })
 
-            setSaving(false);
+                if (body.rollouts) {
+                    setDevRules((prev) =>
+                        prev.map((rule) =>
+                            rule.ruleID === ruleID
+                                ? { ...rule, rollouts: rolloutsNew }
+                                : rule
+                        )
+                    );
+                }
+
+                if (body.segmentData) {
+                    navigate(0);
+                }
+            }
+
             setEditing(null);
-            navigate(0);
+        } catch (err) {
+            console.error("Failed to save changes:", err);
+        } finally {
+            setSaving(false);
         }
-    }
+    };
+
+
 
     return (
         <div className='flex flex-col gap-8 text-sm border bg-gray-50 border-gray-200 rounded-sm pt-4 px-4 mt-4'>

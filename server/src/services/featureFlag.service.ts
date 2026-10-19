@@ -247,6 +247,28 @@ export const createNewFlagService = async (name: string, description: string, pr
     { flagID: flag.id, environment: "stag" }
   ])
 
+  // Create default variants
+
+  await db.insert(flagVariants).values([
+    {
+      flagID: flag.id, name: "true", value: {
+        "val": "true",
+        "param": "state"
+      }
+    },
+
+    {
+      flagID: flag.id, name: "false", value: {
+        "val": "false",
+        "param": "state"
+      }
+    }
+  ])
+
+  // Create default rule 
+
+
+
   // Push Audit Logs
 
   db.insert(auditLogs).values(
@@ -380,7 +402,7 @@ export const changeFlagService = async (requestBody: any, flagID: number) => {
         await db.insert(ruleSegments).values({ ruleID: segmentData.ruleID, segmentID: segment.id })
       }
 
-      return {msg: "done"}
+      return { msg: "done" }
     }
     catch (err) {
       console.log(err);

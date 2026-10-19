@@ -89,13 +89,13 @@ const FlagDetails = () => {
             const dev = response.data.find((c: any) => c.environment == "dev");
             if (dev) { setDevRules(dev.rules); console.log(dev.rules); }
             else setDevRules([])
-
+            console.log("dev rules", dev.rules)
             const stag = response.data.find((c: any) => c.environment == "stag");
             if (stag) setStagRules(stag.rules);
             else setStagRules([])
 
-            
-
+            console.log("configID", response.data[0].configID)
+            console.log("configID", response.data[1].configID)
             if (response.data.length) setFcID1(response.data[0].configID);
             if (response.data.length) setFcID2(response.data[1].configID)
             if (response.data.length) setDevEnabled(response.data[0].enabled);

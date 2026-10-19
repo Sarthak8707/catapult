@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Plus, X } from 'lucide-react'
 import React, { useState } from 'react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 type RuleType = {
     ruleID: number,
@@ -80,18 +80,19 @@ type CurrentSegmentsType = {
     }
 }[]
 
-const RuleEditor = ({ currentSegments, conditions, rollouts, ruleID, setEditing, setDevRules, variants, segments }:
+const RuleEditor = ({ currentSegments, conditions, rollouts, ruleID, setEditing, setDevRules, variants, segments, newRule = false }:
     {
         currentSegments: CurrentSegmentsType,
         conditions: ConditionsType, rollouts: rolloutsType, ruleID: number,
         setEditing: React.Dispatch<React.SetStateAction<number | null>>,
         setDevRules: React.Dispatch<React.SetStateAction<RuleType[]>>, variants: variantsType,
-        segments: { id: number, name: string }[]
+        segments: { id: number, name: string }[],
+        newRule: boolean
     }) => {
 
-    console.log("variants", variants)
+    console.log("ruleid", ruleID)
 
-
+    const {flagID} = useParams();
     const [conditionsNew, setConditionsNew] = useState<ConditionsType>(conditions ?? [
         {
             field: "",
@@ -228,7 +229,10 @@ const RuleEditor = ({ currentSegments, conditions, rollouts, ruleID, setEditing,
                 rules?: object;
                 rollouts?: typeof rolloutsNew;
                 segmentData?: object;
-            } = {};
+                newRule: boolean
+            } = { newRule: newRule };
+
+            
 
             if (JSON.stringify(conditionsNew) !== JSON.stringify(conditions)) {
                 body.rules = {
@@ -250,7 +254,7 @@ const RuleEditor = ({ currentSegments, conditions, rollouts, ruleID, setEditing,
 
             // Send only if something changed
             if (Object.keys(body).length > 0) {
-                await axios.put("http://localhost:3000/flags/17", body);
+                await axios.put(`http://localhost:3000/flags/${flagID}`, body);
 
                 // Update local state only for the fields that changed
                 if (body.rules) {

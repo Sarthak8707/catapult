@@ -94,10 +94,11 @@ const EvaluationCards = ({ rules, setDevRules, variants, segments }: EvaluationC
                 [{variantID: variants[0].id,
                   variantName: "",
                   percentage: 100,
-                  value: { param: "", val: "" }
+                  value: { param: "", val: "" },
                 }]
-              } ruleID={9} setEditing={setEditing}
-              setDevRules={setDevRules} variants={variants} segments={segments} currentSegments={[]}
+              } ruleID={0} setEditing={setEditing}
+              setDevRules={setDevRules} variants={variants} segments={segments} currentSegments={[]} 
+              newRule={true}
             />
             </div>
           </>}
@@ -123,7 +124,8 @@ const EvaluationCards = ({ rules, setDevRules, variants, segments }: EvaluationC
 
               {index == editing ? <> <RuleEditor conditions={rule.conditions.conditions}
                 rollouts={rule.rollouts} ruleID={rule.ruleID} setEditing={setEditing}
-                setDevRules={setDevRules} variants={variants} segments={segments} currentSegments={rule.segments}
+                setDevRules={setDevRules} variants={variants} segments={segments} currentSegments={rule.segments} 
+                newRule={false}
               /> </> : <> <EvalCard {...rule} /> </>}
 
 

@@ -1,4 +1,4 @@
-import { eq, inArray, or } from "drizzle-orm";
+import { and, eq, inArray, or } from "drizzle-orm";
 import { db } from "../db/client";
 import { auditLogs, environmentFlagConfig, flagRollouts, flagRules, flags, flagVariants, projects, ruleSegments, segments } from "../db/schema";
 import { getFlagsForEnvironment } from "../repositories/flag.repository";
@@ -287,8 +287,54 @@ export const createNewFlagService = async (name: string, description: string, pr
 
 export const changeFlagService = async (requestBody: any, flagID: number) => {
 
-  const { flagConfigID, enabled, description, rules, rollouts, newVariant, segmentData } = requestBody;
+  const { flagConfigID, enabled, description, rules, rollouts, newVariant, segmentData, newRule } = requestBody;
   // console.log("rulesconditions:::", rules.conditions);
+
+  // Creating Rule for first time
+
+  if (newRule) {
+    console.log("flagID", flagID)
+
+    const [fC] = await db.select().from(environmentFlagConfig).where(
+      and(
+        eq(environmentFlagConfig.flagID, flagID),
+        eq(environmentFlagConfig.environment, "dev")
+      )
+    );
+
+    // add rule conditions
+
+    const [firstRule] = await db.insert(flagRules)
+      .values({
+        name: "rule 1",
+        conditions: {
+          "operator": "AND",
+          "conditions": rules.conditions
+        },
+        envFlagConfigID: fC.id
+      })
+      .returning();
+
+    // add rollouts
+
+    for (const rollout of rollouts) {
+
+      await db.insert(flagRollouts)
+        .values({
+          ruleID: firstRule.id,
+          percentage: rollout.percentage,
+          variantID: rollout.variantID,
+          bucketBy: "user_id"
+        });
+    }
+
+    return { msg: "Updated Successfully!" }
+
+  }
+
+
+  // Updating existing Rule
+
 
   // Switch 
   if (enabled != undefined) {
@@ -297,7 +343,7 @@ export const changeFlagService = async (requestBody: any, flagID: number) => {
         .set({ enabled: enabled })
         .where(eq(environmentFlagConfig.id, flagConfigID));
 
-      return { msg: "Updated successfully!" };
+      //  return { msg: "Updated successfully!" };
     }
     catch (err) {
       console.log(err);
@@ -312,7 +358,7 @@ export const changeFlagService = async (requestBody: any, flagID: number) => {
         .set({ description: description })
         .where(eq(flags.id, flagID));
 
-      return { msg: "Updated successfully!" };
+      //  return { msg: "Updated successfully!" };
     }
     catch (err) {
       console.log(err);
@@ -336,7 +382,7 @@ export const changeFlagService = async (requestBody: any, flagID: number) => {
         })
         .where(eq(flagRules.id, ruleID));
 
-      return { msg: "Updated successfully!" };
+      // return { msg: "Updated successfully!" };
     }
     catch (err) {
       console.log(err);
@@ -359,7 +405,7 @@ export const changeFlagService = async (requestBody: any, flagID: number) => {
           .where(eq(flagRollouts.id, rollout.rolloutID))
       }
 
-      return { msg: "Updated successfully!" };
+      // return { msg: "Updated successfully!" };
 
     }
     catch (err) {
@@ -380,7 +426,7 @@ export const changeFlagService = async (requestBody: any, flagID: number) => {
           value: { "param": newVariant.param, "val": newVariant.val }
         }
       ]);
-      return { msg: "done" }
+      //return { msg: "done" }
     }
     catch (err) {
       console.log(err);
@@ -402,7 +448,7 @@ export const changeFlagService = async (requestBody: any, flagID: number) => {
         await db.insert(ruleSegments).values({ ruleID: segmentData.ruleID, segmentID: segment.id })
       }
 
-      return { msg: "done" }
+      // return { msg: "done" }
     }
     catch (err) {
       console.log(err);
@@ -410,6 +456,7 @@ export const changeFlagService = async (requestBody: any, flagID: number) => {
 
   }
 
+  return { msg: "Updated Successfully!" }
 
 }
 

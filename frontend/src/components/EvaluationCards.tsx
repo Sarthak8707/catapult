@@ -63,7 +63,7 @@ const EvaluationCards = ({ rules, setDevRules, variants, segments }: EvaluationC
   const [editing, setEditing] = useState<number | null>(null);
 
   const [creatingNewRule, setCreatingNewRule] = useState<boolean>(false);
-
+  console.log("variantss", variants)
 
   if (rules.length == 0) {
     return <>

@@ -119,7 +119,7 @@ const SegmentEditor = ({ conditions, setSegment, setEditing }: {
     return (
 
         <div>
-            <div className='flex flex-col border h-150 w-220 mt-10 rounded-sm py-5'>
+            <div className='flex flex-col border h-120 w-220 mt-10 rounded-sm py-5'>
                 <div>
                     {conditionsNew?.map((condition, idx) => (
                         <div className='flex flex-col items-center gap-2'>

@@ -5,7 +5,7 @@ import { Separator } from '@/components/ui/separator'
 import { Spinner } from '@/components/ui/spinner';
 import axios from 'axios';
 import { Copy, Pencil, X } from 'lucide-react';
-import React, { useEffect, useState } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 const SegmentDetails = () => {
@@ -28,7 +28,7 @@ const SegmentDetails = () => {
   }>();
 
   const [loading, setLoading] = useState(true);
-
+  const [creatingNewSegment, setCreatingNewSegment] = useState<boolean>(false);
   const [editing, setEditing] = useState<boolean>(false);
 
   useEffect(() => {
@@ -43,6 +43,69 @@ const SegmentDetails = () => {
   }, [])
 
   console.log("segment::", segment)
+
+
+  if (segment?.conditions === null) {
+    return (
+
+
+      <div className='min-h-screen px-10 py-5 bg-white'>
+        <div className=''>
+          <div className='text-2xl font-medium'> {segment && segment.name} </div>
+
+        </div>
+
+        <Separator className="my-2 mt-5" />
+
+        <div className='text-xl font-semibold mt-10'> Segment Conditions </div>
+        <div className='text-muted-foreground text-sm mt-1'> The set of conditions which a user has to follow to lie in this segment. </div>
+
+        {loading ? <div className='flex items-center justify-center h-100 w-220'> <Spinner /> </div> :
+
+
+          // <SegmentEditor />
+
+
+
+          <div className='w-200 border-red-300 flex flex-col'>
+
+            <div>
+
+              <div className='mt-10 border-red-300 flex flex-col items-center'>
+
+
+                {creatingNewSegment ? <> <button className='border border-gray-400 w-40 px-6 py-2 font-medium text-sm rounded-sm cursor-pointer'
+                  onClick={() => { setCreatingNewSegment(false) }}
+                > Cancel </button> </>
+                  :
+                  <>
+                    <div className='h-100 flex flex-col items-center justify-center'>
+                      <button className='bg-blue-700 w-80 text-white px-6 py-2 font-bold text-sm rounded-sm cursor-pointer'
+                      onClick={() => { setCreatingNewSegment(true) }}
+                    > Create new segment </button>
+                    </div>
+                  </>}
+
+
+              </div>
+
+              <div>
+                {creatingNewSegment && <> <SegmentEditor conditions={[]} setSegment={setSegment} setEditing={setEditing} /> </>}
+              </div>
+
+            </div>
+
+
+          </div>
+        }
+
+
+      </div>
+
+    )
+  }
+
+
 
   return (
     <div className='min-h-screen px-10 py-5 bg-white'>
@@ -63,8 +126,8 @@ const SegmentDetails = () => {
 
 
 
-        <div className=' flex flex-col'>
-          <div className='w-220 flex'>
+        <div className=' border-red-300 flex flex-col'>
+          <div className=' w-220 flex'>
             <div className='ml-auto flex items-center gap-1.5'>
               <div className=' border rounded-sm'>
                 <Button variant="ghost" className='border rounded-xs' onClick={() => { }} > <Copy /> </Button>

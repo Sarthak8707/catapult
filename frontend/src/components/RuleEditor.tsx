@@ -92,7 +92,7 @@ const RuleEditor = ({ currentSegments, conditions, rollouts, ruleID, setEditing,
 
     console.log("ruleid", ruleID)
 
-    const {flagID} = useParams();
+    const { flagID } = useParams();
     const [conditionsNew, setConditionsNew] = useState<ConditionsType>(conditions ?? [
         {
             field: "",
@@ -232,7 +232,7 @@ const RuleEditor = ({ currentSegments, conditions, rollouts, ruleID, setEditing,
                 newRule: boolean
             } = { newRule: newRule };
 
-            
+
 
             if (JSON.stringify(conditionsNew) !== JSON.stringify(conditions)) {
                 body.rules = {
@@ -256,35 +256,40 @@ const RuleEditor = ({ currentSegments, conditions, rollouts, ruleID, setEditing,
             if (Object.keys(body).length > 0) {
                 await axios.put(`http://localhost:3000/flags/${flagID}`, body);
 
-                // Update local state only for the fields that changed
-                if (body.rules) {
-                    setDevRules((prev) =>
-                        prev.map((rule) =>
-                            rule.ruleID === ruleID
-                                ? {
-                                    ...rule,
-                                    conditions: {
-                                        operator: "AND",
-                                        conditions: conditionsNew,
-                                    },
-                                }
-                                : rule
-                        )
-                    );
-                }
-
-                if (body.rollouts) {
-                    setDevRules((prev) =>
-                        prev.map((rule) =>
-                            rule.ruleID === ruleID
-                                ? { ...rule, rollouts: rolloutsNew }
-                                : rule
-                        )
-                    );
-                }
-
-                if (body.segmentData) {
+                if (newRule) {
                     navigate(0);
+                }
+                else {
+                    // Update local state only for the fields that changed
+                    if (body.rules) {
+                        setDevRules((prev) =>
+                            prev.map((rule) =>
+                                rule.ruleID === ruleID
+                                    ? {
+                                        ...rule,
+                                        conditions: {
+                                            operator: "AND",
+                                            conditions: conditionsNew,
+                                        },
+                                    }
+                                    : rule
+                            )
+                        );
+                    }
+
+                    if (body.rollouts) {
+                        setDevRules((prev) =>
+                            prev.map((rule) =>
+                                rule.ruleID === ruleID
+                                    ? { ...rule, rollouts: rolloutsNew }
+                                    : rule
+                            )
+                        );
+                    }
+
+                    if (body.segmentData) {
+                        navigate(0);
+                    }
                 }
             }
 

@@ -5,6 +5,7 @@ import { EllipsisVertical, Pencil, Trash2, } from 'lucide-react';
 import { Button } from './ui/button';
 import RuleEditor from './RuleEditor';
 import { useState } from 'react';
+import { ScrollArea } from './ui/scroll-area';
 
 type VariantsType = {
   variantName: string,
@@ -67,77 +68,80 @@ const EvaluationCards = ({ rules, setDevRules, variants, segments }: EvaluationC
 
   if (rules.length == 0) {
     return <>
-      
-        {!creatingNewRule ? <>
+
+      {!creatingNewRule ? <>
         <div className=' h-60 flex items-center justify-center'>
           <button className='bg-blue-700 text-white px-6 py-2 font-bold text-sm rounded-sm cursor-pointer'
             onClick={() => { setCreatingNewRule(true) }}
           > Create your Release Flow </button>
-          </div>
-        </>
-         
-         : <>
-         <div className='flex items-center justify-center'>
-          <button className='border border-gray-600 px-6 py-2 font-semibold text-gray-800 text-sm rounded-sm cursor-pointer'
-            onClick={() => { setCreatingNewRule(false) }}
-          > Cancel </button>
+        </div>
+      </>
+
+        : <>
+          <div className='flex items-center justify-center'>
+            <button className='border border-gray-600 px-6 py-2 font-semibold text-gray-800 text-sm rounded-sm cursor-pointer'
+              onClick={() => { setCreatingNewRule(false) }}
+            > Cancel </button>
           </div>
         </>}
-      
 
-      
-        {creatingNewRule &&
-          <>
+
+
+      {creatingNewRule &&
+        <>
           <div className='h-100'>
             <RuleEditor conditions={[]}
               rollouts={
-                [{variantID: variants[0].id,
+                [{
+                  variantID: variants[0].id,
                   variantName: "",
                   percentage: 100,
                   value: { param: "", val: "" },
                 }]
               } ruleID={0} setEditing={setEditing}
-              setDevRules={setDevRules} variants={variants} segments={segments} currentSegments={[]} 
+              setDevRules={setDevRules} variants={variants} segments={segments} currentSegments={[]}
               newRule={true}
             />
-            </div>
-          </>}
-     
+          </div>
+        </>}
+
     </>
   }
 
   return (
     <div>
-      <div className='border-red-800 min-h-100 mb-10'>
-        <div>
-          {rules.map((rule, index) => (
-            <div>
-              <div className='ml-10 mr-10 flex'>Rule {index + 1}  <div className='ml-auto flex border border-gray-200 rounded'>
-                {index == editing ? <>
-                  <button className='hover:bg-neutral-100 rounded-xs px-1 text-gray-600 font-medium text-sm cursor-pointer' onClick={() => setEditing(null)}>Cancel</button>
-                </> : <>
-                  <Button variant="ghost" className='border-none' onClick={() => setEditing(index)} > <Pencil /> </Button>
-                </>}
-                <Button variant="ghost" className='border-none'> <EllipsisVertical /> </Button>
+      <ScrollArea  className="h-170 rounded-lg">
+        <div className='border-red-800 min-h-100 mb-10'>
+          <div>
+            {rules.map((rule, index) => (
+              <div>
+                <div className='ml-10 mr-10 flex'>Rule {index + 1}  <div className='ml-auto flex border border-gray-200 rounded'>
+                  {index == editing ? <>
+                    <button className='hover:bg-neutral-100 rounded-xs px-1 text-gray-600 font-medium text-sm cursor-pointer' onClick={() => setEditing(null)}>Cancel</button>
+                  </> : <>
+                    <Button variant="ghost" className='border-none' onClick={() => setEditing(index)} > <Pencil /> </Button>
+                  </>}
+                  <Button variant="ghost" className='border-none'> <EllipsisVertical /> </Button>
 
-              </div>  </div>
+                </div>  </div>
 
-              {index == editing ? <> <RuleEditor conditions={rule.conditions.conditions}
-                rollouts={rule.rollouts} ruleID={rule.ruleID} setEditing={setEditing}
-                setDevRules={setDevRules} variants={variants} segments={segments} currentSegments={rule.segments} 
-                newRule={false}
-              /> </> : <> <EvalCard {...rule} /> </>}
+                {index == editing ? <> <RuleEditor conditions={rule.conditions.conditions}
+                  rollouts={rule.rollouts} ruleID={rule.ruleID} setEditing={setEditing}
+                  setDevRules={setDevRules} variants={variants} segments={segments} currentSegments={rule.segments}
+                  newRule={false}
+                /> </> : <> <EvalCard {...rule} /> </>}
 
 
-              {(index != rules.length - 1) &&
-                <Separator className="my-8" />
-              }
-            </div>
-          ))}
+                {(index != rules.length - 1) &&
+                  <Separator className="my-8" />
+                }
+              </div>
+            ))}
+          </div>
+
+
         </div>
-
-
-      </div>
+      </ScrollArea>
     </div>
   )
 }

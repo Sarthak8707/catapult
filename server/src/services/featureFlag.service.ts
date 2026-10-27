@@ -131,7 +131,6 @@ export const getFlagInfoService = async (flagID: number) => {
         segments,
         eq(segments.id, ruleSegments.segmentID)
       )
-
       .where(eq(environmentFlagConfig.flagID, flagID));
 
     //console.log(data);
@@ -170,6 +169,7 @@ export const getFlagInfoService = async (flagID: number) => {
           segments: [],
 
           rollouts: [],
+
         });
       }
 
@@ -190,6 +190,8 @@ export const getFlagInfoService = async (flagID: number) => {
           });
         }
       }
+
+      // Add Rollouts
 
       if (row.rolloutID !== null) {
         const exists = rule.rollouts.some(

@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm"
 import { db } from "../db/client"
-import { environmentFlagConfig, flagRollouts, flagRules, flags, flagVariants, projects } from "../db/schema"
+import { environmentFlagConfig, flagRollouts, flagRules, flags, flagVariants, projects, ruleSegments, segments } from "../db/schema"
 import { getFlagInfoService } from "./featureFlag.service"
 
 
@@ -28,6 +28,11 @@ export const getSDKFlagsService = async (projectID: number) => {
         variantID: flagVariants.id,
         variantName: flagVariants.name,
         variantValue: flagVariants.value,
+
+        ruleSegID: ruleSegments.id,
+        segmentID: segments.id,
+        segmentName: segments.name,
+        segmentData: segments.conditions
       })
       .from(flags)
       .leftJoin(
@@ -45,6 +50,14 @@ export const getSDKFlagsService = async (projectID: number) => {
       .leftJoin(
         flagVariants,
         eq(flagVariants.id, flagRollouts.variantID)
+      )
+      .leftJoin(
+        ruleSegments,
+        eq(ruleSegments.ruleID, flagRules.id)
+      )
+      .leftJoin(
+        segments,
+        eq(segments.id, ruleSegments.segmentID)
       )
       .where(eq(flags.projectID, projectID));
 
@@ -92,21 +105,52 @@ export const getSDKFlagsService = async (projectID: number) => {
         config.rules.set(row.ruleID, {
           ruleID: row.ruleID,
           ruleName: row.ruleName,
+
           conditions: row.conditions,
+          segments: [],
+
           rollouts: [],
         });
       }
 
+      const rule = config.rules.get(row.ruleID);
+
+      // Add segments
+      if (row.segmentID !== null) {
+
+        const exists = rule.segments.some(
+          (segment: any) => segment.segmentID === row.segmentID
+        );
+
+        if (!exists) {
+          rule.segments.push({
+            segmentID: row.segmentID,
+            segmentName: row.segmentName,
+            segmentData: row.segmentData
+          })
+        }
+      }
+
+
       // Add rollout only if it exists
       if (row.rolloutID !== null) {
-        config.rules.get(row.ruleID).rollouts.push({
-          rolloutID: row.rolloutID,
-          percentage: row.percentage,
-          variantID: row.variantID,
-          variantName: row.variantName,
-          value: row.variantValue,
-        });
+
+        const exists = rule.rollouts.some(
+          (rollout: any) => rollout.rolloutID === row.rolloutID
+        )
+
+        if (!exists) {
+          config.rules.get(row.ruleID).rollouts.push({
+            rolloutID: row.rolloutID,
+            percentage: row.percentage,
+            variantID: row.variantID,
+            variantName: row.variantName,
+            value: row.variantValue,
+          });
+        }
       }
+
+
     }
 
     // Convert Maps → arrays
@@ -125,7 +169,7 @@ export const getSDKFlagsService = async (projectID: number) => {
     }));
 
     return result;
-    
+
   } catch (err) {
     console.log(err);
     throw err;

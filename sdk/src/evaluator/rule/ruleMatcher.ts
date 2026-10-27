@@ -37,7 +37,6 @@ const matchCondition = (condition: Condition, context: Context) => {
         return condition.value.includes(contextValue);
     }
 
-    throw new Error("Invalid operator provided")
-
-    return false;
+    throw new Error("Invalid operator provided");
+    
 }

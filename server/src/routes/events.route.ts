@@ -4,6 +4,8 @@ import { reportEventsController } from "../controllers/events.controller";
 const router = express.Router();
 
 
+// Stream events
+
 router.post("/", reportEventsController);
 
 

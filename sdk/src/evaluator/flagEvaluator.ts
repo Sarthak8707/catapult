@@ -13,6 +13,8 @@ export function evaluateFlag(flagKey: string, env: string, flag: Flag, context: 
 
   const [selectedEnv] = flag.environments.filter((e) => e.environment == env);
 
+  //console.log("selectedEnv", selectedEnv.rules[0].segments?.[1].segmentData.conditions);
+
   for (const rule of selectedEnv.rules || []) {
 
     if (matchRule(rule, context)) {
@@ -20,6 +22,7 @@ export function evaluateFlag(flagKey: string, env: string, flag: Flag, context: 
       //console.log("applyRule", applyRule(rule, flag, context));
       // Rule matched
        return applyRule(rule, flag, context);
+       
     }
 
   }

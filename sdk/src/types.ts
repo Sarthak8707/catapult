@@ -26,6 +26,7 @@ export type Rule = {
     ruleID: number,
     ruleName: string,
     conditions: Conditions,
+    segments?: Segment[],
     rollouts: Rollout[]
 }
 
@@ -43,6 +44,17 @@ export type Condition = {
     value: any,
     operator: string
 
+}
+
+export type Segment = {
+
+    segmentID: number,
+    segmentName: string,
+    segmentData: {
+        operator: string,
+        conditions: Condition[]
+    }
+    
 }
 
 export type Rollout = {

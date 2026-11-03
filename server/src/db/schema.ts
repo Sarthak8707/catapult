@@ -245,10 +245,9 @@ export const events = pgTable("events", {
         onDelete: "no action", onUpdate: "cascade"
     }),
     
-    eventType: text("event_type"),
-    
-    // unique
-    service: text("service"),
+    metric: text("metric").notNull(),
+
+    value: text("value").notNull(),
 
     createdAt: timestamp("created_at").defaultNow()
 

@@ -1,4 +1,5 @@
-import { Routes, Route } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
 import Layout, { FullLayout } from "./components/Layout";
 
 import Dashboard from "./pages/Dashboard";
@@ -19,33 +20,113 @@ import Invitations from "./pages/Invitations";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
-export default function App() {
-  return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Dashboard />} />
-        <Route path="organizations" element={<Organizations />} />
-        <Route path="audit-trails" element={<AuditTrails />} />
-        <Route path="analytics" element={<Analytics />} />
-        <Route path="flags" element={<Flags />} />
-        <Route path="organizations/:id" element={<OrganizationDetails />} />
-        <Route path="projects" element={<Projects />} />
-        <Route path="projects/:projectID" element={<ProjectDetails />} />
-        <Route path="projects/:projectID/guardrails" element={<Guardrails />} />
-        <Route path="projects/:projectID/flags/:flagID" element={<FlagDetails />} />
-        <Route path="projects/:projectID/segments" element={<Segments />} />
-        <Route path="projects/:projectID/segments/:segmentID" element={<SegmentDetails />} />
-        <Route path="projects/:projectID/guardrails/:guardrailID" element={<GuardrailDetails />} />
-        <Route path="projects/:projectID/members" element={<Members />} />
-        <Route path="invitations" element={<Invitations />} />
-        <Route path="projects" element={<Projects />} />
-        
-      </Route>
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        index: true,
+        element: <Dashboard />,
+      },
+      {
+        path: "organizations",
+        element: <Organizations />,
+      },
+      {
+        path: "organizations/:id",
+        element: <OrganizationDetails />,
+      },
+      {
+        path: "audit-trails",
+        element: <AuditTrails />,
+      },
+      {
+        path: "analytics",
+        element: <Analytics />,
+      },
+      {
+        path: "flags",
 
-      <Route path="/" element={<FullLayout />}>
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
-      </Route>
-    </Routes>
-  );
+        element: <Flags />,
+      },
+
+      {
+        path: "projects",
+        handle: {breadcrumb: "Projects"},
+        children: [
+
+          {
+            index: true,
+            element: <Projects />,
+            // handle: { breadcrumb: "Projects" }
+          },
+
+          {
+            path: ":projectID",
+            handle: {breadcrumb: "Project Name"},
+            children: [
+              {
+                index: true,
+                element: <ProjectDetails />,
+                handle: { breadcrumb: "Project flags" }
+              },
+              {
+                path: "guardrails",
+                element: <Guardrails />,
+                handle: { breadcrumb: "Project guardrails" }
+              },
+              {
+                path: "flags/:flagID",
+                element: <FlagDetails />,
+              },
+              {
+                path: "segments",
+                element: <Segments />,
+                handle: { breadcrumb: "Project segments" }
+              },
+              {
+                path: "segments/:segmentID",
+                element: <SegmentDetails />,
+              },
+              {
+                path: "guardrails/:guardrailID",
+                element: <GuardrailDetails />,
+              },
+              {
+                path: "members",
+                element: <Members />,
+                handle: { breadcrumb: "Project members" }
+              },
+            ]
+          },
+
+
+        ]
+      },
+
+      {
+        path: "invitations",
+        element: <Invitations />,
+      },
+    ],
+  },
+  {
+    path: "/",
+    element: <FullLayout />,
+    children: [
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "register",
+        element: <Register />,
+      },
+    ],
+  },
+]);
+
+export default function App() {
+  return <RouterProvider router={router} />;
 }

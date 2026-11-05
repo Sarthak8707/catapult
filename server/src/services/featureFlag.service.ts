@@ -291,6 +291,7 @@ export const changeFlagService = async (requestBody: any, flagID: number) => {
 
   const { flagConfigID, enabled, description, rules, rollouts, newVariant, segmentData, newRule } = requestBody;
   // console.log("rulesconditions:::", rules.conditions);
+  console.log("requestBody", requestBody)
 
   // Creating Rule for first time
 
@@ -317,7 +318,21 @@ export const changeFlagService = async (requestBody: any, flagID: number) => {
       })
       .returning();
 
+
+    // add segments
+
+    if(segmentData && segmentData.segments){
+
+      for(const segment of segmentData.segments){
+        await db.insert(ruleSegments).values({
+          ruleID: firstRule.id,
+          segmentID: segment.id
+        })
+      }
+    }
+
     // add rollouts
+    //console.log("segments", segmentData.segments)
 
     for (const rollout of rollouts) {
 

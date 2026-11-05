@@ -142,6 +142,11 @@ const FlagDetails = () => {
             setFlagInfo(prev =>
                 prev ? { ...prev, description } : prev
             )
+
+            toastManager.add({
+                title: "Description Updated!",
+                description: "Your flag description was successfully updated"
+            })
         }
         catch (err) {
             console.log("error:", err);

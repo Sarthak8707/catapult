@@ -241,7 +241,7 @@ const RuleEditor = ({ currentSegments, conditions, rollouts, ruleID, setEditing,
                 };
             }
 
-            if (JSON.stringify(rolloutsNew) !== JSON.stringify(rollouts)) {
+            if ((JSON.stringify(rolloutsNew) !== JSON.stringify(rollouts)) || newRule) {
                 body.rollouts = rolloutsNew;
             }
 
@@ -254,6 +254,7 @@ const RuleEditor = ({ currentSegments, conditions, rollouts, ruleID, setEditing,
 
             // Send only if something changed
             if (Object.keys(body).length > 0) {
+                console.log("body", body)
                 await axios.put(`http://localhost:3000/flags/${flagID}`, body);
 
                 if (newRule) {

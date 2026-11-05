@@ -1,14 +1,14 @@
 import { Outlet } from "react-router-dom";
-import Navbar from "./Breadcrumbs";
 import SlideBar from "./SlideBar";
 import { AnchoredToastProvider, ToastProvider } from "./ui/toast";
+import Breadcrumbs from "./Breadcrumbs";
 
 export default function Layout() {
   return (
     <ToastProvider>
       <AnchoredToastProvider>
         <div className="min-h-screen bg-background text-foreground">
-          <Navbar />
+          <Breadcrumbs />
 
 
           <div className="flex">

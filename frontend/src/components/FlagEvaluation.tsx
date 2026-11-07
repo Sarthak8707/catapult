@@ -26,12 +26,12 @@ const FlagEvaluation = ({ loading, devRules, setDevRules, devEnabled, stagRules,
                         <div className='border-red-500 w-220  mt-10'>
 
                             <Tabs >
-                                <TabsList className="mb-5">
+                                <TabsList className="mb-5 ">
                                     <TabsTab value="tab-1" className="w-40 data-active:text-indigo-800">Development</TabsTab>
                                     <TabsTab value="tab-2" className="w-40 data-active:text-yellow-800">Staging</TabsTab>
                                 </TabsList>
 
-                                <TabsPanel value="tab-1">
+                                <TabsPanel value="tab-1" >
 
 
                                     <Card className=' rounded-sm'>

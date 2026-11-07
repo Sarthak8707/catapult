@@ -31,7 +31,7 @@ export function TabsList({
   variant?: TabsVariant;
 }): React.ReactElement {
   return (
-    <div className="relative w-full border-b border-border">
+    <div className={cn("relative w-full ", variant === "underline" ? "border-b border-border" : "")}>
   <TabsPrimitive.List
     className={cn(
       "relative z-0 flex w-fit items-center justify-center gap-x-0.5 text-muted-foreground",

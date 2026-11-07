@@ -226,11 +226,11 @@ const FlagDetails = () => {
             </div>
 
 
-            <div className="my-2 h-[0.5px] w-full bg-border" />
+            <div className="mt-10 h-[0.5px] w-full bg-border" />
 
             {/* About Flag */}
 
-            <div className='text-xl mt-10 font-semibold'>About</div>
+            <div className='text-xl mt-8 font-semibold'>About</div>
             <div className='mt-1 text-gray-600 text-sm'> Details about the flag </div>
             <div className='mt-5 border-red-300 bg-white text-sm flex'>
 

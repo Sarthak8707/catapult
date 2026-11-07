@@ -1,8 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Layout, { FullLayout } from "./components/Layout";
-
-import Dashboard from "./pages/Dashboard";
 import Organizations from "./pages/Organizations";
 import AuditTrails from "./pages/AuditTrail";
 import Analytics from "./pages/Analytics";
@@ -19,16 +17,14 @@ import Members from "./pages/Members";
 import Invitations from "./pages/Invitations";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Landing from "./pages/Landing";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
     children: [
-      {
-        index: true,
-        element: <Dashboard />,
-      },
+      
       {
         path: "organizations",
         element: <Organizations />,
@@ -115,6 +111,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <FullLayout />,
     children: [
+      {
+        path: "home",
+        element: <Landing />,
+      },
       {
         path: "login",
         element: <Login />,

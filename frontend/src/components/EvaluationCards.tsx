@@ -110,7 +110,6 @@ const EvaluationCards = ({ rules, setDevRules, variants, segments }: EvaluationC
 
   return (
     <div>
-      <ScrollArea  className="h-170 rounded-lg">
         <div className='border-red-800 min-h-100 mb-10'>
           <div>
             {rules.map((rule, index) => (
@@ -141,7 +140,6 @@ const EvaluationCards = ({ rules, setDevRules, variants, segments }: EvaluationC
 
 
         </div>
-      </ScrollArea>
     </div>
   )
 }

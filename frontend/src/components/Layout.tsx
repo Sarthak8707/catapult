@@ -7,18 +7,22 @@ export default function Layout() {
   return (
     <ToastProvider>
       <AnchoredToastProvider>
-        <div className="min-h-screen bg-background text-foreground">
+        <div className="h-screen overflow-hidden bg-background text-foreground flex flex-col">
+          {/* Fixed at the top */}
           <Breadcrumbs />
 
-
-          <div className="flex">
+          {/* Takes remaining screen height */}
+          <div className="flex flex-1 min-h-0">
+            {/* Fixed sidebar */}
             <SlideBar />
-            <main className="container mx-auto">
-              <Outlet />
+
+            {/* Only this area scrolls */}
+            <main className="flex-1 min-w-0 overflow-y-auto">
+              <div className="container mx-auto">
+                <Outlet />
+              </div>
             </main>
           </div>
-
-
         </div>
       </AnchoredToastProvider>
     </ToastProvider>

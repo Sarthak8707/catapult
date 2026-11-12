@@ -107,7 +107,77 @@ const Landing = () => {
 
         <div className=' pt-20 px-20 flex gap-20'>
 
-          
+          <div className="h-150 bg-black text-neutral-100 border border-neutral-800 rounded-sm w-100 pt-5">
+            <img
+              src={Guardrails}
+              alt="Guardrails dashboard"
+              className="w-95 h-auto object-contain mx-2"
+            />
+
+            <div className="text-2xl text-neutral-100 font-semibold mt-25 mx-5">
+              Create Guardrail
+            </div>
+            <div className='mt-3 text-neutral-100 font-medium mx-5 '>
+              Create a new Guardrail corresponding to the feature flag you want.
+            </div>
+
+            <div className='mt-10 mx-5'>
+              <button className='text-neutral-100 border border-neutral-100 rounded-full px-6 py-2 cursor-pointer'>
+                <div className='flex items-center gap-2'>
+                  <div> View More </div>
+                  <div> <ArrowUpRight className='h-4 w-4' /> </div>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <div className="h-150 bg-black text-neutral-100 border border-neutral-800 rounded-sm w-100 pt-5">
+            <img
+              src={Triggers}
+              alt="Guardrails dashboard"
+              className="w-95 h-auto object-contain mx-2"
+            />
+
+            <div className="text-2xl text-neutral-100 font-semibold mt-25 mx-5">
+              Define Triggers
+            </div>
+            <div className='mt-3 text-neutral-100 font-medium mx-5 '>
+              Customize metrics which will lead to the trigger of Guardrail.
+            </div>
+
+            <div className='mt-10 mx-5'>
+              <button className='text-neutral-100 border border-neutral-100 rounded-full px-6 py-2 cursor-pointer'>
+                <div className='flex items-center gap-2'>
+                  <div> View More </div>
+                  <div> <ArrowUpRight className='h-4 w-4' /> </div>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <div className="h-150 bg-black text-neutral-100 border border-neutral-800 rounded-sm w-100 pt-5">
+            <img
+              src={Actions}
+              alt="Guardrails dashboard"
+              className="w-87 h-auto object-contain mx-5"
+            />
+
+            <div className="text-2xl text-neutral-100 font-semibold mt-25 mx-5">
+              Set the Actions
+            </div>
+            <div className='mt-3 text-neutral-100 font-medium mx-5 '>
+              Describe how will your features be managed inside your application.
+            </div>
+
+            <div className='mt-10 mx-5'>
+              <button className='text-neutral-100 border border-neutral-100 rounded-full px-6 py-2 cursor-pointer'>
+                <div className='flex items-center gap-2'>
+                  <div> View More </div>
+                  <div> <ArrowUpRight className='h-4 w-4' /> </div>
+                </div>
+              </button>
+            </div>
+          </div>
 
         </div>
 

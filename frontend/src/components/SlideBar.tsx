@@ -1,3 +1,4 @@
+
 import { ArrowRight, ArrowRightLeft, CircleChevronRight, CircleUserRound, Flag, Layers, Lightbulb, Mail, Notebook, NotebookPen, PanelsTopLeft, Shield, ToggleRight, UserCog, Users, UsersRound } from "lucide-react";
 import { Button } from "./ui/button";
 import { Link, useLocation, useParams } from "react-router-dom";
@@ -9,7 +10,7 @@ const SlideBar = () => {
   const {projectID} = useParams();
 
   return (
-    <div className="w-75 min-h-screen border border-gray-200">
+    <div className="w-75 min-h-screen border border-neutral-800 bg-neutral-900 text-gray-300">
       <div className="h-170 pr-3 flex flex-col gap-2 mt-8 pl-4">
 
         <div className="flex flex-col gap-2">
@@ -77,7 +78,7 @@ const SlideBar = () => {
           </Button>
         </div>
 
-        <div className="mt-auto bg-gray-100">
+        <div className="mt-auto bg-gray-950">
           <div>
             <Link to="/invitations">
               <Button
@@ -90,10 +91,10 @@ const SlideBar = () => {
               </Button>
             </Link>
           </div>
-          <Separator />
-          <div className=" flex items-center text-sm justify-between mt-2  rounded-xs px-2 py-1.5 mb-2">
-            <div className="flex items-center gap-1.5 text-gray-700 font-semibold"> <CircleUserRound strokeWidth={1.5} className="size-5 text-indigo-700" /> {username} </div>
-            <div className="text-white rounded-full px-2 bg-indigo-700 text-xs py-1 flex gap-1 items-center pl-3 cursor-pointer"> Logout <ArrowRight strokeWidth={1.5} className="size-3"  /> </div>
+          <Separator className="bg-gray-800" />
+          <div className=" flex items-center text-sm justify-between mt-2 rounded-xs px-2 py-1.5 mb-2">
+            <div className="flex items-center gap-1.5 text-gray-300 font-semibold"> <CircleUserRound strokeWidth={1.5} className="size-5 text-[#becf03]" /> {username} </div>
+            <div className="text-black rounded-full px-2 bg-[#becf03] text-xs py-1 flex gap-1 items-center pl-3 cursor-pointer"> Logout <ArrowRight strokeWidth={1.5} className="size-3" /> </div>
           </div>
         </div>
 

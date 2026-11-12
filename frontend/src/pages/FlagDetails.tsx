@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import axios from 'axios';
@@ -159,14 +158,14 @@ const FlagDetails = () => {
     };
 
     return (
-        <div className='min-h-screen px-10 py-5 bg-white'>
+        <div className='min-h-screen px-10 py-5 bg-neutral-900 text-neutral-100'>
 
 
             <div className='mb-5'>
-                <div className=' border-amber-950 ml-0'>
+                <div className=' border-neutral-800 ml-0'>
                     {/* */}
                     <div>
-                        <div className="border-red-950 flex">
+                        <div className="border-neutral-800 flex">
                             <div className="text-2xl font-medium">
                                 {flagInfo ? flagInfo?.name : "Flag Name"}
                             </div>
@@ -177,14 +176,14 @@ const FlagDetails = () => {
                         </div>
 
                         {editing ? <div className='mt-2 flex gap-2 text-sm'>
-                            <input type="text" value={description} onChange={(e) => { setDescription(e.target.value) }} className='border border-gray-300 w-150 rounded-xs' />
-                            <button onClick={handleSaveDescription} className='cursor-pointer text-blue-700'> {saving ? <>Saving...</> : <>Save</>} </button>
-                            {!saving && <button onClick={() => { setEditing(false); setDescription(flagInfo?.description ?? "") }} className='cursor-pointer' > Cancel </button>}
+                            <input type="text" value={description} onChange={(e) => { setDescription(e.target.value) }} className='border border-neutral-800 bg-neutral-900 text-neutral-100 w-150 rounded-xs' />
+                            <button onClick={handleSaveDescription} className='cursor-pointer text-[#becf03]'> {saving ? <>Saving...</> : <>Save</>} </button>
+                            {!saving && <button onClick={() => { setEditing(false); setDescription(flagInfo?.description ?? "") }} className='cursor-pointer text-neutral-400' > Cancel </button>}
                         </div> : <div>
 
                             <div> {flagInfo ?
-                                <div className='flex text-gray-700 text-sm'> {flagInfo?.description}
-                                    <button className='cursor-pointer ml-2 text-blue-700' onClick={() => { setEditing(true) }}> <Pen className='h-3 w-3' /> </button>
+                                <div className='flex text-neutral-400 text-sm'> {flagInfo?.description}
+                                    <button className='cursor-pointer ml-2 text-[#becf03]' onClick={() => { setEditing(true) }}> <Pen className='h-3 w-3' /> </button>
                                 </div> : "flag description"}  </div>
 
                         </div>
@@ -226,24 +225,24 @@ const FlagDetails = () => {
             </div>
 
 
-            <div className="mt-10 h-[0.5px] w-full bg-border" />
+            <div className="mt-10 h-[0.5px] w-full bg-neutral-800" />
 
             {/* About Flag */}
 
             <div className='text-xl mt-8 font-semibold'>About</div>
-            <div className='mt-1 text-gray-600 text-sm'> Details about the flag </div>
-            <div className='mt-5 border-red-300 bg-white text-sm flex'>
+            <div className='mt-1 text-neutral-400 text-sm'> Details about the flag </div>
+            <div className='mt-5 border-neutral-800 bg-neutral-900 text-sm flex'>
 
-                <div className='flex flex-col border-red-600 w-140 pt-5 pb-5 pl-10 gap-3 text-sm'>
-                    <div className='flex text-sm'> <div className='text-gray-500 w-40'>Type</div> Release flag  </div>
-                    <div className='flex'> <div className='text-gray-500 w-40'>Environment</div> Production </div>
-                    <div className='flex'> <div className='text-gray-500 w-40'>Type</div> {flagInfo ? (flagInfo?.type) : (<>type</>)}  </div>
+                <div className='flex flex-col border-neutral-800 w-140 pt-5 pb-5 pl-10 gap-3 text-sm'>
+                    <div className='flex text-sm'> <div className='text-neutral-500 w-40'>Type</div> Release flag  </div>
+                    <div className='flex'> <div className='text-neutral-500 w-40'>Environment</div> Production </div>
+                    <div className='flex'> <div className='text-neutral-500 w-40'>Type</div> {flagInfo ? (flagInfo?.type) : (<>type</>)}  </div>
                 </div>
 
-                <div className='flex flex-col  border-amber-800 w-140 pt-5 pb-5 pl-10 gap-3 ml-auto'>
-                    <div className='flex text-sm'> <div className='text-gray-500 w-40'>Created </div> 23 June, 2026 </div>
-                    <div className='flex'> <div className='text-gray-500 w-40'>Created by</div> Nick  </div>
-                    <div className='flex'> <div className='text-gray-500 w-40'>Tags</div> Dashboard  </div>
+                <div className='flex flex-col  border-neutral-800 w-140 pt-5 pb-5 pl-10 gap-3 ml-auto'>
+                    <div className='flex text-sm'> <div className='text-neutral-500 w-40'>Created </div> 23 June, 2026 </div>
+                    <div className='flex'> <div className='text-neutral-500 w-40'>Created by</div> Nick  </div>
+                    <div className='flex'> <div className='text-neutral-500 w-40'>Tags</div> Dashboard  </div>
                 </div>
 
             </div>

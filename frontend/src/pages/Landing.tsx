@@ -271,6 +271,67 @@ const Landing = () => {
 
         </div>
 
+        <div className='bg-[#befc03] h-80 mt-20 flex flex-col justify-center pl-35'>
+          <div className='text-4xl font-medium max-w-2xl  '>
+            Make Feature control feel impossibly easy, with Catapult.
+          </div>
+
+          <div>
+            <div className='mt-10 flex gap-5'>
+              <button className='text-white bg-black rounded-full px-6 py-2 cursor-pointer'>
+                <div className='flex items-center gap-2'>
+                  <div> Get Started </div>
+                  <div> <ArrowRight className='h-4 w-4' /> </div>
+                </div>
+              </button>
+
+              <button className='text-black border border-black rounded-full px-6 py-2 cursor-pointer'>
+                <div className='flex items-center gap-2'>
+                  <div> Read Docs </div>
+                </div>
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <div className='h-80 bg-black'>
+          <div className='flex  items-center h-full pl-20'>
+
+            <div className='text-white w-100 text-9xl font-bold ml-10'> C.
+            </div>
+
+            <div className='text-neutral-100 text-xl flex items-center justify-center gap-30 h-full'>
+
+              <div className=''>
+                <div className='font-semibold'>
+                  Product
+                </div>
+                <div className='flex flex-col mt-5 gap-2'>
+                  <span>Features</span>
+                  <span>Blog</span>
+                  <span>Catapult Cloud</span>
+                  <span>Pricing</span>
+                </div>
+              </div>
+
+              <div className=''>
+                <div className='font-semibold'>
+                  Guide
+                </div>
+                <div className='flex flex-col mt-5 gap-2'>
+                  <span>Tutorials</span>
+                  <span>Documentation</span>
+                  <span> Articles </span>
+                  <span>Walkthrough</span>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+
       </div>
 
 

@@ -1,12 +1,15 @@
-import { ArrowRight, ArrowUpRight, ChartNoAxesCombined, ChevronsRight, CircleChevronRight, MoveUpRight } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, ChartNoAxesCombined, ChevronsRight, CircleChevronRight, MoveUpRight, TrendingUp, Zap } from 'lucide-react'
 import Guardrails from '../assets/guardrails3.png'
 import Triggers from '../assets/Triggers.png'
 import Actions from '../assets/Actions2.png'
+import Environments from '../assets/Environments.png'
+import Segment from '../assets/Segments.png'
+import Variants from '../assets/Variants.png'
 
 
 const Landing = () => {
   return (
-    <div className=' min-h-screen '>
+    <div className=' min-h-screen home-page'>
 
       <div className='h-20'>
 
@@ -54,7 +57,7 @@ const Landing = () => {
               <div className='mt-8'> Toggle Features Instantly </div>
 
               <div className='ml-auto bg-[#befc03] h-20 rounded-tr-lg rounded-bl-lg w-30 pl-8 pt-5'>
-                <ChevronsRight className='h-10 w-10 ' />
+                <Zap className='h-10 w-10 ' strokeWidth={1} />
               </div>
             </div>
 
@@ -78,7 +81,7 @@ const Landing = () => {
               <div className='mt-8'> Get Full Analytics </div>
 
               <div className='ml-auto bg-[#befc03] h-20 rounded-tr-lg rounded-bl-lg w-30 pl-8 pt-5'>
-                <ChartNoAxesCombined className='h-10 w-10 ' />
+                <TrendingUp className='h-10 w-10 ' strokeWidth={1} />
               </div>
             </div>
 
@@ -100,90 +103,173 @@ const Landing = () => {
 
       </div>
 
-      <div className='mt-20  h-250 bg-black pt-10 '>
-        <div className='text-white text-5xl text-center font-medium mt-10'>
-          In-built Guardrails according to your needs
-        </div>
+      <div className='mt-20 h-230 bg-black pt-10 relative overflow-hidden'>
 
-        <div className=' pt-20 px-20 flex gap-20'>
+        {/* Dark Grid Lines Background */}
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            background: "#000000",
+            backgroundImage: `
+        linear-gradient(to right, rgba(75, 85, 99, 0.4) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(75, 85, 99, 0.4) 1px, transparent 1px)
+      `,
+            backgroundSize: "40px 40px",
+          }}
+        />
 
-          <div className="h-150 bg-black text-neutral-100 border border-neutral-800 rounded-sm w-100 pt-5">
-            <img
-              src={Guardrails}
-              alt="Guardrails dashboard"
-              className="w-95 h-auto object-contain mx-2"
-            />
-
-            <div className="text-2xl text-neutral-100 font-semibold mt-25 mx-5">
-              Create Guardrail
-            </div>
-            <div className='mt-3 text-neutral-100 font-medium mx-5 '>
-              Create a new Guardrail corresponding to the feature flag you want.
-            </div>
-
-            <div className='mt-10 mx-5'>
-              <button className='text-neutral-100 border border-neutral-100 rounded-full px-6 py-2 cursor-pointer'>
-                <div className='flex items-center gap-2'>
-                  <div> View More </div>
-                  <div> <ArrowUpRight className='h-4 w-4' /> </div>
-                </div>
-              </button>
-            </div>
+        {/* Your Content */}
+        <div className='relative z-10'>
+          <div className='text-white text-5xl text-center font-medium mt-10'>
+            In-built Guardrails according to your needs.
           </div>
 
-          <div className="h-150 bg-black text-neutral-100 border border-neutral-800 rounded-sm w-100 pt-5">
-            <img
-              src={Triggers}
-              alt="Guardrails dashboard"
-              className="w-95 h-auto object-contain mx-2"
-            />
+          <div className='pt-20 px-20 flex gap-20'>
 
-            <div className="text-2xl text-neutral-100 font-semibold mt-25 mx-5">
-              Define Triggers
-            </div>
-            <div className='mt-3 text-neutral-100 font-medium mx-5 '>
-              Customize metrics which will lead to the trigger of Guardrail.
+            {/* Keep all three of your existing cards here, unchanged */}
+
+            <div className="h-150 bg-black text-neutral-100 border border-neutral-800 rounded-sm w-100 pt-5">
+              <img
+                src={Guardrails}
+                alt="Guardrails dashboard"
+                className="w-95 h-auto object-contain mx-2"
+              />
+
+              <div className="text-2xl text-neutral-100 font-semibold mt-25 mx-5">
+                Create Guardrail
+              </div>
+              <div className='mt-3 text-neutral-100 font-medium mx-5 '>
+                Create a new Guardrail corresponding to the feature flag you want.
+              </div>
+
+              <div className='mt-10 mx-5'>
+                <button className='text-neutral-100 border border-neutral-100 rounded-full px-6 py-2 cursor-pointer'>
+                  <div className='flex items-center gap-2'>
+                    <div> View More </div>
+                    <div> <ArrowUpRight className='h-4.5 w-4.5' /> </div>
+                  </div>
+                </button>
+              </div>
             </div>
 
-            <div className='mt-10 mx-5'>
-              <button className='text-neutral-100 border border-neutral-100 rounded-full px-6 py-2 cursor-pointer'>
-                <div className='flex items-center gap-2'>
-                  <div> View More </div>
-                  <div> <ArrowUpRight className='h-4 w-4' /> </div>
-                </div>
-              </button>
+            <div className="h-150 bg-black text-neutral-100 border border-neutral-800 rounded-sm w-100 pt-5">
+              <img
+                src={Triggers}
+                alt="Guardrails dashboard"
+                className="w-95 h-auto object-contain mx-2"
+              />
+
+              <div className="text-2xl text-neutral-100 font-semibold mt-25 mx-5">
+                Define Triggers
+              </div>
+              <div className='mt-3 text-neutral-100 font-medium mx-5 '>
+                Customize metrics which will lead to the trigger of Guardrail.
+              </div>
+
+              <div className='mt-10 mx-5'>
+                <button className='text-neutral-100 border border-neutral-100 rounded-full px-6 py-2 cursor-pointer'>
+                  <div className='flex items-center gap-2'>
+                    <div> View More </div>
+                    <div> <ArrowUpRight className='h-4.5 w-4.5' /> </div>
+                  </div>
+                </button>
+              </div>
             </div>
+
+            <div className="h-150 bg-black text-neutral-100 border border-neutral-800 rounded-sm w-100 pt-5">
+              <img
+                src={Actions}
+                alt="Guardrails dashboard"
+                className="w-87 h-auto object-contain mx-5"
+              />
+
+              <div className="text-2xl text-neutral-100 font-semibold mt-25 mx-5">
+                Set the Actions
+              </div>
+              <div className='mt-3 text-neutral-100 font-medium mx-5 '>
+                Describe how will your features be managed inside your application.
+              </div>
+
+              <div className='mt-10 mx-5'>
+                <button className='text-neutral-100 border border-neutral-100 rounded-full px-6 py-2 cursor-pointer'>
+                  <div className='flex items-center gap-2'>
+                    <div> View More </div>
+                    <div> <ArrowUpRight className='h-4.5 w-4.5' /> </div>
+                  </div>
+                </button>
+              </div>
+            </div>
+
           </div>
-
-          <div className="h-150 bg-black text-neutral-100 border border-neutral-800 rounded-sm w-100 pt-5">
-            <img
-              src={Actions}
-              alt="Guardrails dashboard"
-              className="w-87 h-auto object-contain mx-5"
-            />
-
-            <div className="text-2xl text-neutral-100 font-semibold mt-25 mx-5">
-              Set the Actions
-            </div>
-            <div className='mt-3 text-neutral-100 font-medium mx-5 '>
-              Describe how will your features be managed inside your application.
-            </div>
-
-            <div className='mt-10 mx-5'>
-              <button className='text-neutral-100 border border-neutral-100 rounded-full px-6 py-2 cursor-pointer'>
-                <div className='flex items-center gap-2'>
-                  <div> View More </div>
-                  <div> <ArrowUpRight className='h-4 w-4' /> </div>
-                </div>
-              </button>
-            </div>
-          </div>
-
         </div>
 
       </div>
 
-      <div className='mt-10 h-100 '>
+      <div className='mt-20 h-100 '>
+
+        <div className='flex justify-center'>
+          <div className='text-4xl font-medium text-center max-w-3xl'>
+            Easily select who will see your Application's new feature.
+          </div>
+
+
+        </div>
+
+        <div className='mt-10 px-10 '>
+
+          <div className='flex items-center gap-10'>
+            <img
+              src={Environments}
+              alt="GEnvironments"
+              className="w-180 h-auto object-contain mx-5"
+            />
+
+            <div className='bg-gray-100 pt-8 px-5 h-60 w-150 flex flex-col rounded-bl-2xl rounded-tr-2xl'>
+              <div className='text-3xl font-medium'> Environment Separation </div>
+
+              <div className='mt-auto mb-8 text-xl'>
+                Segregate feature management across Development, Staging and Production.
+              </div>
+            </div>
+
+          </div>
+
+          <div className='flex items-center justify-between'>
+
+            <div className='bg-gray-100 pt-8 px-5 h-60 w-150 flex flex-col rounded-bl-2xl rounded-tr-2xl ml-20'>
+              <div className='text-3xl font-medium'> Segments </div>
+
+              <div className='mt-auto mb-8 text-xl'>
+                Categorize your users and change features targeted to selected users using Segments.
+              </div>
+            </div>
+
+            <img
+              src={Segment}
+              alt="Segments"
+              className="w-100 h-auto object-contain mr-30"
+            />
+
+          </div>
+
+          <div className='flex items-center gap-10'>
+            <img
+              src={Variants}
+              alt="Variants"
+              className="w-180 h-auto object-contain mx-5"
+            />
+
+            <div className='bg-gray-100 pt-8 px-5 h-60 w-150 flex flex-col rounded-bl-2xl rounded-tr-2xl'>
+              <div className='text-3xl font-medium'> Customizable Variants </div>
+
+              <div className='mt-auto mb-8 text-xl'>
+                Fully flexible diverse range of variants for the same feature for different usecases.
+              </div>
+            </div>
+
+          </div>
+
+        </div>
 
       </div>
 

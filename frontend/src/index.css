@@ -184,6 +184,8 @@
     translate: 0 0;
         }
     }
+
+  --font-scoutie: "Scoutie Sans Variable", sans-serif;
   --font-heading: "Inter Variable", sans-serif;
   --font-mono: "Geist Mono Variable", monospace;
   --font-sans: "Inter Variable", sans-serif;
@@ -246,4 +248,8 @@
   body {
   font-family: var(--font-sans);
     }
+}
+
+.home-page {
+  font-family: var(--font-scoutie);
 }

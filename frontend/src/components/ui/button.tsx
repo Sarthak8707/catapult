@@ -37,12 +37,12 @@ export const buttonVariants = cva(
         "destructive-outline":
           "border-input bg-popover not-dark:bg-clip-padding text-destructive-foreground shadow-xs/5 not-disabled:not-active:not-data-pressed:before:shadow-[0_1px_--theme(--color-black/4%)] hover:border-destructive/32 hover:bg-destructive/4 data-pressed:border-destructive/32 data-pressed:bg-destructive/4 *:data-[slot=button-loading-indicator]:text-foreground dark:bg-input/32 dark:not-disabled:before:shadow-[0_-1px_--theme(--color-white/2%)] dark:not-disabled:not-active:not-data-pressed:before:shadow-[0_-1px_--theme(--color-white/6%)] [:disabled,:active,[data-pressed]]:shadow-none",
         ghost:
-          "border-transparent text-gray-300 hover:bg-gray-900 hover:text-gray-100 data-pressed:bg-gray-900 *:data-[slot=button-loading-indicator]:text-gray-300",
+          "border-transparent text-neutral-400 hover:bg-gray-900 hover:text-gray-100 data-pressed:bg-gray-900 *:data-[slot=button-loading-indicator]:text-gray-300",
         link: "border-transparent text-foreground underline-offset-4 hover:underline data-pressed:underline *:data-[slot=button-loading-indicator]:text-foreground",
         outline:
           "border-input bg-popover not-dark:bg-clip-padding text-foreground shadow-xs/5 not-disabled:not-active:not-data-pressed:before:shadow-[0_1px_--theme(--color-black/4%)] hover:bg-accent/50 data-pressed:bg-accent/50 *:data-[slot=button-loading-indicator]:text-foreground dark:bg-input/32 dark:data-pressed:bg-input/64 dark:hover:bg-input/64 dark:not-disabled:before:shadow-[0_-1px_--theme(--color-white/2%)] dark:not-disabled:not-active:not-data-pressed:before:shadow-[0_-1px_--theme(--color-white/6%)] [:disabled,:active,[data-pressed]]:shadow-none",
         secondary:
-          "border-transparent bg-[#becf03] text-black hover:bg-[#becf03]/80 data-pressed:bg-[#becf03]/90 *:data-[slot=button-loading-indicator]:text-black [:active,[data-pressed]]:bg-[#becf03]/80",
+          "border-transparent bg-neutral-800 text-neutral-100 hover:bg-[#becf03]/80 data-pressed:bg-[#becf03]/90 *:data-[slot=button-loading-indicator]:text-black [:active,[data-pressed]]:bg-[#becf03]/80",
       },
     },
   },

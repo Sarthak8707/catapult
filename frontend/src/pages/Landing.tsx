@@ -57,7 +57,7 @@ const Landing = () => {
               <div className='mt-8'> Toggle Features Instantly </div>
 
               <div className='ml-auto bg-[#befc03] h-20 rounded-tr-lg rounded-bl-lg w-30 pl-8 pt-5'>
-                <Zap className='h-10 w-10 ' strokeWidth={1} />
+                <ChevronsRight className='h-10 w-10 ' strokeWidth={1} />
               </div>
             </div>
 

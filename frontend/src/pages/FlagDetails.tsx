@@ -183,7 +183,7 @@ const FlagDetails = () => {
 
                             <div> {flagInfo ?
                                 <div className='flex text-neutral-400 text-sm'> {flagInfo?.description}
-                                    <button className='cursor-pointer ml-2 text-[#becf03]' onClick={() => { setEditing(true) }}> <Pen className='h-3 w-3' /> </button>
+                                    <button className='cursor-pointer ml-2 text-neutral-100' onClick={() => { setEditing(true) }}> <div className='border border-neutral-400 p-1 rounded-full'><Pen className='h-3 w-3' /></div> </button>
                                 </div> : "flag description"}  </div>
 
                         </div>

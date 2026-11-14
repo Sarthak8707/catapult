@@ -3,6 +3,7 @@
 @import "@fontsource-variable/geist-mono";
 @import '@fontsource-variable/dm-sans/wght.css';
 @import "@fontsource-variable/inter";
+@import "@fontsource-variable/geist";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -189,6 +190,7 @@
   --font-heading: "Inter Variable", sans-serif;
   --font-mono: "Geist Mono Variable", monospace;
   --font-sans: "Inter Variable", sans-serif;
+  --font-geist: "Geist Variable", sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -243,10 +245,10 @@
     font-family: var(--font-mono);
     }
   html {
-    font-family: var(--font-sans);
+    font-family: var(--font-geist);
     }
   body {
-  font-family: var(--font-sans);
+  font-family: var(--font-geist);
     }
 }
 

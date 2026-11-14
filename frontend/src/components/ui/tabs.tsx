@@ -31,7 +31,7 @@ export function TabsList({
   variant?: TabsVariant;
 }): React.ReactElement {
   return (
-    <div className={cn("relative w-full ", variant === "underline" ? "border-b border-border" : "")}>
+    <div className={cn("relative w-full ", variant === "underline" ? "border-b border-neutral-800" : "")}>
   <TabsPrimitive.List
     className={cn(
       "relative z-0 flex w-fit items-center justify-center gap-x-0.5 text-muted-foreground",
@@ -55,7 +55,7 @@ export function TabsList({
         "transition-[width,translate] duration-200 ease-in-out",
 
         variant === "underline"
-          ? "z-10 bg-[#becf03] data-[orientation=horizontal]:h-0.5 data-[orientation=vertical]:w-0.5 data-[orientation=vertical]:-translate-x-px data-[orientation=horizontal]:translate-y-px"
+          ? "z-10 bg-neutral-100 data-[orientation=horizontal]:h-0.5 data-[orientation=vertical]:w-0.5 data-[orientation=vertical]:-translate-x-px data-[orientation=horizontal]:translate-y-px"
           : "-z-1 rounded-sm bg-background shadow-sm/5 dark:bg-input",
       )}
       data-slot="tab-indicator"
@@ -72,7 +72,7 @@ export function TabsTab({
   return (
     <TabsPrimitive.Tab
       className={cn(
-        "relative flex h-9 shrink-0 grow cursor-pointer items-center justify-center gap-1.5 whitespace-nowrap rounded-xs border border-transparent px-[calc(--spacing(2.5)-1px)] font-medium  text-base outline-none transition-[color,background-color,box-shadow] hover:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring data-disabled:pointer-events-none data-[orientation=vertical]:w-full data-[orientation=vertical]:justify-start data-active:text-[#becf03] data-disabled:opacity-64 sm:h-8 sm:text-sm [&_svg:not([class*='size-'])]:size-4.5 sm:[&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:-mx-0.5 [&_svg]:shrink-0",
+        "relative flex h-9 shrink-0 grow cursor-pointer items-center justify-center gap-1.5 whitespace-nowrap rounded-xs border border-transparent px-[calc(--spacing(2.5)-1px)] font-medium  text-base outline-none transition-[color,background-color,box-shadow] hover:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring data-disabled:pointer-events-none data-[orientation=vertical]:w-full data-[orientation=vertical]:justify-start data-active:text-neutral-100 data-disabled:opacity-64 sm:h-8 sm:text-sm [&_svg:not([class*='size-'])]:size-4.5 sm:[&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:-mx-0.5 [&_svg]:shrink-0",
         className,
       )}
       data-slot="tabs-tab"

@@ -10,7 +10,7 @@ const SlideBar = () => {
   const {projectID} = useParams();
 
   return (
-    <div className="w-75 min-h-screen border border-neutral-800 bg-neutral-900 text-gray-300">
+    <div className="w-60 min-h-screen border border-neutral-800 bg-neutral-900 text-gray-300">
       <div className="h-170 pr-3 flex flex-col gap-2 mt-8 pl-4">
 
         <div className="flex flex-col gap-2">

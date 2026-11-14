@@ -48,7 +48,7 @@ const FlagGuardrails = ({ flagID }: { flagID: number }) => {
         <div className=' w-295 border-blue-600'>
             <div>
                 <div className='text-xl mt-10 font-semibold'> Guardrails</div>
-                <div className='text-gray-600 mt-1 flex gap-1 text-sm'> These show how sensitive flags react in certain conditions. </div>
+                <div className='text-neutral-400 mt-1 flex gap-1 text-sm'> These show how sensitive flags react in certain conditions. </div>
             </div> 
             
             <div className='mt-10'>

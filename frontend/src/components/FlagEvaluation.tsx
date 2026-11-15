@@ -18,8 +18,8 @@ const FlagEvaluation = ({ loading, devRules, setDevRules, devEnabled, stagRules,
     return (
         <div>
             <div className=' border-red-500'>
-                <div className='text-xl mt-10 font-semibold'>Flag Evaluation</div>
-                <div className='text-gray-600 mt-1 flex gap-1 text-sm'> The release flow of the flag across various rules. In case server is unreachable, <div className='text-blue-700 font-medium'>default rule</div> will be applied.</div>
+                <div className='text-xl mt-10 font-semibold text-neutral-100'>Flag Evaluation</div>
+                <div className='text-neutral-400 mt-1 flex gap-1 text-sm'> The release flow of the flag across various rules. In case server is unreachable, <div className='text-[#e6f542] font-medium'>default rule</div> will be applied.</div>
 
                 {loading ? <div className=' h-150 w-220  mt-10 rounded-sm font-medium border flex flex-col gap-2 text-gray-700 items-center justify-center' > <Spinner /> Loading Flag Evaluation... </div> :
                     <>
@@ -27,8 +27,8 @@ const FlagEvaluation = ({ loading, devRules, setDevRules, devEnabled, stagRules,
 
                             <Tabs >
                                 <TabsList className="mb-5 ">
-                                    <TabsTab value="tab-1" className="w-40 data-active:text-indigo-800">Development</TabsTab>
-                                    <TabsTab value="tab-2" className="w-40 data-active:text-yellow-800">Staging</TabsTab>
+                                    <TabsTab value="tab-1" className="w-40 data-active:text-neutral-900 ">Development</TabsTab>
+                                    <TabsTab value="tab-2" className="w-40 data-active:text-neutral-900">Staging</TabsTab>
                                 </TabsList>
 
                                 <TabsPanel value="tab-1" >
@@ -41,8 +41,8 @@ const FlagEvaluation = ({ loading, devRules, setDevRules, devEnabled, stagRules,
                                         </CardHeader>
                                         <Separator />
                                         <CardPanel className=''>
-                                            <div className='mt-5'>
-                                                <div className='mt-8 mb-5'> Release Flow</div>
+                                            <div className='mt-1'>
+                                                <div className='mt-1 mb-5 text-neutral-100'> Release Flow</div>
 
 
                                                 {/* Evaluation Cards */}
@@ -62,10 +62,10 @@ const FlagEvaluation = ({ loading, devRules, setDevRules, devEnabled, stagRules,
                                             <CardTitle className='flex'> <div className=''>Flag is {stagEnabled ? <>On</> : <>Off</>}  </div> <Switch className="ml-auto [--thumb-size:--spacing(4)] cursor-pointer" checked={stagEnabled} onCheckedChange={(check) => { handleChange(check, "stag") }} disabled={disabled} />
                                             </CardTitle>
                                         </CardHeader>
-                                        <Separator />
-                                        <CardPanel className=''>
-                                            <div className='mt-5'>
-                                                <div className='mt-8 mb-5'> Release Flow</div>
+                                        
+                                        <CardPanel className='text-white'>
+                                            <div className='mt-1'>
+                                                <div className='mt-1 mb-5 text-neutral-100'> Release Flow</div>
 
 
                                                 {/* Evaluation Cards */}

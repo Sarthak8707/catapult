@@ -3,6 +3,7 @@ import { Slider } from '@/components/ui/slider'
 import { Switch } from '@/components/ui/switch'
 import React, { useState } from 'react'
 import { Checkbox } from '@/components/ui/checkbox'
+import { CodeXml } from 'lucide-react'
 
 const GuardrailDetails = ({environmentName, triggers, actions }: {
 
@@ -25,7 +26,7 @@ const GuardrailDetails = ({environmentName, triggers, actions }: {
     return (
         <div className=' border-neutral-800 py-5 bg-neutral-900 text-neutral-100 '>
             <div className='flex border-neutral-800 items-center justify-center pl-6 pr-6'>
-                <div className=' text-[#e6f542] rounded-full text-sm px-2.5 bg-[#1f2403] border-[#e6f542] font-medium'> {environmentName == "dev" ? "Development" : "Staging" } </div>
+                <div className=' text-blue-500 rounded-full text-sm px-2.5  border-blue-500 '> {environmentName == "dev" ? <> <div className='flex items-center gap-2'> <CodeXml className='h-4 w-4' /> Development  </div>  </> : "Staging" } </div>
 
                 <div className='ml-auto flex gap-3'>
                     <button className=' text-neutral-900 border bg-[#e6f542] flex items-center gap-1 px-4.5 py-1 font-medium text-sm transition-colors duration-200 rounded-full cursor-pointer'> <div>Pause</div> </button>

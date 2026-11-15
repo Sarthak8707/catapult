@@ -38,7 +38,7 @@ export function TabsList({
       "data-[orientation=vertical]:flex-col",
 
       variant === "default"
-        ? "rounded-sm bg-muted p-0.5 text-muted-foreground/72"
+        ? "rounded-none bg-neutral-800/40 p-0.5 text-muted-foreground/72"
         : "data-[orientation=vertical]:px-1 data-[orientation=horizontal]:py-1 *:data-[slot=tabs-tab]:hover:bg-accent",
 
       className,
@@ -56,7 +56,7 @@ export function TabsList({
 
         variant === "underline"
           ? "z-10 bg-neutral-100 data-[orientation=horizontal]:h-0.5 data-[orientation=vertical]:w-0.5 data-[orientation=vertical]:-translate-x-px data-[orientation=horizontal]:translate-y-px"
-          : "-z-1 rounded-sm bg-background shadow-sm/5 dark:bg-input",
+          : "-z-1 rounded-none bg-background shadow-sm/5 dark:bg-input",
       )}
       data-slot="tab-indicator"
     />

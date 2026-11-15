@@ -51,26 +51,29 @@ const Login = () => {
     }
 
     return (
-        <div className='min-h-screen bg-gray-300 flex items-center justify-center'>
-            <div className='h-120 w-90 bg-white rounded-xs flex flex-col items-center'>
+        <div className='min-h-screen bg-black items-center  flex flex-col'>
+            <div className='h-20 flex items-center justify-start mt-10'> 
+                <div className='w-300 text-white text-4xl font-semibold'>Catapult.</div>
+            </div>
+            <div className='mt-20 h-120 w-90 bg-white rounded-none flex flex-col items-center'>
                 <div className='mt-10 text-center'>
-                    <div className='text-2xl font-semibold text-gray-800'> Welcome Back! </div>
-                    <div className='mt-2 text-gray-600'> Please enter your details to login to your account. </div>
+                    <div className='text-2xl font-semibold text-neutral-900'> Welcome Back! </div>
+                    <div className='mt-2 text-neutral-600'> Please enter your details to login to your account. </div>
                 </div>
 
                 <div className='w-70 mt-10'>
                     <div className=''>
-                        <div className='text-sm text-gray-600 '>Username</div>
+                        <div className='text-sm text-neutral-600 '>Username</div>
                         <div className='mt-1'>
-                            <input type="text" name="username" className='border w-68 h-8 rounded-sm'
+                            <input type="text" name="username" className='border w-68 h-8 rounded-xs'
                                 value={formData.username} onChange={(e) => handleChange(e)} />
                         </div>
                     </div>
 
                     <div className='mt-5'>
-                        <div className='text-sm text-gray-600'>Password</div>
+                        <div className='text-sm text-neutral-600'>Password</div>
                         <div className='mt-1'>
-                            <input type="text" name="password" className='border w-68 h-8 rounded-sm'
+                            <input type="text" name="password" className='border w-68 h-8 rounded-xs'
                                 value={formData.password} onChange={(e) => handleChange(e)} />
                         </div>
                     </div>
@@ -80,19 +83,19 @@ const Login = () => {
                     <div className=' border-red-400 h-15 flex flex-col'>
 
                         <div> {loginError && <> <div className='text-red-600 text-sm text-center'>
-                             Username or Password is incorrect
+                             Username or Password is Incorrect
                         </div> </>} </div>
 
-                        <button className='mt-auto bg-indigo-900 w-68 h-8 text-white rounded-full cursor-pointer
-                        hover:bg-indigo-800 transition-colors duration-200'
+                        <button className='mt-auto bg-black w-68 h-9 text-white rounded-full cursor-pointer
+                        hover:bg-neutral-900 transition-colors duration-200'
                             onClick={handleSubmit} disabled={logging}> 
                             {logging ? <div className='flex gap-2 items-center justify-center'><Spinner /> Logging In...</div> : <div>Login</div> }
                         </button>
                     </div>
 
-                    <div className='text-sm text-gray-600 text-center mt-5 flex justify-center gap-1'>
+                    <div className='text-sm text-neutral-600 text-center mt-5 flex justify-center gap-1'>
                         <div>Don't have an account?</div>
-                        <div className='text-indigo-900'>
+                        <div className='text-neutral-900'>
                             <Link to="/register">Register Now</Link>
                         </div>
                     </div>

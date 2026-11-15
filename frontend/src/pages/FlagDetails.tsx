@@ -177,7 +177,7 @@ const FlagDetails = () => {
 
                         {editing ? <div className='mt-2 flex gap-2 text-sm'>
                             <input type="text" value={description} onChange={(e) => { setDescription(e.target.value) }} className='border border-neutral-800 bg-neutral-900 text-neutral-100 w-150 rounded-xs' />
-                            <button onClick={handleSaveDescription} className='cursor-pointer text-[#becf03]'> {saving ? <>Saving...</> : <>Save</>} </button>
+                            <button onClick={handleSaveDescription} className='cursor-pointer text-neutral-100'> {saving ? <>Saving...</> : <>Save</>} </button>
                             {!saving && <button onClick={() => { setEditing(false); setDescription(flagInfo?.description ?? "") }} className='cursor-pointer text-neutral-400' > Cancel </button>}
                         </div> : <div>
 

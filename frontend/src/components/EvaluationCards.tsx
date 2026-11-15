@@ -110,17 +110,22 @@ const EvaluationCards = ({ rules, setDevRules, variants, segments }: EvaluationC
 
   return (
     <div>
-        <div className='border-red-800 min-h-100 mb-10'>
+        <div className=' mt-10 border-red-800 min-h-100 mb-10'>
           <div>
             {rules.map((rule, index) => (
               <div>
-                <div className='ml-10 mr-10 flex'>Rule {index + 1}  <div className='ml-auto flex border border-gray-200 rounded'>
+                <div className='ml-10 mr-10  text-neutral-100 flex'>Rule {index + 1}  <div className='ml-auto flex gap-2 border-neutral-800 rounded-full px-2'>
                   {index == editing ? <>
                     <button className='hover:bg-neutral-100 rounded-xs px-1 text-gray-600 font-medium text-sm cursor-pointer' onClick={() => setEditing(null)}>Cancel</button>
                   </> : <>
-                    <Button variant="ghost" className='border-none' onClick={() => setEditing(index)} > <Pencil /> </Button>
+                    <div className='border border-neutral-400 rounded-full'>
+                      <Button variant="ghost" className='border-none text-neutral-100' onClick={() => setEditing(index)} > <Pencil /> </Button>
+                    </div>
                   </>}
-                  <Button variant="ghost" className='border-none'> <EllipsisVertical /> </Button>
+                  <div className='border border-neutral-400 rounded-full'>
+                    
+                  <Button variant="ghost" className='border-none text-neutral-100'> <EllipsisVertical /> </Button>
+                  </div>
 
                 </div>  </div>
 
@@ -132,7 +137,7 @@ const EvaluationCards = ({ rules, setDevRules, variants, segments }: EvaluationC
 
 
                 {(index != rules.length - 1) &&
-                  <Separator className="my-8" />
+                  <Separator className="my-8 bg-neutral-900" />
                 }
               </div>
             ))}

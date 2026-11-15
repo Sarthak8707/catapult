@@ -61,8 +61,8 @@ export default function VariantDialog({id}: {id: number}) {
 
   return (
     <Dialog>
-      <DialogTrigger render={<button className=' bg-blue-700 mt-5 text-white w-35 px-3 py-2 font-medium text-sm rounded-sm cursor-pointer hover:bg-blue-600 transition-colors duration-200'></button>}>
-       <div className='flex items-center gap-1'> <Plus className='h-4 w-4'/>  Add Variant </div>
+      <DialogTrigger render={<button className=' bg-[#e6f542] mt-5 text-neutral-900 w-33 pl-1 pr-2 py-2 font-medium text-sm rounded-full cursor-pointer hover:bg-[#e6f542] transition-colors duration-200'></button>}>
+       <div className='flex items-center justify-center gap-1'> <Plus className='h-3.5 w-3.5'/>  Add Variant </div>
       </DialogTrigger>
       <DialogPopup className="sm:max-w-sm">
         <DialogHeader>

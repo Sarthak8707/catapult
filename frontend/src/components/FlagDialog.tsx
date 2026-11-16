@@ -19,54 +19,59 @@ import { useState, type SubmitEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 
-export default function FlagDialog({id, token}: {id: number, token: string}) {
+export default function FlagDialog({ id, token }: { id: number, token: string }) {
 
-    const {projectID} = useParams();
-    const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-        name: "",
-        description: ""
+  const { projectID } = useParams();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    name: "",
+    description: ""
+  })
+
+  const [creating, setCreating] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
     })
+  }
 
-    const [creating, setCreating] = useState(false);
+  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setCreating(true);
+    // console.log("token", token);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        })
-    }
-
-    const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        setCreating(true);
-       // console.log("token", token);
-
-        try{
-            const response = await axios.post(`http://localhost:3000/projects/${id}/flags`, formData, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-
-            console.log(response.data)
-            navigate(`/projects/${projectID}/flags/${response.data.flagID}`)
-
-            setCreating(false);
-            
+    try {
+      const response = await axios.post(`http://localhost:3000/projects/${id}/flags`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-        catch(err){
-            console.log(err);
-        }
+      });
+
+      console.log(response.data)
+      navigate(`/projects/${projectID}/flags/${response.data.flagID}`)
+
+      setCreating(false);
 
     }
+    catch (err) {
+      console.log(err);
+    }
+
+  }
 
 
 
   return (
     <Dialog>
-      <DialogTrigger render={<button className='bg-blue-700 text-white px-3 py-2 font-medium text-sm rounded-sm cursor-pointer'></button>}>
-       <div> Create Flag </div>
+      <DialogTrigger render={<button className=' bg-[#e6f542]  text-neutral-900 w-33 pl-1 pr-2 py-2 font-medium text-sm rounded-full cursor-pointer hover:bg-[#e6f542] transition-colors duration-200'>
+
+      </button>}>
+        <div className='flex items-center justify-center gap-1'>
+          <Plus className='h-3.5 w-3.5' />
+          <div>Create Flag</div>
+        </div>
       </DialogTrigger>
       <DialogPopup className="sm:max-w-sm">
         <DialogHeader>
@@ -81,7 +86,7 @@ export default function FlagDialog({id, token}: {id: number, token: string}) {
           <DialogPanel className="grid gap-4">
             <Field>
               <FieldLabel>Flag Name</FieldLabel>
-              <Input type="text" name="name" value={formData.name} onChange={handleChange}/>
+              <Input type="text" name="name" value={formData.name} onChange={handleChange} />
             </Field>
             <Field>
               <FieldLabel>Description</FieldLabel>

@@ -367,7 +367,6 @@ const RuleEditor = ({ currentSegments, conditions, rollouts, ruleID, setEditing,
                                 )
                             })}
 
-
                         </SelectContent>
                     </Select>
                 </div>

@@ -53,12 +53,14 @@ const Login = () => {
     return (
         <div className='min-h-screen bg-black items-center  flex flex-col'>
             <div className='h-20 flex items-center justify-start mt-10'> 
-                <div className='w-300 text-white text-4xl font-semibold'>Catapult.</div>
+                <div className='w-300 text-white text-4xl font-semibold flex'><div>Catapul</div> 
+                    <div className='text-[#e6f542]'>t.</div>
+                </div>
             </div>
             <div className='mt-20 h-120 w-90 bg-white rounded-none flex flex-col items-center'>
                 <div className='mt-10 text-center'>
                     <div className='text-2xl font-semibold text-neutral-900'> Welcome Back! </div>
-                    <div className='mt-2 text-neutral-600'> Please enter your details to login to your account. </div>
+                    <div className='mt-2 text-neutral-900'> Please enter your details to login to your account. </div>
                 </div>
 
                 <div className='w-70 mt-10'>

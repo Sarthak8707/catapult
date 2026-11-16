@@ -52,16 +52,20 @@ const Segments = () => {
     getSegments();
   }, [])
   return (
-    <div className='min-h-screen px-10 py-5 bg-white'>
+    <div className='min-h-screen px-10 py-5 bg-neutral-900'>
       <div className='flex items-center justify-center'>
-        <div className='text-2xl font-medium'> Segments </div>
-        <div className='ml-auto flex gap-3'>
-          <button className=' px-3 py-2 text-foreground hover:bg-gray-100 transition-colors duration-200 text-sm rounded-sm font-medium cursor-pointer flex gap-1 items-center'> <SquareArrowRightExit className='h-3 w-3' /> <div>Export</div> </button>
-          <SegmentDialog />
+        <div className='text-2xl font-medium text-neutral-100'> Segments </div>
+        <div className='ml-auto flex gap-3  items-center '>
+          <button className='py-3 px-3 h-fit leading-none text-neutral-100 hover:bg-neutral-800 transition-colors duration-200 text-sm rounded-full font-medium cursor-pointer border border-neutral-800'>
+            <div className='flex items-center gap-1'>
+              <SquareArrowRightExit className='h-3 w-3' /> <div>Export</div>
+            </div>
+          </button>
+          <div className=''> <SegmentDialog /> </div>
         </div>
       </div>
 
-      <Separator className="my-2 mt-5" />
+      <Separator className="my-2 mt-5 bg-neutral-800" />
 
       <div className='mt-5'>
         <div className="relative">
@@ -72,7 +76,7 @@ const Segments = () => {
             value=""
             onChange={() => { }}
             placeholder="Search segment by name, key or description..."
-            className="h-8 w-120 rounded-sm border pl-8 text-sm"
+            className="h-8 w-120 rounded-sm border pl-8 text-sm border-neutral-800 text-neutral-400"
           />
         </div>
       </div>

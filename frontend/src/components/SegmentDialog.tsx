@@ -69,8 +69,8 @@ export default function SegmentDialog() {
 
   return (
     <Dialog>
-      <DialogTrigger render={<button className='bg-blue-700 hover:bg-blue-600 text-white px-3 py-2 font-medium text-sm transition-colors duration-200 rounded-sm cursor-pointer'></button>}>
-       <div> Add Segment </div>
+      <DialogTrigger render={<button className=' bg-[#e6f542] mt-5 text-neutral-900  pl-3 pr-3.5 py-2 font-medium text-sm rounded-full cursor-pointer hover:bg-[#e6f542] transition-colors duration-200'></button>}>
+       <div className='flex items-center justify-center gap-1'> <Plus className='h-3.5 w-3.5'/>  Create Segment </div>
       </DialogTrigger>
       <DialogPopup className="sm:max-w-sm">
         <DialogHeader>

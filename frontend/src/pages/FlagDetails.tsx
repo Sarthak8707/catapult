@@ -58,6 +58,7 @@ type RulesType = {
 
 const FlagDetails = () => {
     const { flagID } = useParams();
+    const { projectID } = useParams();
     const Id = Number(flagID);
 
     const [devRules, setDevRules] = useState<RulesType[]>([]);
@@ -82,9 +83,9 @@ const FlagDetails = () => {
             const res2 = await axios.get(`http://localhost:3000/flags/${flagID}/summary`);
             setFlagInfo(res2.data);
 
-            const res3 = await axios.get(`http://localhost:3000/projects/2/segments`);
+            const res3 = await axios.get(`http://localhost:3000/projects/${projectID}/segments`);
             setSegments(res3.data);
-            //console.log(res3.data);
+            console.log("ProjectSegments", res3.data);
             const dev = response.data.find((c: any) => c.environment == "dev");
             if (dev) { setDevRules(dev.rules); console.log(dev.rules); }
             else setDevRules([])

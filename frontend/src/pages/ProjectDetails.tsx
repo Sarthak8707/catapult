@@ -65,29 +65,29 @@ const ProjectDetails = () => {
 
 
     return (
-        <div className='min-h-screen px-10 py-5 bg-white'>
+        <div className='min-h-screen px-10 py-5 bg-neutral-900'>
 
 
             <div className='flex mb-5'>
                 <div className=' border-amber-950 ml-0'>
                     <div>
-                        <div className='text-2xl font-medium'> Checkout Service </div>
-                        <div className='text-gray-800' > Themes and Payments flag rollouts </div>
+                        <div className='text-2xl font-medium text-neutral-100'> Checkout Service </div>
+                        <div className='text-neutral-400' > Themes and Payments flag rollouts </div>
                     </div>
                 </div>
 
             </div>
 
-            <Separator className="my-2" />
+            <Separator className="my-2 bg-neutral-800" />
 
 
-            <div className=' mt-10 flex gap-5  h-150 '>
+            <div className=' mt-10 flex gap-5  min-h-screen'>
 
                 {/* Flags */}
 
                 <div className=' w-full'>
                     <div className='flex'>
-                        <div className='text-xl font-medium'> Flags </div>
+                        <div className='text-xl text-neutral-100 font-medium'> Flags </div>
                         <div className='ml-auto mr-5'>
 
                             <FlagDialog id={id} token={token} />
@@ -104,14 +104,14 @@ const ProjectDetails = () => {
                                 value={search}
                                 onChange={handleSearch}
                                 placeholder="Search flag by name, key or description..."
-                                className="h-8 w-120 rounded-sm border pl-8 text-sm"
+                                className="h-8 w-120 rounded-sm border pl-8 text-sm text-neutral-100 border-neutral-800"
                             />
                         </div>
                     </div>
 
                     {loading ? (<div className='h-100 flex items-center justify-center text-gray-800'> <div className='flex flex-col items-center gap-3'> <Spinner /> Loading Flags </div> </div>) :
                         (<>
-                            <div className='mt-5 bg-white rounded-[6px] border'>
+                            <div className='mt-5 bg-white rounded-[6px]'>
                                 <Table>
                                     <TableHeader>
                                         <TableRow>

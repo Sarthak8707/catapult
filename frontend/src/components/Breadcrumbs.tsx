@@ -24,9 +24,9 @@ export default function Breadcrumbs() {
         }
       </div>
 
-      <div className="ml-auto mr-15">
+      {/* <div className="ml-auto mr-15">
         <button className="text-neutral-900 bg-[#e6f542] rounded-full px-3 text-sm py-1.5 font-medium cursor-pointer"> Create New</button>
-      </div>
+      </div> */}
     </div>
   );
 }

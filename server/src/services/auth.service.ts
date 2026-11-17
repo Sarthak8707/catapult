@@ -24,6 +24,7 @@ export const loginService = async ({ username, password }: LoginInput) => {
 
     const token = signToken({ username: user.username, id: user.id });
 
+    // If user is creater of a project
     if (project) return { token, username, password: user.password, projectID: project.id };
     
     return { token, username, password: user.password }
@@ -46,9 +47,11 @@ export const registerService = async ({ username, password, email }: RegisterInp
 
     const hashedPassword = await hashPassword(password);
 
-    await db.insert(users).values({ username, password: hashedPassword, email });
+    const [u] = await db.insert(users).values({ username, password: hashedPassword, email }).returning();
+    console.log(u);
+    const token = signToken({ username: username, id: u.id });
 
-    return { username, email };
+    return { username, email, token };
 
 
 }

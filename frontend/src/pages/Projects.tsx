@@ -19,7 +19,7 @@ const Projects = () => {
   >([]);
 
   useEffect(() => {
-    const getSegments = async () => {
+    const getProjects = async () => {
       try {
         const response = await axios.get(`http://localhost:3000/me/projects`, {
           headers: {
@@ -37,7 +37,7 @@ const Projects = () => {
       }
     }
 
-    getSegments();
+    getProjects();
   }, [])
 
   return (

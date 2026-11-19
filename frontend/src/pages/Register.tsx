@@ -40,8 +40,8 @@ const Register = () => {
             
             Cookies.set("token", token);
             window.localStorage.setItem("username", username);
-            //if(projectID)  navigate(`/projects/${projectID}`);
-            navigate(`/projects`);
+            if(projectID)  navigate(`/projects/${projectID}`);
+            else navigate(`/projects/`);
         }
         catch (err) {
            if(axios.isAxiosError(err)) setRegisterError(true);

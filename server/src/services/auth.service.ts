@@ -1,11 +1,11 @@
 import { eq } from "drizzle-orm"
 import { db } from "../db/client"
-import { projects, users } from "../db/schema"
+import { members, projects, users } from "../db/schema"
 import { LoginInput, RegisterInput } from "../types/auth.types"
 import { AppError } from "../utils/appError"
 import { comparePassword, hashPassword } from "../utils/password"
 import { signToken } from "../utils/jwt"
-import { email } from "zod"
+import { createNewProjectService } from "./projects.service"
 
 export const loginService = async ({ username, password }: LoginInput) => {
 
@@ -48,10 +48,14 @@ export const registerService = async ({ username, password, email }: RegisterInp
     const hashedPassword = await hashPassword(password);
 
     const [u] = await db.insert(users).values({ username, password: hashedPassword, email }).returning();
-    console.log(u);
+    //console.log(u);
     const token = signToken({ username: username, id: u.id });
 
-    return { username, email, token };
+    // Create one default project for the first time user
+    const createdProject = await createNewProjectService("Default", u.id);
+    await db.insert(members).values({userID: u.id, projectID: createdProject.id, role: "admin"});
+
+    return { username, email, token, projectID: createdProject.id };
 
 
 }

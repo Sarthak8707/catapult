@@ -11,7 +11,7 @@ export const getAllProjectsOfUserController = async (req: Request, res: Response
 
     try {
         const userID = req.user.id;
-        console.log("userID", userID);
+        console.log("userID for projects", userID);
         const result = await getAllProjectsOfUserService(userID);
 
         res.status(200).json(result);

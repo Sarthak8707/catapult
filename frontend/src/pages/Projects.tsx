@@ -27,7 +27,7 @@ const Projects = () => {
           }
         })
         setProjects(response.data);
-        console.log(response.data);
+        console.log("Projects", response.data);
       }
       catch (err) {
         console.log("errr:::", err)

@@ -80,6 +80,18 @@ export const environmentFlagConfig = pgTable("environment_flag_config", {
     updatedAt: timestamp("updated_at").defaultNow(),
 })
 
+// SDK Keys 
+
+export const sdkKeys = pgTable("sdk_keys", {
+    id: serial("id").primaryKey(),
+
+    projectID: integer("project_id").notNull(),
+
+    environment: text("environment").notNull(),
+
+    value: text("value").notNull()
+})
+
 // Audit Logs Table
 
 export const auditLogs = pgTable("audit_logs", {

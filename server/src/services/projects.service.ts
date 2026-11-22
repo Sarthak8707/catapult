@@ -1,8 +1,9 @@
 import { eq } from "drizzle-orm";
 import { db } from "../db/client"
-import { auditLogs, flags, members, projects, users } from "../db/schema"
+import { auditLogs, flags, members, projects, sdkKeys, users } from "../db/schema"
 import { GetProjectsInput } from "../types/projects.types";
 import { formatAuditLog } from "../utils/auditLogFormatter";
+import { generateSDKKey } from "../utils/sdkKey";
 
 // Get all projects of logged in user
 
@@ -29,12 +30,24 @@ export const getProjectInfoService = async (projectID: number) => {
 
 export const createNewProjectService = async (name: string, createdBy: number) => {
 
-    const [data] = await db
+    // Create a project
+
+    const [projectCreated] = await db
     .insert(projects)
     .values({name: name, createdBy})
     .returning({id: projects.id})
     
-    return data;
+    // Generate a sdk key and save it to db
+
+    const sdkKeyDev = generateSDKKey();
+    const sdkKeyStag = generateSDKKey();
+
+    await db.insert(sdkKeys).values([
+        { projectID: projectCreated.id, environment: "dev", value: sdkKeyDev },
+        { projectID: projectCreated.id, environment: "stag", value: sdkKeyStag }
+    ]);
+
+    return projectCreated;
     
 }
 

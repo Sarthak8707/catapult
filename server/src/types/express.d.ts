@@ -4,6 +4,10 @@ declare global {
             user : {
                 id: number,
                 username: string
+            },
+            sdk: {
+                projectID: number,
+                environment: string
             }
         }
     }

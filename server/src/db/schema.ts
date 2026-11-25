@@ -85,7 +85,9 @@ export const environmentFlagConfig = pgTable("environment_flag_config", {
 export const sdkKeys = pgTable("sdk_keys", {
     id: serial("id").primaryKey(),
 
-    projectID: integer("project_id").notNull(),
+    projectID: integer("project_id").notNull().references(() => projects.id, {
+        onDelete: "cascade", onUpdate: "cascade"
+    }),
 
     environment: text("environment").notNull(),
 

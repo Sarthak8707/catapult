@@ -36,6 +36,10 @@ export const createNewProjectService = async (name: string, createdBy: number) =
     .insert(projects)
     .values({name: name, createdBy})
     .returning({id: projects.id})
+
+    // Add creator to member of table
+
+    await db.insert(members).values({projectID: projectCreated.id, userID: createdBy, role: "admin"});
     
     // Generate a sdk key and save it to db
 

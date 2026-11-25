@@ -1,7 +1,7 @@
 import crypto from "crypto";
 
 export const generateSDKKey = () => {
-  const key = `cat_${crypto.randomBytes(16).toString("hex")}`;
+  const key = `${crypto.randomBytes(8).toString("hex")}`;
 
   return key;
 };

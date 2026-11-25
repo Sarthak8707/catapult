@@ -4,6 +4,8 @@ import { applyRule } from "./rule/applyRule";
 import { matchRule } from "./rule/ruleMatcher";
 import { selectVariant } from "./variant/selectVariant";
 
+
+
 export function evaluateFlag(flagKey: string, env: string, flag: Flag, context: Context) {
 
   if (!flag?.environments) return { enabled: false };
@@ -13,7 +15,16 @@ export function evaluateFlag(flagKey: string, env: string, flag: Flag, context: 
 
   const [selectedEnv] = flag.environments.filter((e) => e.environment == env);
 
-  //console.log("selectedEnv", selectedEnv.rules[0].segments?.[1].segmentData.conditions);
+  // If no rules
+
+  if(selectedEnv.rules.length === 0) return selectedEnv.enabled;
+
+  // If rules exist
+       
+     // But flag is off
+  if(selectedEnv.enabled === false) return false;
+
+     // Only when flag is on, then evaluate rules
 
   for (const rule of selectedEnv.rules || []) {
 

@@ -3,9 +3,14 @@ import { getSDKFlagsService } from "../services/sdk.service";
 
 export const getSDKFlagsController = async (req: Request, res: Response, next: NextFunction) => {
 
-    const projectID = req.sdk.projectID;
+    try {
+        const projectID = req.sdk.projectID;
+        // console.log("Controller", projectID);
+        const data = await getSDKFlagsService(projectID);
+        res.status(200).json(data);
+    }
+    catch (err) {
+        next(err);
+    }
 
-    const data = await getSDKFlagsService(projectID);
-    res.status(200).json(data);
-    
 }

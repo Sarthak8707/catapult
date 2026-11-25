@@ -16,13 +16,16 @@ export const validateSDKKey = async (req: Request, res: Response, next: NextFunc
         }
 
         const sdkKey = authHeader.split(" ")[1];
+        console.log("sdkKey is", sdkKey);
         const [k] = await db.select().from(sdkKeys).where(eq(sdkKeys.value, sdkKey));
 
         if(!k){
             throw new AppError("SDK Key is invalid", 401);
         }
 
-        req.sdk.projectID = k.projectID;
+        req.sdk = {projectID: k.projectID, environment: ""};
+
+        next();
     }
     catch(err){
         next(err);

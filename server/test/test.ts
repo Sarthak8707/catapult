@@ -24,3 +24,26 @@ import { sdkKeys } from '../src/db/schema';
 
 // createProjectTest();
 
+
+// Generate a sdk key and save it to db
+
+// const giveSDKKeytoProject = async (projectID: number) => {
+
+//     try {
+//         const sdkKeyDev = generateSDKKey();
+//         const sdkKeyStag = generateSDKKey();
+
+//         await db.insert(sdkKeys).values([
+//             { projectID: projectID, environment: "dev", value: sdkKeyDev },
+//             { projectID: projectID, environment: "stag", value: sdkKeyStag }
+//         ]);
+
+//         console.log("Done successfully!");
+//     }
+//     catch (err) {
+//         console.log("Error", err);
+//     }
+
+// }
+
+// giveSDKKeytoProject(2);

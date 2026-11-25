@@ -1,23 +1,28 @@
-import { FlagClient } from "../src/client"; 
+import { FlagClient } from "../src/client";
 
 const client = new FlagClient("YOUR_SDK_KEY");
 
 async function main() {
 
 
-console.log(`Loading data, please wait...`);
-    
-await client.init();
+   console.log(`Loading data, please wait...`);
 
-//console.log(client.testSomething()) ;
+   try {
+      await client.init();
 
- const att = { age: 25, plan: "platinum", device: "android" };
+      //console.log(client.testSomething()) ;
 
- {
-    console.log("test results:", client.evaluate("greeting", {userId: 414, attributes: att}));
- }
+      const att = { age: 25, plan: "platinum", device: "android", usage: 10};
 
-//console.log("data:::::", client.isEnabled("greeting", "dev"));
+      {
+         console.log("test results:", client.evaluate("f2", { userId: 414, attributes: att }));
+      }
+
+      //console.log("data:::::", client.isEnabled("greeting", "dev"));
+   }
+   catch (err) {
+      console.log("Error Occurred", err);
+   }
 
 }
 

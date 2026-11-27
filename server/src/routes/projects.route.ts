@@ -1,5 +1,5 @@
 import express from "express";
-import { createFlagInProjectController, createSegmentController, getAllEnvironmentsController, getAllFlagsOfProjectController, getAllProjectsOfUserController, getGuardrailsController, getInvitationsOfProjectController, getMembersController, getProjectInfoController, getRecentActivityController, inviteUserController } from "../controllers/projects.controller";
+import { createFlagInProjectController, createProjectController, createSegmentController, getAllEnvironmentsController, getAllFlagsOfProjectController, getAllProjectsOfUserController, getGuardrailsController, getInvitationsOfProjectController, getMembersController, getProjectInfoController, getRecentActivityController, inviteUserController } from "../controllers/projects.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { getAllSegmentsController, getSegmentController } from "../controllers/segments.controller";
 
@@ -10,6 +10,10 @@ const router = express.Router();
 // Get info about a specific project
 
 router.get("/:id", getProjectInfoController);
+
+// Create a project
+
+router.post("/", authMiddleware, createProjectController);
 
 // Update a project
 

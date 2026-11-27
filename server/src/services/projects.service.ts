@@ -31,6 +31,7 @@ export const getProjectInfoService = async (projectID: number) => {
 export const createNewProjectService = async (name: string, createdBy: number) => {
 
     // Create a project
+    console.log("name", name, "creted by-", createdBy);
 
     const [projectCreated] = await db
     .insert(projects)

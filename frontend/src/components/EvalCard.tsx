@@ -44,7 +44,7 @@ const EvalCard = ({ conditions, rollouts, segments, ruleID }: RuleType) => {
     <div>
       <div >
 
-        <div className='border border-neutral-800 bg-neutral-800/40 rounded-sm flex flex-col justify-center items-center gap-2 mt-8'>
+        <div className=' border-neutral-800 bg-neutral-800/40 rounded-sm flex flex-col justify-center items-center gap-2 mt-8'>
 
 
           {/* Conditions */}

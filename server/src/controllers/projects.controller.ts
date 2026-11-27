@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { getAllProjectsOfUserService, getProjectInfoService, getRecentActivityService } from "../services/projects.service";
+import { createNewProjectService, getAllProjectsOfUserService, getProjectInfoService, getRecentActivityService } from "../services/projects.service";
 
 import { createNewFlagService, getAllFLagsOfProjectService } from "../services/featureFlag.service";
 import { getProjectGuardrailsService } from "../services/guardrails.service";
@@ -20,6 +20,19 @@ export const getAllProjectsOfUserController = async (req: Request, res: Response
         next(err);
     }
 
+}
+
+export const createProjectController = async (req: Request, res: Response, next: NextFunction) => {
+
+    try{
+        const userID = req.user.id;
+        const projectName = req.body.projectName;
+        const result = await createNewProjectService(projectName, userID);
+        res.status(200).json(result);
+    }
+    catch(err){
+        next(err);
+    }
 }
 
 

@@ -11,7 +11,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
             throw new AppError("Authentication Required", 401);
         }
         const token = authHeader.split(" ")[1];
-        // console.log("token", token)
+         console.log("token hckj", token)
         const decode = jwt.verify(token, env.JWT_SECRET) as JwtPayload;
         const id = decode.id;
         const username = decode.username;

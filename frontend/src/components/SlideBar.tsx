@@ -3,7 +3,6 @@ import { ArrowRight, ArrowRightLeft, CircleChevronRight, CircleUserRound, Flag, 
 import { Button } from "./ui/button";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { Separator } from "./ui/separator";
-import Connect from "./Connect";
 
 const SlideBar = () => {
   const location = useLocation();
@@ -85,7 +84,22 @@ const SlideBar = () => {
 
           <div className="flex flex-col gap-1 mb-1 mt-1.5">
 
-            <Connect />
+            <div className="rounded-xs border border-neutral-800">
+
+              <Link to="/connect">
+
+                <Button
+                  variant={location.pathname === "/invitations" ? "secondary" :
+                    "ghost"
+                  }
+                  className="w-full justify-start rounded-sm transition-colors duration-150"
+                >
+                  <div className="py-1 flex items-center gap-2 text-[#e6f542] "> <Unplug /> Connect </div>
+                </Button>
+                
+              </Link>
+
+            </div>
 
             <div>
               <Link to="/invitations">

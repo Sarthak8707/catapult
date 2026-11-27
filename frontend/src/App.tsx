@@ -18,6 +18,7 @@ import Invitations from "./pages/Invitations";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Landing from "./pages/Landing";
+import Connect from "./pages/Connect";
 
 const router = createBrowserRouter([
   {
@@ -105,6 +106,12 @@ const router = createBrowserRouter([
         path: "invitations",
         element: <Invitations />,
       },
+
+      {
+        path: "connect",
+        element: <Connect />
+      }
+
     ],
   },
   {
